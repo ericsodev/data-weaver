@@ -5,7 +5,7 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from "sveltekit-superforms/adapters"
 import { findUser } from '$lib/db/auth';
 import { sha256 } from 'js-sha256';
-import { SessionType, stringifySession } from '$lib/schema/cookie';
+import { stringifySession } from '$lib/schema/cookie';
 
 export const actions: Actions = {
 	default: async ({ request, cookies }) => {
@@ -20,7 +20,7 @@ export const actions: Actions = {
 
 		if (user && user.password_hash === sha256(data.password)) {
 			cookies.set("data-weaver-session", stringifySession({ session_id: "8", username: user.username }), { path: "/" })
-			return redirect(300, "/")
+			return redirect(300, "/dashboard")
 		}
 
 		return setError(loginForm, 'password', "Invalid login")

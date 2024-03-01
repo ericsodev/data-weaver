@@ -12,12 +12,24 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	}
 
-	if (event.url.pathname.startsWith('/dashboard')) {
-		if (!event.locals.session) {
-			throw redirect(303, '/login')
-		}
+	if (isProtectedRoute(event.url.pathname) && !event.locals.session) {
+		throw redirect(303, '/login')
 	}
 
 	const response = resolve(event);
 	return response;
 }
+
+const protectedRoutes: string[] = [
+	"/dashboard",
+	"/settings",
+	"/account",
+	"/schema",
+	"/data",
+];
+
+function isProtectedRoute(path: string): boolean {
+	return protectedRoutes.map(route => path.startsWith(route)).some(Boolean)
+}
+
+

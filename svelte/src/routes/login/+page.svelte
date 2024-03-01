@@ -6,17 +6,11 @@
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { loginFormSchema } from './schema';
-  import { goto } from '$app/navigation';
 
   export let data: SuperValidated<Infer<typeof loginFormSchema>>;
 
   const form = superForm(data, {
-    validators: zodClient(loginFormSchema),
-    onResult: ({ result }) => {
-      if (result.type === 'redirect') {
-        goto(result.location);
-      }
-    }
+    validators: zodClient(loginFormSchema)
   });
 
   const { form: formData, enhance } = form;

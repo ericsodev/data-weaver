@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui/button';
   import FeatureCard from './FeatureCard.svelte';
+  export let data;
 </script>
 
 <div class="flex h-full flex-col p-4">
@@ -28,8 +29,12 @@
       </section>
     </section>
     <section class="flex justify-center gap-5">
-      <Button href="/register">Get Started</Button>
-      <Button href="/login" class="w-24" variant="secondary">Login</Button>
+      {#if !data.session}
+        <Button href="/register">Get Started</Button>
+        <Button href="/login" class="w-24" variant="secondary">Login</Button>
+      {:else}
+        <Button href="/dashboard" class="px-6">Go to dashboard</Button>
+      {/if}
     </section>
   </main>
 </div>
