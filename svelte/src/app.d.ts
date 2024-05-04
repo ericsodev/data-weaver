@@ -6,9 +6,9 @@ declare global {
 		interface Locals {
 			session?: Session;
 		}
-		interface PageData {
-			session?: Session;
-		}
+		//interface PageData {
+		//	session?: Session;
+		//}
 		// interface PageState {}
 		// interface Platform {}
 	}
