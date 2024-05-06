@@ -1,7 +1,11 @@
 import type { Knex } from 'knex';
-import path from 'path';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
 
 // Update with your config settings.
+//
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export const config: { [key: string]: Knex.Config } = {
   development: {

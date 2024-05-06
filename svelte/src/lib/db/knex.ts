@@ -5,4 +5,4 @@ const environment = process.env.ENVIRONMENT || 'development';
 
 const db = knex(config[environment]);
 
-export default knex;
+export default db;

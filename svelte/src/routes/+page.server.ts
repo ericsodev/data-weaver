@@ -1,13 +1,12 @@
-import { type Actions, type Action, redirect } from "@sveltejs/kit";
+import { type Actions, type Action, redirect } from '@sveltejs/kit';
 
 const logout: Action = async ({ cookies }) => {
-	// TODO: delete session from database
-	if (cookies.get("data-weaver-session")) {
-		cookies.set("data-weaver-session", "", { path: "/" });
-	}
-	return redirect(303, "/");
-}
-export const actions: Actions = {
-	logout
+  // TODO: delete session from database
+  if (cookies.get('data-weaver-session')) {
+    cookies.set('data-weaver-session', '', { path: '/' });
+  }
+  return redirect(303, '/');
 };
-
+export const actions: Actions = {
+  logout
+};
