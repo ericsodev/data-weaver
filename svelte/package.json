@@ -9,7 +9,13 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"seed:make": "knex --knexfile ./knex/knexfile.ts seed:make -x ts",
+		"seed:run": "knex --knexfile ./knex/knexfile.ts seed:run",
+		"migrate:make": "knex --knexfile ./knex/knexfile.ts migrate:make -x ts",
+		"migrate:up": "knex --knexfile ./knex/knexfile.ts migrate:up",
+		"migrate:down": "knex --knexfile ./knex/knexfile.ts migrate:down",
+		"migrate:latest": "knex --knexfile ./knex/knexfile.ts migrate:latest"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
@@ -17,6 +23,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "^8.56.0",
 		"@types/js-cookie": "^3.0.6",
+		"@types/node": "^20.12.8",
 		"@typescript-eslint/eslint-plugin": "^7.0.0",
 		"@typescript-eslint/parser": "^7.0.0",
 		"autoprefixer": "^10.4.17",
@@ -37,14 +44,15 @@
 		"typescript": "^5.0.0",
 		"vite": "^5.0.3"
 	},
-	"type": "module",
 	"dependencies": {
 		"bits-ui": "^0.18.6",
 		"clsx": "^2.1.0",
 		"formsnap": "^0.5.1",
 		"js-cookie": "^3.0.5",
 		"js-sha256": "^0.11.0",
+		"knex": "^3.1.0",
 		"lucide-svelte": "^0.343.0",
+		"pg": "^8.11.5",
 		"tailwind-merge": "^2.2.1",
 		"tailwind-variants": "^0.2.0",
 		"zod": "^3.22.4"
