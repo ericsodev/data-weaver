@@ -1,7 +1,7 @@
 import db from "$lib/db/knex";
 import type { Schema, Attribute, TableColumn, AttributeType } from "$lib/models/schemaModel";
 
-export function schemaToTableName(schema_name: string): string {
+export function convertSchemaToTableName(schema_name: string): string {
     return "schema_" + schema_name.replaceAll(" ", "_");
 }
 

@@ -10,9 +10,8 @@ export interface Schema {
 }
 
 export interface DataSchema {
-    schema_id: number;
     schema_name: string;
-    attributes: { string: Attribute };
+    attributes: Attribute[];
 }
 
 export type Attribute = {
@@ -38,8 +37,8 @@ export async function listDataSchemas(): Promise<Pick<Schema, "schema_name" | "s
     return await db<Schema>("schema").returning(["schema_name", "schema_id"]);
 }
 
-export async function getDataSchemaByName(schemaName: string): Promise<DataSchema | undefined> {
-    const tableName = convertSchemaToTableName(schemaName);
+export async function getDataSchemaByName(schema_name: string): Promise<DataSchema | undefined> {
+    const tableName = convertSchemaToTableName(schema_name);
     if (!(await db.schema.hasTable(tableName))) return undefined;
 
     const dataSchemaColumns = await db<TableColumn>("information_schema.columns").where({
@@ -53,7 +52,15 @@ export async function getDataSchemaByName(schemaName: string): Promise<DataSchem
         .filter(col => col.column_name.indexOf("attr_") == 0)
         .map(parseAttribute)
         .filter(attr => !!attr) as Attribute[];
+
+    return {
+        schema_name,
+        attributes,
+    };
 }
+
+// TODO: Checks whether a schema name can be added after converting to table name
+export async function dataSchemaNameExists() {}
 
 export async function getDataSchemaById(schema_id: number): Promise<DataSchema | undefined> {
     const schema = await db<Schema>("schema").where({ schema_id }).returning(["schema_id", "schema_name"]).first();
