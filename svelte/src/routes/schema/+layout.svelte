@@ -2,7 +2,7 @@
   import Button from '$lib/components/ui/button/button.svelte';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
-  import type { Schema } from '$lib/db/schema.js';
+  import type { Schema } from '$lib/models/schemaModel';
 
   export let data;
   const staticRoutes = [
@@ -12,10 +12,10 @@
     { id: '#separator', name: 'Separator' },
     { id: '#label', name: 'Schemas' }
   ];
-  const appendRoutes = (schemas: Schema[]) => {
+  const appendRoutes = (schemas: Pick<Schema, "schema_id"| "schema_name">[]) => {
     const routes = [
       ...staticRoutes,
-      ...schemas.map((s) => ({ id: `schema_${s.id}`, name: s.name }))
+      ...schemas.map((s) => ({ id: s.schema_id.toString(), name: s.schema_name }))
     ];
     return routes;
   };
