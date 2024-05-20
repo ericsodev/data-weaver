@@ -12,7 +12,7 @@
     { id: '#separator', name: 'Separator' },
     { id: '#label', name: 'Schemas' }
   ];
-  const appendRoutes = (schemas: Pick<Schema, "schema_id"| "schema_name">[]) => {
+  const appendRoutes = (schemas: Pick<Schema, 'schema_id' | 'schema_name'>[]) => {
     const routes = [
       ...staticRoutes,
       ...schemas.map((s) => ({ id: s.schema_id.toString(), name: s.schema_name }))

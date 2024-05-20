@@ -1,43 +1,41 @@
 .layout {
-	padding-top: 60px;
-	/* This is the height of the nav */
-	display: grid;
-	grid-template-columns: 200px 1fr 1fr;
-	gap: 10px;
-	grid-template-rows: auto 1fr 1fr;
-	grid-template-areas:
-		"header subnav subnav"
-		"sidebar main main"
-		"sidebar main main"
-	;
+  padding-top: 60px;
+  /* This is the height of the nav */
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 10px;
+  grid-template-rows: auto 1fr 1fr;
+  grid-template-areas:
+    'header subnav subnav'
+    'sidebar main main'
+    'sidebar main main';
 }
 
 .sidebar {
-	@apply pr-3 border-r-2 pt-2;
-	grid-area: sidebar;
+  @apply pr-3 border-r-2 pt-2;
+  grid-area: sidebar;
 }
 
 .header {
-	grid-area: header;
+  grid-area: header;
 }
 
 .subnav {
-	grid-area: subnav;
+  grid-area: subnav;
 }
 
 @media screen and (max-width: 600px) {
-	.layout {
-		grid-template-columns: 1fr;
-		grid-template-rows: auto auto auto 1fr;
-		grid-template-areas:
-			"header"
-			"subnav"
-			"sidebar"
-			"main"
-		;
-	}
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+      'header'
+      'subnav'
+      'sidebar'
+      'main';
+  }
 
-	.sidebar {
-		@apply pr-0 border-r-0;
-	}
+  .sidebar {
+    @apply pr-0 border-r-0;
+  }
 }
