@@ -2,8 +2,8 @@ import { redirect, type Action, type Actions, error } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import { insertSchema } from '$lib/db/schema';
 import { schemaFormSchema } from '../schema';
+import { db } from '$lib/data/actions';
 
 export const load: PageServerLoad = async ({ request }) => {
   const params = new URLSearchParams(request.url.toString());
@@ -14,19 +14,22 @@ export const load: PageServerLoad = async ({ request }) => {
   return { form };
 };
 
-const createSchemaHandler: Action = async ({ request }) => {
+const createSchemaHandler: Action = async ({ request, locals }) => {
   const form = await superValidate(request, zod(schemaFormSchema));
-  console.log(form);
   if (!form.valid) {
     return error(400, 'Invalid form');
   }
 
+  if (!locals.user) {
+    return error(401, 'You must be logged in to create a schema');
+  }
+
   // TODO: access DB, create, redirect to schema page
   const data = form.data;
-  const schema = await insertSchema(data.name);
+  const schema = await db.schema.create({ name: data.name, creatorId: locals.user.id });
 
   if (schema) {
-    return redirect(300, `/schema/schema_${schema.id}`);
+    return redirect(300, `/schema/${schema.id}`);
   }
   return error(409, 'Schema exists');
 };

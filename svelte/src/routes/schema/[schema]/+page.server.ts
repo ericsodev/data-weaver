@@ -1,17 +1,18 @@
-import { getDataSchemaById } from '$lib/models/schemaModel';
-import { error } from '@sveltejs/kit';
+import { db } from '$lib/data/actions';
+import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 /** @type {import('./$types').PageServerLoad} */
 export const load: PageServerLoad = async ({ params }) => {
   // Load a single data schema
 
-  if (!params || isNaN(Number(params.schema))) {
-    console.log(`Invalid schema path: ${params.schema}`);
+  if (!params.schema) {
     error(400, { message: 'Invalid schema path' });
   }
 
-  const s = await getDataSchemaById(Number(params.schema));
-  console.log(s);
-  return s;
+  const s = await db.schema.find({ id: params.schema });
+  if (!s) {
+    redirect(301, '/schema');
+  }
+  return { id: s.id, name: s.name };
 };

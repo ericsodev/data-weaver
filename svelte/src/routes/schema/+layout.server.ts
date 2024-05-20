@@ -1,7 +1,11 @@
-import { getAllSchemas } from '$lib/db/schema';
-import { listDataSchemas } from '$lib/models/schemaModel';
+import { db } from '$lib/data/actions';
 import type { LayoutServerLoad } from '../$types';
 
 export const load: LayoutServerLoad = async () => {
-  return { schemas: await listDataSchemas() };
+  try {
+    const schemas = await db.schema.findAll({});
+    return { schemas: schemas.map(({ id, name }) => ({ id, name })) };
+  } catch (error: unknown) {
+    return { schemas: [] };
+  }
 };
