@@ -2,7 +2,7 @@ import { redirect, type Actions } from '@sveltejs/kit';
 import { registerSchema } from './schema';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { insertUser } from '$lib/models/userModel';
+import { db } from '$lib/data/actions';
 
 export const actions: Actions = {
   default: async ({ request, cookies }) => {
@@ -11,7 +11,11 @@ export const actions: Actions = {
 
     const data = registerForm.data;
 
-    const user = await insertUser(data.username, data.password);
+    const user = await db.user.createUser({
+      name: data.username,
+      password: data.password,
+      userRole: 'admin' // TODO: change later
+    });
 
     if (!user) {
       return setError(registerForm, 'username', 'Username is taken');

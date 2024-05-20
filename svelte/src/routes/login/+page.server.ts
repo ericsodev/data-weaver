@@ -3,7 +3,7 @@ import { redirect } from '@sveltejs/kit';
 import { loginFormSchema } from './schema';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { findUser } from '$lib/models/userModel';
+import { db } from '$lib/data/actions';
 import { sha256 } from 'js-sha256';
 import { stringifySession } from '$lib/schema/cookie';
 
@@ -16,9 +16,9 @@ export const actions: Actions = {
     }
 
     const data = loginForm.data;
-    const user = await findUser(data.username);
+    const user = await db.user.findUser({ name: loginForm.data.username });
 
-    if (user && user.password_hash === sha256(data.password)) {
+    if (user && user.passwordHash === sha256(data.password)) {
       cookies.set(
         'data-weaver-session',
         stringifySession({ session_id: '8', username: user.name }),
