@@ -3,6 +3,7 @@ import { registerSchema } from './schema';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { db } from '$lib/data/actions';
+import { sha256 } from 'js-sha256';
 
 export const actions: Actions = {
   default: async ({ request, cookies }) => {
@@ -13,7 +14,7 @@ export const actions: Actions = {
 
     const user = await db.user.create({
       name: data.username,
-      password: data.password,
+      passwordHash: sha256(data.password),
       userRole: 'admin' // TODO: change later
     });
 

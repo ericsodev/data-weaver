@@ -1,4 +1,4 @@
-import type { Model } from 'objection';
+import type { Model, RelationExpression } from 'objection';
 import type { BaseModel } from '../models/base';
 import type { Except, RequireAtLeastOne } from 'type-fest';
 
@@ -12,20 +12,34 @@ export class BaseActions<T extends typeof BaseModel> {
     this.model = model;
   }
 
-  // TODO: Figure out typesafe generic actions
   async find(filters: Partial<GenericDTO<T>>): Promise<GenericDTO<T> | undefined> {
     const ret = await this.model.query().where(filters).first();
     return ret as unknown as GenericDTO<T>;
   }
 
-  async findAll(filters: Partial<GenericDTO<T>>): Promise<GenericDTO<T>[]> {
-    const ret = (await this.model.query().where(filters)) as unknown as GenericDTO<T>[];
+  async findAll(
+    filters: Partial<GenericDTO<T>>,
+    relations?: RelationExpression<InstanceType<T>>
+  ): Promise<GenericDTO<T>[]> {
+    const ret = await this.model
+      .query()
+      .where(filters)
+      .modify((qb, relExpr) => {
+        if (relExpr) {
+          qb.withGraphFetched(relExpr);
+        }
+      }, relations);
     return ret as unknown as GenericDTO<T>[];
   }
 
-  async create(data: GenericCreateDTO<T>): Promise<GenericDTO<T>> {
-    const ret = await this.model.query().insert(data);
-    return ret as unknown as GenericDTO<T>;
+  async create(data: GenericCreateDTO<T>): Promise<GenericDTO<T> | undefined> {
+    try {
+      const ret = await this.model.query().insert(data);
+      return ret as unknown as GenericDTO<T>;
+    } catch (error: unknown) {
+      console.log(error as string);
+      return undefined;
+    }
   }
 
   async update(
