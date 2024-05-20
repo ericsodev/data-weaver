@@ -16,7 +16,7 @@ export const actions: Actions = {
     }
 
     const data = loginForm.data;
-    const user = await db.user.findUser({ name: loginForm.data.username });
+    const user = await db.user.find({ name: loginForm.data.username });
 
     if (user && user.passwordHash === sha256(data.password)) {
       cookies.set(

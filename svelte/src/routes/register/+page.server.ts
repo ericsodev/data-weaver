@@ -11,7 +11,7 @@ export const actions: Actions = {
 
     const data = registerForm.data;
 
-    const user = await db.user.createUser({
+    const user = await db.user.create({
       name: data.username,
       password: data.password,
       userRole: 'admin' // TODO: change later
