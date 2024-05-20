@@ -1,3 +1,4 @@
+import { db } from '$lib/data/actions';
 import { cookieSchema } from '$lib/schema/cookie';
 import { redirect, type Handle } from '@sveltejs/kit';
 /** @type {import('@sveltejs/kit').Handle} */
@@ -6,13 +7,18 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   if (cookie) {
     const parsedCookie = cookieSchema.safeParse(JSON.parse(cookie));
-    if (parsedCookie.success) {
-      // TODO: Add session validation
-      event.locals.session = parsedCookie.data;
+    if (!parsedCookie.success) {
+      return resolve(event);
+    }
+
+    // TODO: Add session validation
+    const user = await db.user.find({ id: parsedCookie.data.id });
+    if (user) {
+      event.locals.user = { name: user.name, id: user.id, userRole: user.userRole };
     }
   }
 
-  if (isProtectedRoute(event.url.pathname) && !event.locals.session) {
+  if (isProtectedRoute(event.url.pathname) && !event.locals.user) {
     throw redirect(303, '/login');
   }
 

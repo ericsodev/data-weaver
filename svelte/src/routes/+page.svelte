@@ -29,7 +29,7 @@
       </section>
     </section>
     <section class="flex justify-center gap-5">
-      {#if !data.session}
+      {#if !data.user}
         <Button href="/register">Get Started</Button>
         <Button href="/login" class="w-24" variant="secondary">Login</Button>
       {:else}
