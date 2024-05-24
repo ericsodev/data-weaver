@@ -1,13 +1,16 @@
 import { Model, mixin, type JSONSchema, type JSONSchemaType, type QueryContext } from 'objection';
 import { BaseModel } from './base';
 import { Schema } from './schemaModel';
+import type { Except } from 'type-fest';
 
 const ATTRIBUTE_TYPES = ['string', 'number', 'boolean'] as const;
+type AttributeType = (typeof ATTRIBUTE_TYPES)[number];
 
 export class Attribute extends mixin(BaseModel) {
   name!: string;
-  creatorId!: string;
   schemaId!: string;
+  type!: AttributeType;
+  required!: boolean;
 
   static get tableName() {
     return 'attribute';
@@ -39,3 +42,5 @@ export class Attribute extends mixin(BaseModel) {
     };
   }
 }
+
+export type AttributeDTO = Except<Attribute, keyof Model>;
