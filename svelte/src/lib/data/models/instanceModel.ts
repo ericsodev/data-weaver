@@ -30,7 +30,7 @@ export class Instance extends mixin(BaseModel) {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'instance.creator_id',
+          from: 'instance.creatorId',
           to: 'user.id'
         }
       },
@@ -38,7 +38,7 @@ export class Instance extends mixin(BaseModel) {
         relation: Model.BelongsToOneRelation,
         modelClass: Schema,
         join: {
-          from: 'instance.schema_id',
+          from: 'instance.schemaId',
           to: 'schema.id'
         }
       }

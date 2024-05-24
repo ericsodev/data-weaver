@@ -28,7 +28,7 @@ export class Schema extends mixin(BaseModel) {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'schema.creator_id',
+          from: 'schema.creatorId',
           to: 'user.id'
         }
       },
@@ -37,7 +37,7 @@ export class Schema extends mixin(BaseModel) {
         modelClass: Attribute,
         join: {
           from: 'schema.id',
-          to: 'attribute.schema_id'
+          to: 'attribute.schemaId'
         }
       },
       authorizedUsers: {
@@ -46,8 +46,8 @@ export class Schema extends mixin(BaseModel) {
         join: {
           from: 'schema.id',
           through: {
-            from: 'schema_permission.schema_id',
-            to: 'schema_permissions.user_id'
+            from: 'schema_permission.schemaId',
+            to: 'schema_permissions.userId'
           },
           to: 'user.id'
         }

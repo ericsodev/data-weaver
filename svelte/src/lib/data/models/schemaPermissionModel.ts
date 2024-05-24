@@ -37,7 +37,7 @@ export class SchemaPermission extends mixin(BaseModel) {
         relation: Model.BelongsToOneRelation,
         modelClass: Schema,
         join: {
-          from: 'schema_permission.schema_id',
+          from: 'schema_permission.schemaId',
           to: 'schema.id'
         }
       },
@@ -45,7 +45,7 @@ export class SchemaPermission extends mixin(BaseModel) {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'schema_permission.user_id',
+          from: 'schema_permission.userId',
           to: 'user.id'
         }
       }

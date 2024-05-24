@@ -7,10 +7,6 @@ export class BaseModel extends Model {
   updatedAt!: string;
   deletedAt!: string;
 
-  static get columnNameMappers() {
-    return snakeCaseMappers();
-  }
-
   $beforeInsert(queryContext: QueryContext): void | Promise<unknown> {
     super.$beforeInsert(queryContext);
     this.createdAt = new Date().toISOString();
