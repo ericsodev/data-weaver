@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ params }) => {
   // Load a single data schema
 
   if (!params.schema) {
-    error(400, { message: 'Invalid schema path' });
+    error(400, { message: 'Schema not found' });
   }
 
   const s = await db.schema.find({ id: params.schema });
