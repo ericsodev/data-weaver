@@ -13,23 +13,33 @@ export class BaseActions<T extends typeof BaseModel> {
   }
 
   async find(filters: Partial<GenericDTO<T>>): Promise<GenericDTO<T> | undefined> {
-    const ret = await this.model.query().where(filters).first();
-    return ret as unknown as GenericDTO<T>;
+    try {
+      const ret = await this.model.query().where(filters).first();
+      return ret as unknown as GenericDTO<T>;
+    } catch (error: unknown) {
+      console.log(error as string);
+      return undefined;
+    }
   }
 
   async findAll(
     filters: Partial<GenericDTO<T>>,
     relations?: RelationExpression<InstanceType<T>>
-  ): Promise<GenericDTO<T>[]> {
-    const ret = await this.model
-      .query()
-      .where(filters)
-      .modify((qb, relExpr) => {
-        if (relExpr) {
-          qb.withGraphFetched(relExpr);
-        }
-      }, relations);
-    return ret as unknown as GenericDTO<T>[];
+  ): Promise<GenericDTO<T>[] | undefined> {
+    try {
+      const ret = await this.model
+        .query()
+        .where(filters)
+        .modify((qb, relExpr) => {
+          if (relExpr) {
+            qb.withGraphFetched(relExpr);
+          }
+        }, relations);
+      return ret as unknown as GenericDTO<T>[];
+    } catch (error: unknown) {
+      console.log(error as string);
+      return undefined;
+    }
   }
 
   async create(data: GenericCreateDTO<T>): Promise<GenericDTO<T> | undefined> {
@@ -45,7 +55,12 @@ export class BaseActions<T extends typeof BaseModel> {
   async update(
     data: RequireAtLeastOne<GenericCreateDTO<T>> & { id: string }
   ): Promise<GenericDTO<T> | undefined> {
-    const ret = await this.model.query().patchAndFetchById(data.id, data);
-    return ret as unknown as GenericDTO<T>;
+    try {
+      const ret = await this.model.query().patchAndFetchById(data.id, data);
+      return ret as unknown as GenericDTO<T>;
+    } catch (error: unknown) {
+      console.log(error as string);
+      return undefined;
+    }
   }
 }

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const cookieSchema = z.object({
   session_id: z.string(),
-  username: z.string()
+  id: z.string()
 });
 
 export type SessionType = z.infer<typeof cookieSchema>;

@@ -1,5 +1,5 @@
-import { randomUUID } from 'crypto';
 import { Model, snakeCaseMappers, type ModelOptions, type QueryContext } from 'objection';
+import { v4 as uuidv4 } from 'uuid';
 
 export class BaseModel extends Model {
   id!: string;
@@ -11,14 +11,14 @@ export class BaseModel extends Model {
     return snakeCaseMappers();
   }
 
-  $beforeInsert(queryContext: QueryContext): void | Promise<any> {
+  $beforeInsert(queryContext: QueryContext): void | Promise<unknown> {
     super.$beforeInsert(queryContext);
     this.createdAt = new Date().toISOString();
     this.updatedAt = new Date().toISOString();
-    this.id = randomUUID();
+    this.id = uuidv4();
   }
 
-  $beforeUpdate(opt: ModelOptions, queryContext: QueryContext): void | Promise<any> {
+  $beforeUpdate(opt: ModelOptions, queryContext: QueryContext): void | Promise<unknown> {
     super.$beforeUpdate(opt, queryContext);
     this.updatedAt = new Date().toISOString();
   }

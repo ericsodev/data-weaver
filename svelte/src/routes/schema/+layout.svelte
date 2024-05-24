@@ -24,9 +24,10 @@
       Schema
     </h2>
   </header>
-  <section class="sidebar"></section>
-  <section class="subnav flex gap-2">
+  <section class="sidebar">
     <SettingsMenu routes={appendRoutes(data.schemas ?? [])} rootUri="/schema/" />
+  </section>
+  <section class="subnav flex gap-2">
     <Button href="/dashboard" variant="ghost" class="w-28 text-muted-foreground">Dashboard</Button>
     <Button href="/instances" variant="ghost" class="w-28 text-muted-foreground">Instances</Button>
   </section>
