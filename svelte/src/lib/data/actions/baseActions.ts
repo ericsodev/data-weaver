@@ -12,9 +12,20 @@ export class BaseActions<T extends typeof BaseModel> {
     this.model = model;
   }
 
-  async find(filters: Partial<GenericDTO<T>>): Promise<GenericDTO<T> | undefined> {
+  async find(
+    filters: Partial<GenericDTO<T>>,
+    relations?: RelationExpression<InstanceType<T>>
+  ): Promise<GenericDTO<T> | undefined> {
     try {
-      const ret = await this.model.query().where(filters).first();
+      const ret = await this.model
+        .query()
+        .where(filters)
+        .modify((qb, relExpr) => {
+          if (relExpr) {
+            qb.withGraphFetched(relExpr);
+          }
+        }, relations)
+        .first();
       return ret as unknown as GenericDTO<T>;
     } catch (error: unknown) {
       console.log(error as string);
