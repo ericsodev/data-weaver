@@ -3,7 +3,6 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { schemaFormSchema } from '../schema';
-import { db } from '$lib/data/actions';
 import { createSchemaWithPermission } from '$lib/utils/schema';
 
 export const load: PageServerLoad = async ({ request }) => {
@@ -26,11 +25,10 @@ const createSchemaHandler: Action = async ({ request, locals }) => {
   }
 
   const data = form.data;
-  //const schema = await db.schema.create({ name: data.name, creatorId: locals.user.id });
   const schema = await createSchemaWithPermission({ name: data.name, creatorId: locals.user.id });
 
   if (schema) {
-    return redirect(300, `/schema/${schema.id}`);
+    return redirect(300, `/schema/id/${schema.id}`);
   }
   return error(409, 'Schema exists');
 };

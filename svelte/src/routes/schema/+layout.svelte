@@ -13,7 +13,7 @@
     { id: '#label', name: 'Schemas' }
   ];
   const appendRoutes = (schemas: Pick<SchemaDTO, 'id' | 'name'>[]) => {
-    const routes = [...staticRoutes, ...schemas.map((s) => ({ id: s.id, name: s.name }))];
+    const routes = [...staticRoutes, ...schemas.map((s) => ({ id: 'id/' + s.id, name: s.name }))];
     return routes;
   };
 </script>

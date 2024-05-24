@@ -8,18 +8,16 @@
   $: rootUri = rootUri.endsWith('/') ? rootUri : rootUri + '/';
   // Checks if rootUri + uri is a prefix of the current URI
   function checkIsPrefix(uri: string): boolean {
-    const re = /\/*([^/]*)/;
-    const uriMatch = uri.match(re);
-    if (!uriMatch) return false;
-
-    uri = uriMatch[1];
+    if (uri === '#separator' || uri === '#label') {
+      return false;
+    }
 
     return $page.url.pathname.startsWith(rootUri + uri);
   }
 
   let activeUrl: string;
-  const update = (p) => routes.map((r) => r.id).filter(checkIsPrefix)[0] ?? routes[0].id;
-  $: activeUrl = update($page);
+  const update = (_p) => routes.filter((r) => checkIsPrefix(r.id))[0] ?? routes[0].id;
+  $: activeUrl = update($page).id;
 </script>
 
 <div class="flex h-full w-full flex-col items-stretch gap-2.5">
