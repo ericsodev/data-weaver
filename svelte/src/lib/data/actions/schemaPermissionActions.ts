@@ -10,7 +10,6 @@ export class SchemaPermissionAction extends BaseActions<typeof SchemaPermission>
   }
 
   async listAuthorizedSchemas(userId: string): Promise<SchemaPermissionDTO[]> {
-    console.log('listing schemas');
     const schemas = await this.model.query().where('user_id', userId).withGraphFetched('schema');
     return schemas;
   }

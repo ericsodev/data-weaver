@@ -49,7 +49,6 @@ function createAuthStore() {
       placeholderAsyncLogin(username, password).then((session) => {
         Cookie.set('data-weaver-session', JSON.stringify(session.session));
         set({ logged_in: true, session: session.session });
-        console.log('Logged in');
       });
     },
     refresh: () => set(sessionFromCookie())
