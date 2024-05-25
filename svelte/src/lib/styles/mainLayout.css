@@ -24,6 +24,11 @@
   grid-area: subnav;
 }
 
+.layout > .main {
+  grid-area: main;
+  padding: 2rem 4rem;
+}
+
 @media screen and (max-width: 600px) {
   .layout {
     grid-template-columns: 1fr;
@@ -33,6 +38,11 @@
       'subnav'
       'sidebar'
       'main';
+  }
+
+  .layout > .main {
+    grid-area: main;
+    padding: 2rem 0rem;
   }
 
   .sidebar {

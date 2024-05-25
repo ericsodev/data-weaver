@@ -25,5 +25,5 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     error(400, { message: 'Schema not found' });
   }
 
-  return { schema: removePrototype(schema) };
+  return { schema: { ...removePrototype(schema), accessType: userAuthLevel } };
 };
