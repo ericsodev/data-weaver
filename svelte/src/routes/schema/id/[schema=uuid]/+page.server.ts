@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types';
 import { removePrototype } from '$lib/utils/toPojo';
 
 /** @type {import('./$types').PageServerLoad} */
-export const load: PageServerLoad = async ({ params, locals }) => {
+export const load: PageServerLoad = async ({ params, locals, depends }) => {
   // Load a single data schema
 
   if (!locals.user) {
@@ -20,6 +20,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     userId: locals.user.id
   });
 
+  depends('app:random');
   const schema = await db.schema.find({ id: params.schema }, 'attributes');
   if (!userAuthLevel || !schema) {
     error(400, { message: 'Schema not found' });

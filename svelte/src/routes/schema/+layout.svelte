@@ -18,7 +18,7 @@
   };
 </script>
 
-<div class="layout h-full px-12">
+<div class="layout min-h-full px-12">
   <header class="header">
     <h2 class="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
       Schema

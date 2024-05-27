@@ -5,7 +5,7 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { db } from '$lib/data/actions';
 import { sha256 } from 'js-sha256';
-import { stringifySession } from '$lib/schema/cookie';
+import { stringifySession } from '$lib/validationSchemas/cookie';
 
 export const actions: Actions = {
   default: async ({ request, cookies }) => {

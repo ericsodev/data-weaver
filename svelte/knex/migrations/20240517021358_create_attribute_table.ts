@@ -15,7 +15,7 @@ export async function up(knex: Knex): Promise<void> {
     t.string('type').notNullable();
     t.boolean('required').notNullable();
 
-    t.unique(['schema_id', 'name']);
+    t.unique(['schema_id', 'name'], { deferrable: 'deferred' });
   });
 }
 

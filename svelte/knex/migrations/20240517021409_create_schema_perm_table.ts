@@ -10,8 +10,16 @@ export async function up(knex: Knex): Promise<void> {
     t.uuid('schema_id').notNullable();
     t.uuid('user_id').notNullable();
 
-    t.foreign('schema_id').references('schema.id').deferrable('deferred');
-    t.foreign('user_id').references('user.id').deferrable('deferred');
+    t.foreign('schema_id')
+      .references('schema.id')
+      .deferrable('deferred')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
+    t.foreign('user_id')
+      .references('user.id')
+      .deferrable('deferred')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
 
     t.string('access_type').notNullable();
 

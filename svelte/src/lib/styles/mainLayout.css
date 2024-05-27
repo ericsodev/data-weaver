@@ -29,7 +29,7 @@
   padding: 2rem 4rem;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .layout {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto 1fr;

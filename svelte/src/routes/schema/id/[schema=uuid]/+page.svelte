@@ -1,19 +1,37 @@
 <script lang="ts">
   import AttributeProperty from './AttributeProperty.svelte';
+  import type { SchemaPostPayload } from '$lib/validationSchemas/schemaPost';
   import * as Table from '$lib/components/ui/table';
+  import * as Alert from '$lib/components/ui/alert';
   import { Button } from '$lib/components/ui/button';
+  import { PlusIcon } from 'lucide-svelte';
+  import { createAttributeState } from './AttributeState.svelte';
 
-  export let data;
-  let modifiedAttributes = data.schema.attributes.map(({ name, type, required }) => ({
-    name,
-    type,
-    required
-  }));
+  let { data } = $props();
+  let error = $state('');
+  let attributesState = createAttributeState(data.schema.attributes);
 
-  const addAttribute = () => {
-    modifiedAttributes.push({ name: '', type: 'string', required: false });
-    modifiedAttributes = modifiedAttributes;
-  };
+  async function onSave() {
+    const payload: SchemaPostPayload = {
+      name: data.schema.name,
+      attributes: attributesState.attributes.map((a) => a.modified)
+    };
+    try {
+      const res = await fetch(`/api/schema/${data.schema.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        const body = await res.json();
+        error = body.message ?? 'An error occurred';
+        setTimeout(() => {
+          error = '';
+        }, 1500);
+      }
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  }
 </script>
 
 <header class="mb-8">
@@ -23,31 +41,50 @@
   </h2>
 </header>
 <div>
-  <Table.Root class="w-fit">
+  <Table.Root class="w-full">
     <Table.Header>
       <Table.Row>
         <Table.Head class="min-w-[180px] w-80">Name</Table.Head>
-        <Table.Head class="min-w-[120px] w-48">Type</Table.Head>
+        <Table.Head class="min-w-[120px] w-60">Type</Table.Head>
+        <Table.Head></Table.Head>
         <Table.Head class="w-20">Required</Table.Head>
       </Table.Row>
     </Table.Header>
     <Table.Body>
-      {#each modifiedAttributes as attribute}
-        <AttributeProperty data={attribute}></AttributeProperty>
+      {#each attributesState.attributes as attribute}
+        <AttributeProperty
+          data={attribute}
+          modify={(change) => {
+            attribute.modified = { ...attribute.modified, ...change };
+            if (change.required !== undefined) {
+              attribute.modified.required = change.required;
+            }
+          }}
+        ></AttributeProperty>
       {/each}
       <Table.Row class="hover:bg-transparent">
         <Table.Cell colspan={3}>
           <Button
-            class="px-16 mx-auto inline-block"
+            size="sm"
+            variant="secondary"
             on:click={() => {
-              addAttribute();
-            }}>New Attribute</Button
+              attributesState.addAttribute();
+            }}
+          >
+            <PlusIcon class="w-4 mr-2.5"></PlusIcon>
+            New Attribute</Button
           >
         </Table.Cell>
       </Table.Row>
     </Table.Body>
   </Table.Root>
   {#if ['ADMIN', 'WRITE'].includes(data.schema.accessType)}
-    <Button class="mt-6">Save changes</Button>
+    <Button on:click={onSave} size="lg" class="mt-6">Save changes</Button>
+  {/if}
+  {#if error}
+    <Alert.Root class="w-60 bg-red-400/30 border-red-500 border-[1.5px] fixed top-10 right-10">
+      <Alert.Title>Error saving</Alert.Title>
+      <Alert.Description>{error}</Alert.Description>
+    </Alert.Root>
   {/if}
 </div>

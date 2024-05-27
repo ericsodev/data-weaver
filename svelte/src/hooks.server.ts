@@ -1,5 +1,5 @@
 import { db } from '$lib/data/actions';
-import { cookieSchema } from '$lib/schema/cookie';
+import { cookieSchema } from '$lib/validationSchemas/cookie';
 import { redirect, type Handle } from '@sveltejs/kit';
 /** @type {import('@sveltejs/kit').Handle} */
 export const handle: Handle = async ({ event, resolve }) => {
