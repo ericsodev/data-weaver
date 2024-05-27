@@ -6,10 +6,11 @@
   import { Button } from '$lib/components/ui/button';
   import { PlusIcon } from 'lucide-svelte';
   import { createAttributeState } from './AttributeState.svelte';
+  import { invalidateAll } from '$app/navigation';
 
   let { data } = $props();
   let error = $state('');
-  let attributesState = createAttributeState(data.schema.attributes);
+  let attributesState = $derived(createAttributeState(data.schema.attributes));
 
   async function onSave() {
     const payload: SchemaPostPayload = {
@@ -21,6 +22,7 @@
         method: 'PUT',
         body: JSON.stringify(payload)
       });
+      invalidateAll();
       if (!res.ok) {
         const body = await res.json();
         error = body.message ?? 'An error occurred';

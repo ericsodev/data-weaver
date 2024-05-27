@@ -10,7 +10,6 @@ export const PUT: RequestHandler = async ({ params, request, locals }) => {
   if (!valPayload.success) {
     return error(400, { message: 'Validation error' });
   }
-  console.log(valPayload.data);
 
   if (!schemaId) {
     return error(400, { message: 'Missing id' });
