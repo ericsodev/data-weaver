@@ -17,11 +17,15 @@ export const attributePutValidation = attributePostValidation
   });
 
 export const schemaPostValidation = z.object({
-  name: z.string().min(1),
-  attributes: z.array(attributePutValidation)
+  name: z.string().min(1)
 });
 
-export const schemaPutValidation = schemaPostValidation.partial();
+export const schemaPutValidation = schemaPostValidation
+  .partial()
+  .extend({
+    attributes: z.array(attributePutValidation).optional()
+  })
+  .partial();
 
 export type SchemaPostPayload = z.infer<typeof schemaPostValidation>;
 export type SchemaPutPayload = z.infer<typeof schemaPutValidation>;

@@ -4,15 +4,12 @@
   import { Input } from '$lib/components/ui/input';
   import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { z } from 'zod';
+  import { schemaPostValidation } from '$lib/validationSchemas/api/schema';
 
-  const formSchema = z.object({
-    name: z.string()
-  });
-  export let data: { form: SuperValidated<Infer<typeof formSchema>> };
+  export let data: { form: SuperValidated<Infer<typeof schemaPostValidation>> };
 
   const form = superForm(data.form, {
-    validators: zodClient(formSchema)
+    validators: zodClient(schemaPostValidation)
   });
 
   const { form: formData, enhance } = form;

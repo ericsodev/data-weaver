@@ -37,7 +37,7 @@ export const PUT: RequestHandler = async ({ params, request, locals }) => {
 
   if (name) {
     // Update schema name
-    if (name !== perms.schema.name) {
+    if (name !== perms.schema?.name) {
       await db.schema.update({ id: schemaId, name });
     }
   }
