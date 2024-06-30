@@ -6,13 +6,16 @@
   import type { AttributeFormState, AttributeData } from './AttributeState.svelte';
   import { cn } from '$lib/utils';
   import { ATTRIBUTE_TYPES, type AttributeType } from '$lib/data/models/attributeModel';
+  import { Button } from '$lib/components/ui/button';
+  import { Trash, Trash2 } from 'lucide-svelte';
 
   interface IProps {
     data: AttributeFormState;
     modify: (c: Partial<AttributeData>) => void;
+    toggleDelete: () => void;
   }
 
-  let { data, modify }: IProps = $props();
+  let { data, modify, toggleDelete }: IProps = $props();
 
   const getModifiedFields = (modified: AttributeData, current: AttributeData) => {
     if (!data.id) {
@@ -31,11 +34,10 @@
   };
 
   let name = $state(data.modified.name);
-
   let modifiedFields = $derived(getModifiedFields(data.modified, data.current));
 </script>
 
-<Table.Row>
+<Table.Row class={cn(data.delete && 'bg-red-200/40')}>
   <Table.Cell>
     <Input
       required
@@ -79,5 +81,13 @@
         if (checked !== 'indeterminate') modify({ required: checked });
       }}
     ></Checkbox>
+  </Table.Cell>
+  <Table.Cell>
+    <Button
+      size="icon"
+      variant="outline"
+      class={cn(data.delete && 'bg-red-300')}
+      onclick={toggleDelete}><Trash2 class="w-3"></Trash2></Button
+    >
   </Table.Cell>
 </Table.Row>

@@ -53,14 +53,14 @@
       </Table.Row>
     </Table.Header>
     <Table.Body>
-      {#each attributesState.attributes as attribute}
+      {#each attributesState.attributes as attribute, index}
         <AttributeProperty
           data={attribute}
+          toggleDelete={() => {
+            attributesState.toggleDelete(index);
+          }}
           modify={(change) => {
-            attribute.modified = { ...attribute.modified, ...change };
-            if (change.required !== undefined) {
-              attribute.modified.required = change.required;
-            }
+            attributesState.modifyAttribute({ ...change }, index);
           }}
         ></AttributeProperty>
       {/each}

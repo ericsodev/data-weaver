@@ -22,8 +22,8 @@ export function createAttributeState(initial: PageData['schema']['attributes']) 
   );
 
   function modifyAttribute(data: Partial<AttributeData>, index: number) {
-    attributes[index] = { ...attributes[index], ...data };
-    attributes = [...attributes];
+    if (!attributes[index]) return;
+    attributes[index].modified = { ...attributes[index].modified, ...data };
   }
 
   function addAttribute() {
@@ -37,8 +37,7 @@ export function createAttributeState(initial: PageData['schema']['attributes']) 
   attributes = [...attributes];
 
   function toggleDelete(index: number) {
-    attributes[index].delete = true;
-    attributes = [...attributes];
+    attributes[index].delete = !attributes[index].delete;
   }
 
   return {
