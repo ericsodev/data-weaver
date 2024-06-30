@@ -1,4 +1,4 @@
-import type { AttributePostPayload } from '$lib/validationSchemas/schemaPost';
+import type { AttributePostPayload } from '$lib/validationSchemas/api/schema';
 import type { PageData } from './$types';
 
 export type AttributeData = Omit<AttributePostPayload, 'id'>;
@@ -37,7 +37,13 @@ export function createAttributeState(initial: PageData['schema']['attributes']) 
   attributes = [...attributes];
 
   function toggleDelete(index: number) {
-    attributes[index].delete = !attributes[index].delete;
+    // If entry is not in database, remove locally
+    if (attributes[index].id) {
+      attributes[index].delete = !attributes[index].delete;
+      return;
+    }
+
+    attributes.splice(index, 1);
   }
 
   return {

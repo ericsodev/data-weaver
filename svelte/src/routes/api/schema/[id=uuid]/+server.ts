@@ -1,13 +1,14 @@
 import { db } from '$lib/data/actions';
-import { schemaValidation } from '$lib/validationSchemas/schemaPost';
+import { schemaPutValidation } from '$lib/validationSchemas/api/schema';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 
 export const PUT: RequestHandler = async ({ params, request, locals }) => {
   const payload = await request.json();
-  const valPayload = schemaValidation.safeParse(payload);
+  const valPayload = schemaPutValidation.safeParse(payload);
   const schemaId = params.id;
 
   if (!valPayload.success) {
+    console.log(valPayload.error);
     return error(400, { message: 'Validation error' });
   }
 
@@ -33,17 +34,29 @@ export const PUT: RequestHandler = async ({ params, request, locals }) => {
 
   // Ensure attributes have unique names
   const { name, attributes } = valPayload.data;
-  if (new Set(attributes.map((a) => a.name)).size !== attributes.length) {
-    return error(404, { message: 'Duplicate attribute names' });
+
+  if (name) {
+    // Update schema name
+    if (name !== perms.schema.name) {
+      await db.schema.update({ id: schemaId, name });
+    }
   }
 
-  if (name !== perms.schema.name) {
-    await db.schema.update({ id: schemaId, name });
+  if (attributes) {
+    // Update attributes
+    if (new Set(attributes.map((a) => a.name)).size !== attributes.length) {
+      return error(404, { message: 'Duplicate attribute names' });
+    }
+
+    const toUpsert = attributes.filter((attr) => !attr.delete);
+    const toDelete = attributes.filter((attr) => attr.delete);
+
+    for (const attr of toDelete) {
+      if (!attr.id) continue;
+      await db.attribute.delete({ id: attr.id });
+    }
+    await db.attribute.batchUpsert(toUpsert.map((attr) => ({ ...attr, schemaId })));
   }
-
-  await db.attribute.batchUpsert(attributes.map((attr) => ({ ...attr, schemaId })));
-
-  // TODO: Handle deletions
 
   return json('');
 };

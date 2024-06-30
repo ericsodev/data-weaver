@@ -71,7 +71,6 @@
       </Select.Content>
     </Select.Root>
   </Table.Cell>
-  <Table.Cell></Table.Cell>
   <Table.Cell>
     <Checkbox
       required
@@ -82,7 +81,8 @@
       }}
     ></Checkbox>
   </Table.Cell>
-  <Table.Cell>
+  <Table.Cell></Table.Cell>
+  <Table.Cell class="">
     <Button
       size="icon"
       variant="outline"

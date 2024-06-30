@@ -1,6 +1,6 @@
 <script lang="ts">
   import AttributeProperty from './AttributeProperty.svelte';
-  import type { SchemaPostPayload } from '$lib/validationSchemas/schemaPost';
+  import type { SchemaPutPayload } from '$lib/validationSchemas/api/schema';
   import * as Table from '$lib/components/ui/table';
   import * as Alert from '$lib/components/ui/alert';
   import { Button } from '$lib/components/ui/button';
@@ -13,10 +13,18 @@
   let attributesState = $derived(createAttributeState(data.schema.attributes));
 
   async function onSave() {
-    const payload: SchemaPostPayload = {
+    const payload: SchemaPutPayload = {
       name: data.schema.name,
-      attributes: attributesState.attributes.map((a) => a.modified)
+      attributes: attributesState.attributes.map((a) => ({
+        name: a.modified.name,
+        type: a.modified.type,
+        required: a.modified.required,
+        id: a.id,
+        delete: a.delete
+      }))
     };
+
+    console.log(payload);
     try {
       const res = await fetch(`/api/schema/${data.schema.id}`, {
         method: 'PUT',
@@ -48,8 +56,9 @@
       <Table.Row>
         <Table.Head class="min-w-[180px] w-80">Name</Table.Head>
         <Table.Head class="min-w-[120px] w-60">Type</Table.Head>
-        <Table.Head></Table.Head>
         <Table.Head class="w-20">Required</Table.Head>
+        <Table.Head></Table.Head>
+        <Table.Head class="w-20">Delete</Table.Head>
       </Table.Row>
     </Table.Header>
     <Table.Body>
