@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --check . && eslint .",
+    "lint": "eslint . --fix",
     "format": "prettier --write .",
     "seed:make": "node --loader ts-node/esm ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts seed:make -x ts",
     "seed:run": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts seed:run",

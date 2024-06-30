@@ -1,4 +1,4 @@
-import { Model, snakeCaseMappers, type ModelOptions, type QueryContext } from 'objection';
+import { Model, type ModelOptions, type QueryContext } from 'objection';
 import { v4 as uuidv4 } from 'uuid';
 
 export class BaseModel extends Model {

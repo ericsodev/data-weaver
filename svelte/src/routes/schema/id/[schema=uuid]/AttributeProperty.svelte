@@ -7,7 +7,7 @@
   import { cn } from '$lib/utils';
   import { ATTRIBUTE_TYPES, type AttributeType } from '$lib/data/models/attributeModel';
   import { Button } from '$lib/components/ui/button';
-  import { Trash, Trash2 } from 'lucide-svelte';
+  import { Trash2 } from 'lucide-svelte';
 
   interface IProps {
     data: AttributeFormState;
