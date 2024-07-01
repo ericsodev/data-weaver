@@ -1,6 +1,6 @@
 <script lang="ts">
   import AttributeProperty from './AttributeProperty.svelte';
-  import type { SchemaPutPayload } from '$lib/validationSchemas/api/schema';
+  import { schemaPutValidation, type SchemaPutPayload } from '$lib/validationSchemas/api/schema';
   import * as Table from '$lib/components/ui/table';
   import * as Alert from '$lib/components/ui/alert';
   import { Button } from '$lib/components/ui/button';
@@ -24,7 +24,12 @@
       }))
     };
 
-    console.log(payload);
+    const validatedPayload = await schemaPutValidation.safeParseAsync(payload);
+    if (validatedPayload.error) {
+      error = validatedPayload.error.errors[0].message;
+      return;
+    }
+
     try {
       const res = await fetch(`/api/schema/${data.schema.id}`, {
         method: 'PUT',
