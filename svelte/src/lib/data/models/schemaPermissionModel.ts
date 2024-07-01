@@ -13,7 +13,7 @@ export class SchemaPermission extends mixin(BaseModel) {
   public userId!: string;
   public accessType!: SchemaAccessType;
 
-  public schema!: SchemaDTO | undefined;
+  public schema?: SchemaDTO;
 
   static get tableName() {
     return 'schema_permission';

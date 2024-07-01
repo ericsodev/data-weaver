@@ -6,7 +6,7 @@ import { Attribute, type AttributeDTO } from './attributeModel';
 export class Schema extends mixin(BaseModel) {
   name!: string;
   creatorId!: string;
-  attributes!: AttributeDTO[];
+  attributes?: AttributeDTO[];
 
   static get tableName() {
     return 'schema';
@@ -58,5 +58,5 @@ export class Schema extends mixin(BaseModel) {
 }
 
 export type SchemaDTO = Omit<Schema, keyof Model>;
-export type CreateSchemaDTO = Omit<Schema, keyof BaseModel>;
+export type CreateSchemaDTO = Omit<Schema, keyof BaseModel | 'attributes'>;
 export type FilterSchemaDTO = Partial<Omit<Schema, keyof Model>>;

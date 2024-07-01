@@ -25,5 +25,7 @@
     <Button href="/schema" variant="ghost" class="w-28 text-muted-foreground">Schema</Button>
     <Button href="/dashboard" variant="ghost" class="w-28 text-muted-foreground">Dashboard</Button>
   </section>
-  <section class="main"></section>
+  <section class="main">
+    <slot />
+  </section>
 </div>

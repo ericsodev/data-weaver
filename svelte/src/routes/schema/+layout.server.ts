@@ -9,14 +9,16 @@ export const load: LayoutServerLoad = async ({ locals }) => {
     }
 
     const authSchemas = await db.schemaPermission.listAuthorizedSchemas(locals.user.id);
-    const schemas = authSchemas.map((s) => {
-      return {
-        id: s.schema.id,
-        name: s.schema.name,
-        accessType: s.accessType,
-        createdAt: s.createdAt
-      };
-    });
+    const schemas = authSchemas
+      .filter((a) => a.schema !== undefined)
+      .map((s) => {
+        return {
+          id: s.schema?.id as string,
+          name: s.schema?.name as string,
+          accessType: s.accessType,
+          createdAt: s.createdAt
+        };
+      });
     return { schemas };
   } catch (error: unknown) {
     return { schemas: [] };
