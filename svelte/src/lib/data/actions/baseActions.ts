@@ -78,8 +78,10 @@ export class BaseActions<T extends typeof BaseModel> {
   async delete(data: { id: string }): Promise<boolean | undefined> {
     try {
       const numRows = await this.model.query().deleteById(data.id);
+
       return numRows === 1;
     } catch (error: unknown) {
+      console.log(error);
       return undefined;
     }
   }

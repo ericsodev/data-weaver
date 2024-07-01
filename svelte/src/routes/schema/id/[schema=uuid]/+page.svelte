@@ -4,9 +4,9 @@
   import * as Table from '$lib/components/ui/table';
   import * as Alert from '$lib/components/ui/alert';
   import { Button } from '$lib/components/ui/button';
-  import { PlusIcon } from 'lucide-svelte';
+  import { PlusIcon, Trash2 } from 'lucide-svelte';
   import { createAttributeState } from './AttributeState.svelte';
-  import { invalidateAll } from '$app/navigation';
+  import { goto, invalidate, invalidateAll } from '$app/navigation';
 
   let { data } = $props();
   let error = $state('');
@@ -47,13 +47,30 @@
       console.log(error);
     }
   }
+
+  const handleDelete = async () => {
+    if (data.schema.accessType !== 'ADMIN') {
+      return;
+    }
+    const res = await fetch(`/api/schema/${data.schema.id}`, { method: 'DELETE' });
+    if (!res.ok) {
+      error = 'Error deleting schema.';
+    } else {
+      goto('/schema', { invalidateAll: true });
+    }
+  };
 </script>
 
-<header class="mb-8">
-  <p class="text-xl text-muted-foreground">Schema</p>
-  <h2 class="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-    {data.schema.name}
-  </h2>
+<header class="mb-8 flex justify-between">
+  <span>
+    <p class="text-xl text-muted-foreground">Schema</p>
+    <h2 class="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+      {data.schema.name}
+    </h2>
+  </span>
+  <Button onclick={handleDelete} size="sm" variant="outline" class="self-end"
+    ><Trash2 class="w-4 mr-2"></Trash2> Delete</Button
+  >
 </header>
 <div>
   <Table.Root class="w-full">

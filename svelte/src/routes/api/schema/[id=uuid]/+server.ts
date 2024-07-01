@@ -82,6 +82,7 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 
   const schema = await db.schema.delete({ id: schemaId });
   if (!schema) {
+    console.log(schema);
     return error(404, { message: 'Schema not found' });
   }
   return json('');
