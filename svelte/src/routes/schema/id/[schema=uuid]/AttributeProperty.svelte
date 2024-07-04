@@ -10,12 +10,13 @@
   import { Trash2 } from 'lucide-svelte';
 
   interface IProps {
+    disabled?: boolean;
     data: AttributeFormState;
     modify: (c: Partial<AttributeData>) => void;
     toggleDelete: () => void;
   }
 
-  let { data, modify, toggleDelete }: IProps = $props();
+  let { data, modify, toggleDelete, disabled }: IProps = $props();
 
   const getModifiedFields = (modified: AttributeData, current: AttributeData) => {
     if (!data.id) {
@@ -40,6 +41,7 @@
 <Table.Row class={cn(data.delete && 'bg-red-200/40')}>
   <Table.Cell>
     <Input
+      {disabled}
       required
       class={cn(modifiedFields.name ? 'border-green-300 border-2 focus:border-none' : '')}
       placeholder="Name"
@@ -52,6 +54,7 @@
   <Table.Cell>
     <Select.Root
       required
+      {disabled}
       onSelectedChange={(selected) => {
       if (selected && ([...ATTRIBUTE_TYPES] as unknown[]).includes(selected.value)) {
         modify({ type: selected.value as AttributeType });
@@ -73,6 +76,7 @@
   </Table.Cell>
   <Table.Cell>
     <Checkbox
+      {disabled}
       required
       class={cn('block mt-2', modifiedFields.required ? 'ring-green-300 ring-2 ring-offset-2' : '')}
       checked={data.modified.required}
@@ -84,6 +88,7 @@
   <Table.Cell></Table.Cell>
   <Table.Cell class="">
     <Button
+      {disabled}
       size="icon"
       variant="outline"
       class={cn(data.delete && 'bg-red-300')}
