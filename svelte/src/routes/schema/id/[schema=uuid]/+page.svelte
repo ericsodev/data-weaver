@@ -11,6 +11,7 @@
   let { data } = $props();
   let error = $state('');
   let attributesState = $derived(createAttributeState(data.schema.attributes));
+  const canDelete = $derived(data.abilities.includes('SCHEMA:DELETE'));
 
   async function onSave() {
     const payload: SchemaPutPayload = {
@@ -68,9 +69,11 @@
       {data.schema.name}
     </h2>
   </span>
-  <Button onclick={handleDelete} size="sm" variant="outline" class="self-end"
-    ><Trash2 class="w-4 mr-2"></Trash2> Delete</Button
-  >
+  {#if canDelete}
+    <Button onclick={handleDelete} size="sm" variant="outline" class="self-end"
+      ><Trash2 class="w-4 mr-2"></Trash2> Delete</Button
+    >
+  {/if}
 </header>
 <div>
   <Table.Root class="w-full">

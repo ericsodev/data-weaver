@@ -1,4 +1,4 @@
-import { SchemaPermission } from '$lib/data/models/schemaPermissionModel';
+import { SchemaAuthorization } from './schemaPermissions';
 
 export interface IResource {
   name: string;
@@ -12,5 +12,5 @@ export interface ResourceAuthorizer<Action extends string, Resource extends IRes
 }
 
 export const permissions = {
-  schema: new SchemaPermission()
+  schema: new SchemaAuthorization()
 };
