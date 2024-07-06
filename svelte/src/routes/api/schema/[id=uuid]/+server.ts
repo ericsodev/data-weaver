@@ -28,7 +28,7 @@ export const PUT: RequestHandler = async ({ params, request, locals }) => {
     'schema'
   );
 
-  if (perms?.accessType !== 'WRITE' && perms?.accessType !== 'ADMIN') {
+  if (perms?.role !== 'WRITE' && perms?.role !== 'ADMIN') {
     return error(401, { message: 'Unauthorized' });
   }
 
