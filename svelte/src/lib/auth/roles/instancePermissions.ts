@@ -2,7 +2,7 @@ import { db } from '$lib/data/actions';
 import type { ResourceAuthorizer } from './permissions';
 import type { InstanceRole } from '$lib/data/models/instancePermissionModel';
 
-export const INSTANCE_ACTIONS = ['WRITE', 'READ', 'DELETE', 'UPDATE', 'MANAGE'] as const;
+const INSTANCE_ACTIONS = ['WRITE', 'READ', 'DELETE', 'UPDATE', 'MANAGE'] as const;
 const INSTANCE_RESOURCES = ['INSTANCE', 'NAME', 'ATTRIBUTE'] as const;
 
 const INSTANCE_ABILITIES = {
@@ -13,8 +13,8 @@ const INSTANCE_ABILITIES = {
 
 type Ability = typeof INSTANCE_ABILITIES;
 
-export type InstanceResource = (typeof INSTANCE_RESOURCES)[number];
-export type InstanceAction = (typeof INSTANCE_ACTIONS)[number];
+type InstanceResource = (typeof INSTANCE_RESOURCES)[number];
+type InstanceAction = (typeof INSTANCE_ACTIONS)[number];
 export type InstanceAbility = {
   [Property in keyof Ability]: `${Property}:${Ability[Property][number]}`;
 }[keyof Ability];

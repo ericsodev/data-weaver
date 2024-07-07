@@ -4,7 +4,7 @@ import { Schema, type SchemaDTO } from './schemaModel';
 import { User } from './userModel';
 import type { Except } from 'type-fest';
 
-export const SCHEMA_USER_ROLES = ['ADMIN', 'WRITE', 'READ'] as const;
+export const SCHEMA_USER_ROLES = ['OWNER', 'ADMIN', 'EDITOR', 'VIEWER'] as const;
 
 export type SchemaUserRole = (typeof SCHEMA_USER_ROLES)[number];
 
