@@ -6,11 +6,13 @@
   import { Button } from '$lib/components/ui/button';
   import { PlusIcon, Trash2 } from 'lucide-svelte';
   import { createAttributeState } from './AttributeState.svelte';
-  import { goto, invalidate, invalidateAll } from '$app/navigation';
+  import { goto, invalidateAll } from '$app/navigation';
 
   let { data } = $props();
   let error = $state('');
   let attributesState = $derived(createAttributeState(data.schema.attributes));
+  const canDelete = $derived(data.abilities.includes('SCHEMA:DELETE'));
+  const canModifyAttributes = $derived(data.abilities.includes('ATTRIBUTE:WRITE'));
 
   async function onSave() {
     const payload: SchemaPutPayload = {
@@ -49,9 +51,7 @@
   }
 
   const handleDelete = async () => {
-    if (data.schema.accessType !== 'ADMIN') {
-      return;
-    }
+    if (!canDelete) return;
     const res = await fetch(`/api/schema/${data.schema.id}`, { method: 'DELETE' });
     if (!res.ok) {
       error = 'Error deleting schema.';
@@ -68,9 +68,11 @@
       {data.schema.name}
     </h2>
   </span>
-  <Button onclick={handleDelete} size="sm" variant="outline" class="self-end"
-    ><Trash2 class="w-4 mr-2"></Trash2> Delete</Button
-  >
+  {#if canDelete}
+    <Button onclick={handleDelete} size="sm" variant="outline" class="self-end"
+      ><Trash2 class="w-4 mr-2"></Trash2> Delete</Button
+    >
+  {/if}
 </header>
 <div>
   <Table.Root class="w-full">
@@ -86,6 +88,7 @@
     <Table.Body>
       {#each attributesState.attributes as attribute, index}
         <AttributeProperty
+          disabled={!canModifyAttributes}
           data={attribute}
           toggleDelete={() => {
             attributesState.toggleDelete(index);
@@ -95,23 +98,25 @@
           }}
         ></AttributeProperty>
       {/each}
-      <Table.Row class="hover:bg-transparent">
-        <Table.Cell colspan={3}>
-          <Button
-            size="sm"
-            variant="secondary"
-            on:click={() => {
-              attributesState.addAttribute();
-            }}
-          >
-            <PlusIcon class="w-4 mr-2.5"></PlusIcon>
-            New Attribute</Button
-          >
-        </Table.Cell>
-      </Table.Row>
+      {#if canModifyAttributes}
+        <Table.Row class="hover:bg-transparent">
+          <Table.Cell colspan={3}>
+            <Button
+              size="sm"
+              variant="secondary"
+              on:click={() => {
+                attributesState.addAttribute();
+              }}
+            >
+              <PlusIcon class="w-4 mr-2.5"></PlusIcon>
+              New Attribute</Button
+            >
+          </Table.Cell>
+        </Table.Row>
+      {/if}
     </Table.Body>
   </Table.Root>
-  {#if ['ADMIN', 'WRITE'].includes(data.schema.accessType)}
+  {#if data.abilities.includes('ATTRIBUTE:WRITE')}
     <Button on:click={onSave} size="lg" class="mt-6">Save changes</Button>
   {/if}
   {#if error}

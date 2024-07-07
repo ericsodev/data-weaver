@@ -16,9 +16,9 @@ export class SchemaPermissionAction extends BaseActions<typeof SchemaPermission>
 
   async getAuthorizationLevel(
     filters: Pick<SchemaPermissionDTO, 'userId' | 'schemaId'>
-  ): Promise<SchemaPermissionDTO['accessType'] | undefined> {
+  ): Promise<SchemaPermissionDTO['role'] | undefined> {
     const res = await this.model.query().where(filters).first();
 
-    return res?.accessType;
+    return res?.role;
   }
 }

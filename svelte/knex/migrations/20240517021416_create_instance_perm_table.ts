@@ -21,7 +21,7 @@ export async function up(knex: Knex): Promise<void> {
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
 
-    t.string('access_type').notNullable();
+    t.string('role').notNullable();
 
     t.unique(['instance_id', 'user_id']);
   });

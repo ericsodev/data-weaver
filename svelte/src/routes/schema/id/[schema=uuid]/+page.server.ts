@@ -2,6 +2,7 @@ import { db } from '$lib/data/actions';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { removePrototype } from '$lib/utils/toPojo';
+import { permissions } from '$lib/auth/roles/permissions';
 
 /** @type {import('./$types').PageServerLoad} */
 export const load: PageServerLoad = async ({ params, locals, depends }) => {
@@ -26,5 +27,11 @@ export const load: PageServerLoad = async ({ params, locals, depends }) => {
     error(400, { message: 'Schema not found' });
   }
 
-  return { schema: { ...removePrototype(schema), accessType: userAuthLevel } };
+  const abilities = await permissions.schema.getAbilities(schema.id, locals.user.id);
+
+  if (!abilities.includes('SCHEMA:READ')) {
+    error(401, { message: 'Unauthorized to read schema' });
+  }
+
+  return { schema: { ...removePrototype(schema), accessType: userAuthLevel }, abilities };
 };
