@@ -18,7 +18,7 @@ export type SchemaAbility = {
   [Resource in keyof typeof SCHEMA_ABILITIES]: `${Resource}:${(typeof SCHEMA_ABILITIES)[Resource][number]}`;
 }[SchemaResource];
 
-export class SchemaAuthorization implements ResourceAuthorizer<SchemaAction, SchemaResource> {
+export class SchemaAuthorization implements ResourceAuthorizer<SchemaAbility> {
   public async getAbilities(schemaId: string, userId: string): Promise<SchemaAbility[]> {
     const authLevel = await db.schemaPermission.getAuthorizationLevel({ schemaId, userId });
     return authLevel ? ROLE_ABILITIES[authLevel] : [];
@@ -31,6 +31,35 @@ export class SchemaAuthorization implements ResourceAuthorizer<SchemaAction, Sch
     });
 
     return authLevel ? ROLE_ABILITIES[authLevel].includes(ability) : false;
+  }
+
+  public async canIMany<T extends SchemaAbility[]>(
+    abilities: T,
+    schemaId: string,
+    userId: string
+  ): Promise<Record<T[number], boolean>> {
+    const authLevel = await db.schemaPermission.getAuthorizationLevel({
+      schemaId,
+      userId
+    });
+
+    if (!authLevel) {
+      return abilities.reduce(
+        (acc, ability) => {
+          acc[ability] = false;
+          return acc;
+        },
+        {} as Record<SchemaAbility, boolean>
+      );
+    }
+
+    return abilities.reduce(
+      (acc, ability) => {
+        acc[ability] = ROLE_ABILITIES[authLevel].includes(ability);
+        return acc;
+      },
+      {} as Record<SchemaAbility, boolean>
+    );
   }
 }
 const OWNER_ABILITIES: SchemaAbility[] = [

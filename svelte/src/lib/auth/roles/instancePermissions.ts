@@ -17,9 +17,9 @@ type InstanceResource = (typeof INSTANCE_RESOURCES)[number];
 type InstanceAction = (typeof INSTANCE_ACTIONS)[number];
 export type InstanceAbility = {
   [Property in keyof Ability]: `${Property}:${Ability[Property][number]}`;
-}[keyof Ability];
+}[InstanceResource];
 
-export class InstanceAuthorization implements ResourceAuthorizer<InstanceAction, InstanceResource> {
+export class InstanceAuthorization implements ResourceAuthorizer<InstanceAbility> {
   public async getAbilities(instanceId: string, userId: string): Promise<InstanceAbility[]> {
     const authLevel = await db.instancePermission.getAuthorizationLevel({ instanceId, userId });
 
@@ -45,6 +45,35 @@ export class InstanceAuthorization implements ResourceAuthorizer<InstanceAction,
     }
 
     return ROLE_ABILITIES[authLevel].includes(ability);
+  }
+
+  public async canIMany<T extends InstanceAbility[]>(
+    abilities: T,
+    instanceId: string,
+    userId: string
+  ): Promise<Record<T[number], boolean>> {
+    const authLevel = await db.instancePermission.getAuthorizationLevel({
+      instanceId,
+      userId
+    });
+
+    if (!authLevel) {
+      return abilities.reduce(
+        (acc, ability) => {
+          acc[ability] = false;
+          return acc;
+        },
+        {} as Record<InstanceAbility, boolean>
+      );
+    }
+
+    return abilities.reduce(
+      (acc, ability) => {
+        acc[ability] = ROLE_ABILITIES[authLevel].includes(ability);
+        return acc;
+      },
+      {} as Record<InstanceAbility, boolean>
+    );
   }
 }
 
