@@ -11,7 +11,7 @@ export async function createSchemaWithPermission(
   await db.schemaPermission.create({
     userId: schema.creatorId,
     schemaId: schemaRet.id,
-    role: 'ADMIN'
+    role: 'OWNER'
   });
 
   return schemaRet;

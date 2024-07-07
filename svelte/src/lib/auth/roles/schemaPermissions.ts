@@ -84,12 +84,13 @@ const ADMIN_ABILITIES: SchemaAbility[] = [
 
 const EDITOR_ABILITIES: SchemaAbility[] = [
   'SCHEMA:READ',
+  'NAME:READ',
   'ATTRIBUTE:READ',
   'ATTRIBUTE:WRITE',
   'ATTRIBUTE:DELETE'
 ] as const;
 
-const VIEWER_ABILITIES: SchemaAbility[] = ['SCHEMA:READ', 'ATTRIBUTE:READ'] as const;
+const VIEWER_ABILITIES: SchemaAbility[] = ['SCHEMA:READ', 'ATTRIBUTE:READ', 'NAME:READ'] as const;
 
 const ROLE_ABILITIES: Record<(typeof SCHEMA_USER_ROLES)[number], SchemaAbility[]> = {
   OWNER: OWNER_ABILITIES,
