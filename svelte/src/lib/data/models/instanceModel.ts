@@ -2,6 +2,7 @@ import { Model, mixin, type JSONSchema } from 'objection';
 import { BaseModel } from './base';
 import { User } from './userModel';
 import { Schema } from './schemaModel';
+import type { Except } from 'type-fest';
 
 export class Instance extends mixin(BaseModel) {
   name!: string;
@@ -45,3 +46,5 @@ export class Instance extends mixin(BaseModel) {
     };
   }
 }
+
+export type InstanceDTO = Except<Instance, keyof Model>;

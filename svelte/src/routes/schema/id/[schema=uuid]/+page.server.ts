@@ -29,5 +29,9 @@ export const load: PageServerLoad = async ({ params, locals, depends }) => {
 
   const abilities = await permissions.schema.getAbilities(schema.id, locals.user.id);
 
+  if (!abilities.includes('SCHEMA:READ')) {
+    error(401, { message: 'Unauthorized to read schema' });
+  }
+
   return { schema: { ...removePrototype(schema), accessType: userAuthLevel }, abilities };
 };

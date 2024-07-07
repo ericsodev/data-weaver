@@ -11,14 +11,14 @@ export type AttributeFormState = {
 };
 export function createAttributeState(initial: PageData['schema']['attributes']) {
   let attributes: AttributeFormState[] = $state(
-    initial.map((attr) => {
+    initial?.map((attr) => {
       return {
         id: attr.id,
         current: { ...attr },
         modified: { ...attr },
         delete: false
       };
-    })
+    }) ?? []
   );
 
   function modifyAttribute(data: Partial<AttributeData>, index: number) {

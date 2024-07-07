@@ -4,14 +4,14 @@ import { Schema, type SchemaDTO } from './schemaModel';
 import { User } from './userModel';
 import type { Except } from 'type-fest';
 
-export const SCHEMA_USER_ROLES = ['ADMIN', 'WRITE', 'READ'] as const;
+export const SCHEMA_USER_ROLES = ['OWNER', 'ADMIN', 'EDITOR', 'VIEWER'] as const;
 
 export type SchemaUserRole = (typeof SCHEMA_USER_ROLES)[number];
 
 export class SchemaPermission extends mixin(BaseModel) {
   public schemaId!: string;
   public userId!: string;
-  public accessType!: SchemaUserRole;
+  public role!: SchemaUserRole;
 
   public schema?: SchemaDTO;
 
@@ -22,11 +22,11 @@ export class SchemaPermission extends mixin(BaseModel) {
   static get jsonSchema(): JSONSchema {
     return {
       type: 'object',
-      required: ['userId', 'schemaId', 'accessType'],
+      required: ['userId', 'schemaId', 'role'],
       properties: {
         userId: { type: 'string' },
         schemaId: { type: 'string' },
-        accessType: { enum: [...SCHEMA_USER_ROLES] }
+        role: { enum: [...SCHEMA_USER_ROLES] }
       }
     };
   }

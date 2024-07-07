@@ -51,9 +51,7 @@
   }
 
   const handleDelete = async () => {
-    if (data.schema.accessType !== 'ADMIN') {
-      return;
-    }
+    if (!canDelete) return;
     const res = await fetch(`/api/schema/${data.schema.id}`, { method: 'DELETE' });
     if (!res.ok) {
       error = 'Error deleting schema.';

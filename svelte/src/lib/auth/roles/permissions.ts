@@ -1,16 +1,17 @@
+import { InstanceAuthorization } from './instancePermissions';
 import { SchemaAuthorization } from './schemaPermissions';
 
-export interface IResource {
-  name: string;
-}
-
-type Ability<R extends IResource, A extends string> = `${R['name']}:${A}`;
-
-export interface ResourceAuthorizer<Action extends string, Resource extends IResource> {
-  canI(resource: Resource, action: Action, userId: string): Promise<boolean>;
-  getAbilities(resourceId: string, userId: string): Promise<Ability<Resource, Action>[]>;
+export interface ResourceAuthorizer<Ability extends string> {
+  canI(ability: Ability, resourceId: string, userId: string): Promise<boolean>;
+  canIMany<T extends Ability[]>(
+    abilities: T,
+    resourceId: string,
+    userId: string
+  ): Promise<Record<T[number], boolean>>;
+  getAbilities(resourceId: string, userId: string): Promise<Ability[]>;
 }
 
 export const permissions = {
-  schema: new SchemaAuthorization()
+  schema: new SchemaAuthorization(),
+  instance: new InstanceAuthorization()
 };
