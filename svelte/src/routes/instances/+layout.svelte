@@ -4,11 +4,10 @@
   import '$lib/styles/mainLayout.css';
   const routes = [
     { id: 'overview', name: 'Overview' },
-    { id: 'users', name: 'Users' },
     { id: 'roles', name: 'Roles' },
-    { id: 'permissions', name: 'Permissions' },
-    { id: 'webhooks', name: 'Webhooks' },
-    { id: 'database', name: 'Database' }
+    { id: 'settings', name: 'Settings' },
+    { id: '#separator', name: 'Separator' },
+    { id: '#label', name: 'Instances' }
   ];
 </script>
 
