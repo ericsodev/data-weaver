@@ -12,10 +12,13 @@ import { AttributeActions } from './attributeActions';
 import { Attribute } from '../models/attributeModel';
 import { InstancePermission } from '../models/instancePermissionModel';
 import { InstancePermissionAction } from './instancePermissionActions';
+import { InstanceAction } from './instanceActions';
+import { Instance } from '../models/instanceModel';
 
 const db = {
   user: new UserAction(User),
   schema: new SchemaAction(Schema),
+  instance: new InstanceAction(Instance),
   schemaPermission: new SchemaPermissionAction(SchemaPermission),
   instancePermission: new InstancePermissionAction(InstancePermission),
   attribute: new AttributeActions(Attribute)
