@@ -1,7 +1,7 @@
 import type { InstancePermission, InstancePermissionDTO } from '../models/instancePermissionModel';
 import { BaseActions } from './baseActions';
 
-export class InstancePermissionAction extends BaseActions<typeof InstancePermission> {
+export class InstancePermissionAction extends BaseActions<typeof InstancePermission, 'instance'> {
   protected model: typeof InstancePermission;
 
   constructor(model: typeof InstancePermission) {
