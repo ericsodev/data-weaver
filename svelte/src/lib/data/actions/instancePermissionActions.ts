@@ -9,9 +9,12 @@ export class InstancePermissionAction extends BaseActions<typeof InstancePermiss
     this.model = model;
   }
 
-  async listAuthorizedSchemas(userId: string): Promise<InstancePermissionDTO[]> {
-    const schemas = await this.model.query().where('user_id', userId).withGraphFetched('schema');
-    return schemas;
+  async listAuthorizedInstances(userId: string): Promise<InstancePermissionDTO[]> {
+    const instances = await this.model
+      .query()
+      .where('user_id', userId)
+      .withGraphFetched('instance');
+    return instances;
   }
 
   async getAuthorizationLevel(

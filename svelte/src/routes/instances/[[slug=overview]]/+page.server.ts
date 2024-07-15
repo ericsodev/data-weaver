@@ -5,6 +5,8 @@ import { removePrototype } from '$lib/utils/toPojo';
 import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { instanceCreateFormValidation } from '$lib/validationSchemas/api/instance';
+import { permissions } from '$lib/auth/roles/permissions';
+import { createInstanceWithPermission } from '$lib/utils/instance';
 
 export const load: PageServerLoad = async ({ locals }) => {
   if (!locals.user) {
@@ -20,12 +22,32 @@ export const load: PageServerLoad = async ({ locals }) => {
 export const actions: Actions = {
   default: async (event) => {
     const form = await superValidate(event, zod(instanceCreateFormValidation));
-    console.log(form.data);
     if (!form.valid) {
       return fail(400, {
         form
       });
     }
+
+    if (!event.locals.user) return fail(401, { form });
+
+    // validate permissions to see schema
+    const canReadSchema = await permissions.schema.canI(
+      'SCHEMA:READ',
+      form.data.schemaId,
+      event.locals.user.id
+    );
+
+    if (!canReadSchema) {
+      return fail(401, { form });
+    }
+
+    // TODO:permissions to create instances
+
+    await createInstanceWithPermission({
+      ...form.data,
+      creatorId: event.locals.user.id
+    });
+
     return {
       form
     };

@@ -2,13 +2,22 @@
   import Button from '$lib/components/ui/button/button.svelte';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
-  const routes = [
+  import type { InstanceDTO } from '$lib/data/models/instanceModel';
+
+  let { data, children } = $props();
+
+  const staticRoutes = [
     { id: 'overview', name: 'Overview' },
     { id: 'roles', name: 'Roles' },
     { id: 'settings', name: 'Settings' },
     { id: '#separator', name: 'Separator' },
     { id: '#label', name: 'Instances' }
   ];
+
+  const appendRoutes = (instances: Pick<InstanceDTO, 'id' | 'name'>[]) => {
+    const routes = [...staticRoutes, ...instances.map((s) => ({ id: 'id/' + s.id, name: s.name }))];
+    return routes;
+  };
 </script>
 
 <div class="layout h-full px-12">
@@ -18,13 +27,13 @@
     </h2>
   </header>
   <section class="sidebar">
-    <SettingsMenu {routes} rootUri="/instances/" />
+    <SettingsMenu routes={appendRoutes(data.instances)} rootUri="/instances/" />
   </section>
   <section class="subnav flex gap-2">
     <Button href="/schema" variant="ghost" class="w-28 text-muted-foreground">Schema</Button>
     <Button href="/dashboard" variant="ghost" class="w-28 text-muted-foreground">Dashboard</Button>
   </section>
   <section class="main">
-    <slot />
+    {@render children()}
   </section>
 </div>
