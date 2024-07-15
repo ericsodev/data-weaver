@@ -26,10 +26,6 @@
     validators: zodClient(instanceCreateFormValidation)
   });
 
-  $effect(() => {
-    console.log($formData);
-  });
-
   let selectedSchema = $derived(
     schemas
       .filter(({ id }) => id === $formData.schemaId)
