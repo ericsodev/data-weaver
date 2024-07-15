@@ -66,14 +66,9 @@ export class BaseActions<
     }
   }
 
-  async create(data: CreateDTO<T, E>): Promise<GenericDTO<T> | undefined> {
-    try {
-      const ret = await this.model.query().insert(data);
-      return ret as unknown as GenericDTO<T>;
-    } catch (error: unknown) {
-      console.log(error as string);
-      return undefined;
-    }
+  async create(data: CreateDTO<T, E>): Promise<GenericDTO<T>> {
+    const ret = await this.model.query().insert(data);
+    return ret as unknown as GenericDTO<T>;
   }
 
   async update(

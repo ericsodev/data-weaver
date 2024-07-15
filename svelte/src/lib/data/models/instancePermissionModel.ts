@@ -31,7 +31,7 @@ export class InstancePermission extends mixin(BaseModel) {
 
   static get relationMappings() {
     return {
-      schema: {
+      instance: {
         relation: Model.BelongsToOneRelation,
         modelClass: Instance,
         join: {

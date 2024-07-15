@@ -25,13 +25,14 @@ export class Instance extends mixin(BaseModel) {
   schemaId!: string;
   schema?: SchemaDTO;
   attributes!: AttributeValueDTO[];
-  tableName!: string;
+  instanceTableName!: string;
 
   static get tableName() {
     return 'instance';
   }
 
   async $beforeInsert(queryContext: QueryContext): Promise<void> {
+    super.$beforeInsert(queryContext);
     const schema = await db.schema.find({ id: this.schemaId }, 'attributes');
 
     if (!schema) {
@@ -40,46 +41,36 @@ export class Instance extends mixin(BaseModel) {
     }
 
     const tableName = await createInstanceTable(schema);
-    this.tableName = tableName;
+    this.instanceTableName = tableName;
   }
 
-  static afterInsert({ result }: StaticHookArguments<Instance, Record<string, unknown>[]>) {
-    if (!result) {
-      return result;
+  $afterInsert(ctx: QueryContext) {
+    super.$afterInsert(ctx);
+    this.transformAfterRead();
+  }
+
+  $afterFind(ctx: QueryContext) {
+    super.$afterFind(ctx);
+    return this.transformAfterRead();
+  }
+
+  private transformAfterRead() {
+    const attributes: AttributeValueDTO<AttributeType>[] = [];
+
+    for (const key in this) {
+      if (!key.startsWith('attr_')) continue;
+
+      attributes.push(
+        this.transformAttribute(key.slice(5), this[key] as string | number | boolean)
+      );
+      delete this[key];
     }
 
-    return this.transformAfterRead(result);
+    // @ts-expect-error f asdf
+    this.attributes = attributes;
   }
 
-  static afterFind({ result }: StaticHookArguments<Instance, Record<string, unknown>[]>) {
-    if (!result) {
-      return result;
-    }
-
-    return this.transformAfterRead(result);
-  }
-
-  private static transformAfterRead(result: Record<string, unknown>[]) {
-    const transformed: InstanceDTO[] = [];
-    for (const row of result) {
-      const newRow: Record<string, unknown> = {};
-      const attributes: AttributeValueDTO<AttributeType>[] = [];
-
-      for (const key in row) {
-        if (!key.startsWith('attr_')) {
-          newRow[key] = row[key];
-        }
-
-        attributes.push(
-          this.transformAttribute(key.slice(5), row[key] as string | number | boolean)
-        );
-      }
-    }
-
-    return transformed;
-  }
-
-  private static transformAttribute(
+  private transformAttribute(
     key: string,
     value: string | number | boolean
   ): AttributeValueDTO<'string' | 'boolean' | 'number'> {
@@ -141,5 +132,5 @@ export class Instance extends mixin(BaseModel) {
 export type InstanceDTO = Except<Instance, keyof Model>;
 export type CreateInstanceDTO = Except<
   Instance,
-  keyof BaseModel | 'schema' | 'attributes' | 'tableName'
+  keyof BaseModel | 'schema' | 'attributes' | 'instanceTableName'
 >;

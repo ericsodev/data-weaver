@@ -10,10 +10,9 @@ export class InstancePermissionAction extends BaseActions<typeof InstancePermiss
   }
 
   async listAuthorizedInstances(userId: string): Promise<InstancePermissionDTO[]> {
-    const instances = await this.model
-      .query()
-      .where('user_id', userId)
-      .withGraphFetched('instance');
+    console.log('instancesbbbbb');
+    const instances = await this.model.query().where({ userId }).withGraphFetched('instance');
+    console.log('instances, ', instances);
     return instances;
   }
 

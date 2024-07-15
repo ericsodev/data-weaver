@@ -28,17 +28,14 @@ export async function linkInstance(instanceID: string): Promise<void> {}
 function createColumn(table: TableBuilder, attribute: AttributeDTO) {
   switch (attribute.type) {
     case 'string':
-      table.string(attribute.name).notNullable();
+      table.string(attribute.name).nullable();
       break;
     case 'boolean':
-      table.string(attribute.name).notNullable();
+      table.string(attribute.name).nullable();
       break;
     case 'number':
-      table.integer(attribute.name).notNullable();
+      table.integer(attribute.name).nullable();
       break;
-  }
-  if (attribute.required) {
-    table.setNullable(attribute.name);
   }
 }
 
