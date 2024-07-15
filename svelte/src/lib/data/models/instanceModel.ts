@@ -139,4 +139,7 @@ export class Instance extends mixin(BaseModel) {
 }
 
 export type InstanceDTO = Except<Instance, keyof Model>;
-export type CreateInstanceDTO = Except<Instance, keyof BaseModel | 'schema'>;
+export type CreateInstanceDTO = Except<
+  Instance,
+  keyof BaseModel | 'schema' | 'attributes' | 'tableName'
+>;

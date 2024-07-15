@@ -6,7 +6,7 @@ type GenericDTO<T extends typeof BaseModel> = Except<InstanceType<T>, keyof Mode
 type CreateDTO<
   T extends typeof BaseModel,
   E extends keyof Except<InstanceType<T>, keyof Model>
-> = Except<InstanceType<T>, keyof Model | E>;
+> = Except<InstanceType<T>, keyof BaseModel | E>;
 
 type FilterDTO<
   T extends typeof BaseModel,
