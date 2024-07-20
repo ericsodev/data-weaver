@@ -14,7 +14,6 @@ import { InstancePermission } from '../models/instancePermissionModel';
 import { InstancePermissionAction } from './instancePermissionActions';
 import { InstanceAction } from './instanceActions';
 import { Instance } from '../models/instanceModel';
-import { InstanceData } from '../models/instanceDataModel';
 import { InstanceDataAction } from './instanceDataActions';
 
 const db = {
