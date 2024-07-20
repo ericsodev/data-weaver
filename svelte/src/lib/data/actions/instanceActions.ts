@@ -3,7 +3,7 @@ import { BaseActions } from './baseActions';
 
 export class InstanceAction extends BaseActions<
   typeof Instance,
-  'schema' | 'attributes' | 'instanceTableName'
+  'schema' | 'attributes' | 'dataTableName'
 > {
   protected model: typeof Instance;
   constructor(model: typeof Instance) {
