@@ -4,11 +4,19 @@ import { User } from './userModel';
 import { Attribute, type AttributeDTO } from './attributeModel';
 import { camelToSnakeCase } from '$lib/utils/camelToSnake';
 
+const SCHEMA_TYPES = {
+  single: 'Single',
+  collection: 'Collection'
+} as const;
+
+type SchemaType = (typeof SCHEMA_TYPES)[keyof typeof SCHEMA_TYPES];
+
 export class Schema extends mixin(BaseModel) {
   name!: string;
   creatorId!: string;
   attributes?: AttributeDTO[];
   dataTableName!: string;
+  schemaType!: SchemaType;
 
   async $beforeInsert(queryContext: QueryContext): Promise<void> {
     this.dataTableName = `data_${camelToSnakeCase(this.name)}`;
@@ -75,5 +83,5 @@ export class Schema extends mixin(BaseModel) {
 }
 
 export type SchemaDTO = Omit<Schema, keyof Model>;
-export type CreateSchemaDTO = Omit<Schema, keyof BaseModel | 'attributes'>;
+export type CreateSchemaDTO = Omit<Schema, keyof BaseModel | 'attributes' | 'dataTableName'>;
 export type FilterSchemaDTO = Partial<Omit<Schema, keyof Model>>;
