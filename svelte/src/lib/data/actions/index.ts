@@ -14,13 +14,16 @@ import { InstancePermission } from '../models/instancePermissionModel';
 import { InstancePermissionAction } from './instancePermissionActions';
 import { InstanceAction } from './instanceActions';
 import { Instance } from '../models/instanceModel';
+import { InstanceData } from '../models/instanceDataModel';
+import { InstanceDataAction } from './instanceDataActions';
 
 const db = {
   user: new UserAction(User),
   schema: new SchemaAction(Schema),
   instance: new InstanceAction(Instance),
-  schemaPermission: new SchemaPermissionAction(SchemaPermission),
   instancePermission: new InstancePermissionAction(InstancePermission),
+  instanceData: new InstanceDataAction(),
+  schemaPermission: new SchemaPermissionAction(SchemaPermission),
   attribute: new AttributeActions(Attribute)
 };
 

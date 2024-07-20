@@ -3,39 +3,34 @@ import { BaseModel } from './base';
 import { User } from './userModel';
 import { Schema, type SchemaDTO } from './schemaModel';
 import type { Except } from 'type-fest';
-import type { AttributeType } from './attributeModel';
+import type { AttributeValue } from './attributeModel';
 import { db } from '../actions';
-
-type AttributeValueDTO<T extends AttributeType = never> = {
-  name: string;
-  type: T;
-  value: T extends 'number' ? number : T extends 'string' ? string : boolean;
-};
 
 export class Instance extends mixin(BaseModel) {
   name!: string;
   creatorId!: string;
   schemaId!: string;
   schema?: SchemaDTO;
-  attributes!: AttributeValueDTO[];
-  dataTableName!: string;
+  attributes!: Record<string, AttributeValue>;
 
   static get tableName() {
     return 'instance';
   }
 
-  $afterInsert(ctx: QueryContext) {
-    // TODO: insert a new row into the data table
+  async $afterInsert(ctx: QueryContext) {
     super.$afterInsert(ctx);
-    this.transformAfterRead();
+    await this.transformAfterRead();
   }
 
-  $afterFind(ctx: QueryContext) {
+  async $afterFind(ctx: QueryContext) {
     super.$afterFind(ctx);
-    return this.transformAfterRead();
+    await this.transformAfterRead();
   }
 
-  private transformAfterRead() {}
+  private async transformAfterRead() {
+    const ret = await db.instanceData.getInstanceData(this.id);
+    this.attributes = ret?.attributes ?? {};
+  }
 
   static get jsonSchema(): JSONSchema {
     return {
@@ -72,7 +67,4 @@ export class Instance extends mixin(BaseModel) {
 }
 
 export type InstanceDTO = Except<Instance, keyof Model>;
-export type CreateInstanceDTO = Except<
-  Instance,
-  keyof BaseModel | 'schema' | 'attributes' | 'instanceTableName'
->;
+export type CreateInstanceDTO = Except<Instance, keyof BaseModel | 'schema' | 'attributes'>;
