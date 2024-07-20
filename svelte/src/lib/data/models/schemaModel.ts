@@ -1,12 +1,29 @@
-import { Model, mixin } from 'objection';
+import { Model, mixin, type QueryContext } from 'objection';
 import { BaseModel } from './base';
 import { User } from './userModel';
 import { Attribute, type AttributeDTO } from './attributeModel';
+import { camelToSnakeCase } from '$lib/utils/camelToSnake';
 
 export class Schema extends mixin(BaseModel) {
   name!: string;
   creatorId!: string;
   attributes?: AttributeDTO[];
+  dataTableName!: string;
+
+  async $beforeInsert(queryContext: QueryContext): Promise<void> {
+    this.dataTableName = `data_${camelToSnakeCase(this.name)}`;
+    await queryContext.transaction.transaction((knex) => {
+      knex.schema.createTable(this.dataTableName, (table) => {
+        table.uuid('id').primary();
+        table
+          .uuid('instanceId')
+          .references('instance.id')
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE')
+          .notNullable();
+      });
+    });
+  }
 
   static get tableName() {
     return 'schema';
