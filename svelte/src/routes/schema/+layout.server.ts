@@ -1,6 +1,6 @@
-import { db } from '$lib/data/actions';
 import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from '../$types';
+import { db } from '$lib/data/actions';
 
 export const load: LayoutServerLoad = async ({ locals }) => {
   try {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type SchemaDTO } from '$lib/data/models/schemaModel.js';
+  import type { SchemaDTO } from '$lib/data/models/schemaModel';
   import Button from '$lib/components/ui/button/button.svelte';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';

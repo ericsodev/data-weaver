@@ -7,6 +7,10 @@ export class BaseModel extends Model {
   updatedAt!: string;
   deletedAt!: string;
 
+  static get $id() {
+    return 'id';
+  }
+
   $beforeInsert(queryContext: QueryContext): void | Promise<unknown> {
     super.$beforeInsert(queryContext);
     this.createdAt = new Date().toISOString();

@@ -4,6 +4,8 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('schema', (t) => {
     t.uuid('id').primary();
     t.string('name').unique().notNullable();
+    t.string('data_table_name').unique().notNullable();
+    t.string('schema_type').notNullable();
     t.datetime('created_at').notNullable();
     t.datetime('updated_at').notNullable();
     t.datetime('deleted_at');

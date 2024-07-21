@@ -1,7 +1,7 @@
 import type { InstancePermission, InstancePermissionDTO } from '../models/instancePermissionModel';
 import { BaseActions } from './baseActions';
 
-export class InstancePermissionAction extends BaseActions<typeof InstancePermission> {
+export class InstancePermissionAction extends BaseActions<typeof InstancePermission, 'instance'> {
   protected model: typeof InstancePermission;
 
   constructor(model: typeof InstancePermission) {
@@ -9,9 +9,10 @@ export class InstancePermissionAction extends BaseActions<typeof InstancePermiss
     this.model = model;
   }
 
-  async listAuthorizedSchemas(userId: string): Promise<InstancePermissionDTO[]> {
-    const schemas = await this.model.query().where('user_id', userId).withGraphFetched('schema');
-    return schemas;
+  async listAuthorizedInstances(userId: string): Promise<InstancePermissionDTO[]> {
+    const instances = await this.model.query().where({ userId }).withGraphFetched('instance');
+    console.log('instances, ', instances);
+    return instances;
   }
 
   async getAuthorizationLevel(

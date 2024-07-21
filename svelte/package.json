@@ -50,11 +50,13 @@
     "tslib": "^2.4.1",
     "typescript": "^5.5.2",
     "typescript-eslint": "^7.8.0",
+    "typescript-svelte-plugin": "^0.3.39",
     "vite": "^5.0.3"
   },
   "dependencies": {
-    "bits-ui": "^0.21.0",
+    "bits-ui": "^0.21.12",
     "clsx": "^2.1.0",
+    "dayjs": "^1.11.11",
     "formsnap": "^1.0.1",
     "js-cookie": "^3.0.5",
     "js-sha256": "^0.11.0",

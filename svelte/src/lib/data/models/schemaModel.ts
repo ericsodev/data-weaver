@@ -1,12 +1,38 @@
-import { Model, mixin } from 'objection';
+import { Model, mixin, type QueryContext } from 'objection';
 import { BaseModel } from './base';
 import { User } from './userModel';
 import { Attribute, type AttributeDTO } from './attributeModel';
+import { camelToSnakeCase } from '$lib/utils/camelToSnake';
+import type { SchemaType } from './schema.types';
 
 export class Schema extends mixin(BaseModel) {
   name!: string;
   creatorId!: string;
   attributes?: AttributeDTO[];
+  dataTableName!: string;
+  schemaType!: SchemaType;
+
+  async $beforeInsert(queryContext: QueryContext): Promise<void> {
+    await super.$beforeInsert(queryContext);
+    this.dataTableName = `data_${camelToSnakeCase(this.name)}`;
+    console.log('1.3');
+    await queryContext.transaction.transaction(async (knex) => {
+      await knex.schema.createTable(this.dataTableName, (table) => {
+        table.uuid('id').primary();
+        table
+          .uuid('instanceId')
+          .references('instance.id')
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE')
+          .notNullable();
+      });
+    });
+    console.log(this);
+  }
+
+  async $beforeDelete(queryContext: QueryContext): Promise<void> {
+    await this.$knex().schema.dropTable(this.dataTableName);
+  }
 
   static get tableName() {
     return 'schema';
@@ -58,5 +84,5 @@ export class Schema extends mixin(BaseModel) {
 }
 
 export type SchemaDTO = Omit<Schema, keyof Model>;
-export type CreateSchemaDTO = Omit<Schema, keyof BaseModel | 'attributes'>;
+export type CreateSchemaDTO = Omit<Schema, keyof BaseModel | 'attributes' | 'dataTableName'>;
 export type FilterSchemaDTO = Partial<Omit<Schema, keyof Model>>;
