@@ -30,6 +30,10 @@ export class Schema extends mixin(BaseModel) {
     console.log(this);
   }
 
+  async $beforeDelete(queryContext: QueryContext): Promise<void> {
+    await this.$knex().schema.dropTable(this.dataTableName);
+  }
+
   static get tableName() {
     return 'schema';
   }
