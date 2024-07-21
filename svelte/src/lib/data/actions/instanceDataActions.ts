@@ -4,13 +4,16 @@ import type { InstanceDataDTO } from '../models/instanceDataModel';
 import { Model } from 'objection';
 
 export class InstanceDataAction {
-  public async getInstanceData(instanceId: string): Promise<InstanceDataDTO | undefined> {
-    const instance = await db.instance.find({ id: instanceId }, 'schema');
-    if (!instance || !instance.schema) {
+  public async getInstanceData(
+    instanceId: string,
+    schemaId: string
+  ): Promise<InstanceDataDTO | undefined> {
+    const schema = await db.schema.find({ id: schemaId });
+    if (!schema) {
       throw new Error('Error getting instance data: Instance or schema does not exist.');
     }
 
-    const tableName = instance.schema.dataTableName;
+    const tableName = schema.dataTableName;
     const row = await Model.query()
       .knex()
       .select<{ id: string; instance_id: string } & Record<string, unknown>>('*')

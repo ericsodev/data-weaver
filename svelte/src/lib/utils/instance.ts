@@ -5,6 +5,7 @@ export async function createInstanceWithPermission(
   instance: CreateInstanceDTO
 ): Promise<InstanceDTO | undefined> {
   const instanceRet = await db.instance.create(instance);
+  console.log(instanceRet);
   if (!instanceRet) return;
 
   await db.instancePermission.create({
