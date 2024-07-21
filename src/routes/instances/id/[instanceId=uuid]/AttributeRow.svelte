@@ -1,10 +1,10 @@
 <script lang="ts">
   import Button from '$lib/components/ui/button/button.svelte';
-  import { Checkbox } from '$lib/components/ui/checkbox';
   import Input from '$lib/components/ui/input/input.svelte';
+  import { Switch } from '$lib/components/ui/switch';
   import { TableCell, TableRow } from '$lib/components/ui/table';
   import type { AttributeDTO } from '$lib/data/models/attributeModel';
-  import { AsteriskIcon, RotateCcwIcon } from 'lucide-svelte';
+  import { AsteriskIcon, PencilIcon, RotateCcwIcon } from 'lucide-svelte';
 
   interface IProps {
     attribute: AttributeDTO;
@@ -21,13 +21,18 @@
       <AsteriskIcon class="ml-0.5 w-3.5 inline-block text-red-400"></AsteriskIcon>
     {/if}
   </TableCell>
-  <TableCell>
-    {#if attribute.type === 'string'}
-      <Input type="text" required={attribute.required}></Input>
-    {:else if attribute.type === 'number'}
-      <Input type="number" required={attribute.required}></Input>
+  <TableCell class="flex gap-1.5">
+    {#if attribute.type === 'string' || attribute.type === 'number'}
+      <Input
+        type={attribute.type}
+        required={attribute.required}
+        class="shrink grow basis-40 lg:inline-block hidden"
+      ></Input>
+      <Button variant="outline" size="icon" class="grow-0 shrink-0"
+        ><PencilIcon class="w-3.5"></PencilIcon></Button
+      >
     {:else}
-      <Checkbox></Checkbox>
+      <Switch></Switch>
     {/if}
   </TableCell>
 

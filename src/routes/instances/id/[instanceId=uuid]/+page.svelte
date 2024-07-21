@@ -28,9 +28,9 @@
   <Table.Root class="w-full">
     <Table.Header>
       <Table.Row>
-        <Table.Head class="min-w-[180px] w-60">Name</Table.Head>
+        <Table.Head class="min-w-[120px] w-60">Name</Table.Head>
         <Table.Head class="min-w-[120px] w-60">Type</Table.Head>
-        <Table.Head class="w-96">Value</Table.Head>
+        <Table.Head class="w-80">Value</Table.Head>
         <Table.Head class="w-20">Reset</Table.Head>
       </Table.Row>
     </Table.Header>
