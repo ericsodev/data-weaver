@@ -4,6 +4,6 @@ import { knexSnakeCaseMappers } from 'objection';
 
 const environment = process.env.ENVIRONMENT || 'development';
 
-const knexDb = knex({ ...config[environment], ...knexSnakeCaseMappers() });
+const db = knex({ ...config[environment], ...knexSnakeCaseMappers() });
 
-export default knexDb;
+export default db;

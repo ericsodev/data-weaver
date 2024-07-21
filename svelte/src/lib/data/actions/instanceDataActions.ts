@@ -1,7 +1,7 @@
 import { isBoolean, isNull, isNumber, isString } from 'util';
 import { db } from '.';
-import knexDb from '../knex';
 import type { InstanceDataDTO } from '../models/instanceDataModel';
+import { Model } from 'objection';
 
 export class InstanceDataAction {
   public async getInstanceData(instanceId: string): Promise<InstanceDataDTO | undefined> {
@@ -11,9 +11,11 @@ export class InstanceDataAction {
     }
 
     const tableName = instance.schema.dataTableName;
-    const row = await knexDb(tableName)
+    const row = await Model.query()
+      .knex()
       .select<{ id: string; instance_id: string } & Record<string, unknown>>('*')
       .where('instanceId', instanceId)
+      .from(tableName)
       .first();
 
     if (!row) {

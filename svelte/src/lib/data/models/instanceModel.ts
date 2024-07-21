@@ -3,7 +3,7 @@ import { BaseModel } from './base';
 import { User } from './userModel';
 import { Schema, type SchemaDTO } from './schemaModel';
 import type { Except } from 'type-fest';
-import type { AttributeValue } from './attributeModel';
+import type { AttributeValue } from './attribute.types';
 import { db } from '../actions';
 
 export class Instance extends mixin(BaseModel) {

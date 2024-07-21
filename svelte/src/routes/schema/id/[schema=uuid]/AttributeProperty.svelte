@@ -5,7 +5,7 @@
   import * as Table from '$lib/components/ui/table';
   import type { AttributeFormState, AttributeData } from './AttributeState.svelte';
   import { cn } from '$lib/utils';
-  import { ATTRIBUTE_TYPES, type AttributeType } from '$lib/data/models/attributeModel';
+  import { ATTRIBUTE_TYPES, type AttributeType } from '$lib/data/models/attribute.types';
   import { Button } from '$lib/components/ui/button';
   import { Trash2 } from 'lucide-svelte';
 

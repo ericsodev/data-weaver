@@ -25,7 +25,11 @@ const createSchemaHandler: Action = async ({ request, locals }) => {
   }
 
   const data = form.data;
-  const schema = await createSchemaWithPermission({ name: data.name, creatorId: locals.user.id });
+  const schema = await createSchemaWithPermission({
+    name: data.name,
+    creatorId: locals.user.id,
+    schemaType: 'Single'
+  });
 
   if (schema) {
     return redirect(300, `/schema/id/${schema.id}`);

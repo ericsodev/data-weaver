@@ -7,7 +7,6 @@ export async function up(knex: Knex): Promise<void> {
     t.datetime('updated_at').notNullable();
     t.datetime('deleted_at');
     t.string('name').unique().notNullable();
-    t.string('instance_table_name').unique();
 
     t.uuid('creator_id').notNullable();
     t.uuid('schema_id').notNullable();

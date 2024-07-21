@@ -9,7 +9,6 @@ export const PUT: RequestHandler = async ({ params, request, locals }) => {
   const schemaId = params.id;
 
   if (!valPayload.success) {
-    console.log(valPayload.error);
     return error(400, { message: 'Validation error' });
   }
 
@@ -88,7 +87,6 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 
   const schema = await db.schema.delete({ id: schemaId });
   if (!schema) {
-    console.log(schema);
     return error(404, { message: 'Schema not found' });
   }
   return json('');

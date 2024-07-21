@@ -3,13 +3,7 @@ import { BaseModel } from './base';
 import { User } from './userModel';
 import { Attribute, type AttributeDTO } from './attributeModel';
 import { camelToSnakeCase } from '$lib/utils/camelToSnake';
-
-const SCHEMA_TYPES = {
-  single: 'Single',
-  collection: 'Collection'
-} as const;
-
-type SchemaType = (typeof SCHEMA_TYPES)[keyof typeof SCHEMA_TYPES];
+import type { SchemaType } from './schema.types';
 
 export class Schema extends mixin(BaseModel) {
   name!: string;
@@ -19,9 +13,11 @@ export class Schema extends mixin(BaseModel) {
   schemaType!: SchemaType;
 
   async $beforeInsert(queryContext: QueryContext): Promise<void> {
+    await super.$beforeInsert(queryContext);
     this.dataTableName = `data_${camelToSnakeCase(this.name)}`;
-    await queryContext.transaction.transaction((knex) => {
-      knex.schema.createTable(this.dataTableName, (table) => {
+    console.log('1.3');
+    await queryContext.transaction.transaction(async (knex) => {
+      await knex.schema.createTable(this.dataTableName, (table) => {
         table.uuid('id').primary();
         table
           .uuid('instanceId')
@@ -31,6 +27,7 @@ export class Schema extends mixin(BaseModel) {
           .notNullable();
       });
     });
+    console.log(this);
   }
 
   static get tableName() {

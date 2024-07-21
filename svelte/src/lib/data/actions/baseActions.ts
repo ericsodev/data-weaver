@@ -67,7 +67,7 @@ export class BaseActions<
   }
 
   async create(data: CreateDTO<T, E>): Promise<GenericDTO<T>> {
-    const ret = await this.model.query().insert(data);
+    const ret = await this.model.query().insertGraphAndFetch(data);
     return ret as unknown as GenericDTO<T>;
   }
 
@@ -85,7 +85,8 @@ export class BaseActions<
 
   async delete(data: { id: string }): Promise<boolean | undefined> {
     try {
-      const numRows = await this.model.query().deleteById(data.id);
+      const row = await this.model.query().findById(data.id);
+      const numRows = await row?.$query().delete();
 
       return numRows === 1;
     } catch (error: unknown) {

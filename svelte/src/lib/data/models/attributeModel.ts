@@ -1,13 +1,9 @@
 import { Model, mixin, type JSONSchema, type ModelOptions, type QueryContext } from 'objection';
 import { BaseModel } from './base';
-import { Schema, SchemaDTO } from './schemaModel';
+import { Schema, type SchemaDTO } from './schemaModel';
 import type { Except } from 'type-fest';
-import { convertCamelToSnakeKeys } from '$lib/utils/camelToSnake';
 import { db } from '../actions';
-
-export const ATTRIBUTE_TYPES = ['string', 'number', 'boolean'] as const;
-export type AttributeType = (typeof ATTRIBUTE_TYPES)[number];
-export type AttributeValue = number | string | boolean | null;
+import { type AttributeType, ATTRIBUTE_TYPES } from './attribute.types';
 
 export class Attribute extends mixin(BaseModel) {
   name!: string;
@@ -19,24 +15,22 @@ export class Attribute extends mixin(BaseModel) {
     await super.$afterInsert(queryContext);
 
     // Update existing data schema
-    const schemaRaw = await this.$modelClass
-      .query()
-      .knex()
+    const schema = await this.$knex()
       .select<SchemaDTO>('*')
       .from('schema')
       .where('id', this.schemaId)
       .first();
 
-    if (!schemaRaw) throw Error('Schema does not exist');
-    const schema = convertCamelToSnakeKeys(schemaRaw);
+    if (!schema) throw Error('Schema does not exist');
 
     await queryContext.transaction.schema.alterTable(schema.dataTableName, (table) => {
+      const column = 'attr_' + this.name;
       if (this.type === 'string') {
-        table.string(this.name).nullable();
+        table.string(column).nullable();
       } else if (this.type === 'boolean') {
-        table.boolean(this.name).nullable();
+        table.boolean(column).nullable();
       } else {
-        table.integer(this.name).nullable();
+        table.integer(column).nullable();
       }
     });
   }
@@ -45,24 +39,22 @@ export class Attribute extends mixin(BaseModel) {
     await super.$afterUpdate(opt, queryContext);
 
     // Update existing data schema
-    const schemaRaw = await this.$modelClass
-      .query()
-      .knex()
+    const schema = await this.$knex()
       .select<SchemaDTO>('*')
       .from('schema')
       .where('id', this.schemaId)
       .first();
 
-    if (!schemaRaw) throw Error('Schema does not exist');
-    const schema = convertCamelToSnakeKeys(schemaRaw);
+    if (!schema) throw Error('Schema does not exist');
 
     await queryContext.transaction.schema.alterTable(schema.dataTableName, (table) => {
+      const column = 'attr_' + this.name;
       if (this.type === 'string') {
-        table.string(this.name).nullable().alter();
+        table.string(column).nullable().alter();
       } else if (this.type === 'boolean') {
-        table.boolean(this.name).nullable().alter();
+        table.boolean(column).nullable().alter();
       } else {
-        table.integer(this.name).nullable().alter();
+        table.integer(column).nullable().alter();
       }
     });
   }
@@ -74,7 +66,7 @@ export class Attribute extends mixin(BaseModel) {
     if (!attribute) throw new Error('Attribute does not exist');
 
     // Update existing data schema
-    const schemaRaw = await this.$modelClass
+    const schema = await this.$modelClass
       .query()
       .knex()
       .select<SchemaDTO>('*')
@@ -82,11 +74,11 @@ export class Attribute extends mixin(BaseModel) {
       .where('id', attribute.schemaId)
       .first();
 
-    if (!schemaRaw) throw Error('Schema does not exist');
-    const schema = convertCamelToSnakeKeys(schemaRaw);
+    if (!schema) throw Error('Schema does not exist');
 
     await queryContext.transaction.schema.alterTable(schema.dataTableName, (table) => {
-      table.dropColumn(attribute.name);
+      const column = 'attr_' + attribute.name;
+      table.dropColumn(column);
     });
   }
 

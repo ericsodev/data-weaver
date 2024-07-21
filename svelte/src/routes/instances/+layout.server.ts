@@ -8,7 +8,6 @@ export const load: LayoutServerLoad = async ({ locals }) => {
       redirect(301, '/login');
     }
 
-    console.log('hihihi');
     const authedInstances = await db.instancePermission.listAuthorizedInstances(locals.user.id);
     const instances = authedInstances
       .filter((a) => a.instance !== undefined)

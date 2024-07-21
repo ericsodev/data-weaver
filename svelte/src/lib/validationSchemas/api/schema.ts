@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { ATTRIBUTE_TYPES } from '$lib/data/models/attributeModel';
+import { ATTRIBUTE_TYPES } from '$lib/data/models/attribute.types';
+import { SCHEMA_TYPES } from '$lib/data/models/schema.types';
 
 export const attributePostValidation = z.object({
   id: z.string().min(1).optional(),
@@ -17,7 +18,8 @@ export const attributePutValidation = attributePostValidation
   });
 
 export const schemaPostValidation = z.object({
-  name: z.string().min(1)
+  name: z.string().min(1),
+  schemaType: z.enum(Object.values(SCHEMA_TYPES) as [string, ...string[]]).optional()
 });
 
 export const schemaPutValidation = schemaPostValidation
