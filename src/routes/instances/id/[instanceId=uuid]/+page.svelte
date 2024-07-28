@@ -45,7 +45,7 @@
 
   const onSave = () => {};
   const error = $state();
-  let hasChanges = $state(false);
+  let hasChanges = $derived(Object.values(modified).some((v) => v));
 </script>
 
 <header class="mb-8 flex justify-between">
