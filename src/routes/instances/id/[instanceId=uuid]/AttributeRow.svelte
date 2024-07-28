@@ -7,10 +7,13 @@
   import { AsteriskIcon, PencilIcon, RotateCcwIcon } from 'lucide-svelte';
 
   interface IProps {
-    attribute: AttributeDTO;
+    schema: AttributeDTO;
+    value: string | boolean | number | null;
+    modified?: boolean;
+    reset: () => void;
   }
 
-  let { attribute }: IProps = $props();
+  let { schema: attribute, value = $bindable(), modified, reset }: IProps = $props();
 </script>
 
 <TableRow>
@@ -24,10 +27,11 @@
   <TableCell class="flex gap-1.5">
     {#if attribute.type === 'string' || attribute.type === 'number'}
       <Input
+        bind:value
         type={attribute.type}
         required={attribute.required}
         class="shrink grow basis-40 lg:inline-block hidden"
-      ></Input>
+      />
       <Button variant="outline" size="icon" class="grow-0 shrink-0"
         ><PencilIcon class="w-3.5"></PencilIcon></Button
       >
@@ -36,9 +40,11 @@
     {/if}
   </TableCell>
 
-  <TableCell
-    ><Button variant="outline" size="icon">
-      <RotateCcwIcon class="w-4"></RotateCcwIcon>
-    </Button>
+  <TableCell>
+    {#if modified}
+      <Button variant="outline" size="icon" onclick={reset}>
+        <RotateCcwIcon class="w-4"></RotateCcwIcon>
+      </Button>
+    {/if}
   </TableCell>
 </TableRow>

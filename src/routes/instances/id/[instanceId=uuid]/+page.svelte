@@ -3,12 +3,49 @@
   import * as Alert from '$lib/components/ui/alert';
   import Button from '$lib/components/ui/button/button.svelte';
   import AttributeRow from './AttributeRow.svelte';
+  import type { AttributeValue } from '$lib/data/models/attribute.types';
+  import type { FormData } from './types';
+  import { onMount } from 'svelte';
 
   let { data } = $props();
+  let form = $state<FormData>({});
+
+  function isEmpty(value: AttributeValue): boolean {
+    if (typeof value === 'string' && value === '') return true;
+
+    return value === undefined || value === null;
+  }
+
+  function getModifiedFields(
+    original: Record<string, AttributeValue>,
+    form: FormData
+  ): Record<string, boolean> {
+    const ret: Record<string, boolean> = {};
+    for (const key in form) {
+      if (isEmpty(original[key]) && isEmpty(form[key].value)) {
+        ret[key] = false;
+        continue;
+      }
+      ret[key] = original[key] !== form[key].value;
+    }
+
+    return ret;
+  }
+
+  onMount(() => {
+    for (const attribute of data.instance.schema?.attributes ?? []) {
+      form[attribute.name] = {
+        value: data.instance.attributes[attribute.name] ?? null,
+        schema: attribute
+      };
+    }
+  });
+
+  let modified = $derived(getModifiedFields(data.instance.attributes, $state.snapshot(form)));
+
   const onSave = () => {};
   const error = $state();
   let hasChanges = $state(false);
-  console.log(data.instance);
 </script>
 
 <header class="mb-8 flex justify-between">
@@ -35,8 +72,13 @@
       </Table.Row>
     </Table.Header>
     <Table.Body>
-      {#each data.instance.schema?.attributes ?? [] as attribute}
-        <AttributeRow {attribute}></AttributeRow>
+      {#each Object.entries(form) as [name, attribute]}
+        <AttributeRow
+          schema={attribute.schema}
+          bind:value={attribute.value}
+          modified={modified[attribute.schema.name]}
+          reset={() => (attribute.value = data.instance.attributes[name])}
+        ></AttributeRow>
       {/each}
     </Table.Body>
   </Table.Root>
