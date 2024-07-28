@@ -6,8 +6,6 @@
   import type { AttributeDTO } from '$lib/data/models/attributeModel';
   import { cn } from '$lib/utils';
   import { AsteriskIcon, PencilIcon, RotateCcwIcon } from 'lucide-svelte';
-  import { number, z } from 'zod';
-
   interface IProps {
     schema: AttributeDTO;
     value: string | boolean | number | null;

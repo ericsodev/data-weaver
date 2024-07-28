@@ -6,6 +6,7 @@
   import type { AttributeValue } from '$lib/data/models/attribute.types';
   import type { FormData } from './types';
   import { onMount } from 'svelte';
+  import { validatorBuilder } from './validator';
 
   let { data } = $props();
   let form = $state<FormData>({});
@@ -31,6 +32,23 @@
 
     return ret;
   }
+
+  function getFormData(form: FormData): Record<string, AttributeValue> {
+    const ret: Record<string, AttributeValue> = {};
+
+    for (const attr in form) {
+      ret[attr] = form[attr].value;
+    }
+
+    return ret;
+  }
+
+  let validator = validatorBuilder(data.instance.schema?.attributes ?? []);
+  const validatedInput = $derived(validator.safeParse(getFormData(form)));
+
+  $effect(() => {
+    console.log(validatedInput.success);
+  });
 
   onMount(() => {
     for (const attribute of data.instance.schema?.attributes ?? []) {
