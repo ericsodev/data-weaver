@@ -4,6 +4,7 @@
   import { Switch } from '$lib/components/ui/switch';
   import { TableCell, TableRow } from '$lib/components/ui/table';
   import type { AttributeDTO } from '$lib/data/models/attributeModel';
+  import { cn } from '$lib/utils';
   import { AsteriskIcon, PencilIcon, RotateCcwIcon } from 'lucide-svelte';
 
   interface IProps {
@@ -35,16 +36,20 @@
       <Button variant="outline" size="icon" class="grow-0 shrink-0"
         ><PencilIcon class="w-3.5"></PencilIcon></Button
       >
-    {:else}
-      <Switch></Switch>
+    {:else if attribute.type === 'boolean'}
+      <Switch checked={!!value} onCheckedChange={(v) => (value = v)}></Switch>
     {/if}
   </TableCell>
 
-  <TableCell>
-    {#if modified}
-      <Button variant="outline" size="icon" onclick={reset}>
-        <RotateCcwIcon class="w-4"></RotateCcwIcon>
-      </Button>
-    {/if}
+  <TableCell class={cn(!modified && 'opacity-0')}>
+    <Button
+      variant="outline"
+      size="icon"
+      onclick={reset}
+      disabled={!modified}
+      class={cn('bg-green-300/50 hover:bg-green-400/50')}
+    >
+      <RotateCcwIcon class="w-4"></RotateCcwIcon>
+    </Button>
   </TableCell>
 </TableRow>
