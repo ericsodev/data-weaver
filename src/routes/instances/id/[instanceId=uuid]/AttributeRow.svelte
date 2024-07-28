@@ -6,6 +6,7 @@
   import type { AttributeDTO } from '$lib/data/models/attributeModel';
   import { cn } from '$lib/utils';
   import { AsteriskIcon, PencilIcon, RotateCcwIcon } from 'lucide-svelte';
+  import { number, z } from 'zod';
 
   interface IProps {
     schema: AttributeDTO;
@@ -26,10 +27,21 @@
     {/if}
   </TableCell>
   <TableCell class="flex gap-1.5">
-    {#if attribute.type === 'string' || attribute.type === 'number'}
+    {#if attribute.type === 'string'}
       <Input
         bind:value
-        type={attribute.type}
+        type="text"
+        required={attribute.required}
+        class="shrink grow basis-40 lg:inline-block hidden"
+      />
+      <Button variant="outline" size="icon" class="grow-0 shrink-0"
+        ><PencilIcon class="w-3.5"></PencilIcon></Button
+      >
+    {:else if attribute.type === 'number'}
+      <Input
+        bind:value
+        type="number"
+        on:keypress={(e) => !isFinite(Number(e.key)) && e.preventDefault()}
         required={attribute.required}
         class="shrink grow basis-40 lg:inline-block hidden"
       />
