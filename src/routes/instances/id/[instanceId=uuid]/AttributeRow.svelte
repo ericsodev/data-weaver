@@ -9,6 +9,7 @@
   interface IProps {
     schema: AttributeDTO;
     value: string | boolean | number | null;
+    error: string | undefined;
     modified?: boolean;
     reset: () => void;
   }
@@ -30,7 +31,7 @@
         bind:value
         type="text"
         required={attribute.required}
-        class="shrink grow basis-40 lg:inline-block hidden"
+        class={cn('shrink grow basis-40 lg:inline-block hidden')}
       />
       <Button variant="outline" size="icon" class="grow-0 shrink-0"
         ><PencilIcon class="w-3.5"></PencilIcon></Button
@@ -41,7 +42,7 @@
         type="number"
         on:keypress={(e) => !isFinite(Number(e.key)) && e.preventDefault()}
         required={attribute.required}
-        class="shrink grow basis-40 lg:inline-block hidden"
+        class={cn('shrink grow basis-40 lg:inline-block hidden')}
       />
       <Button variant="outline" size="icon" class="grow-0 shrink-0"
         ><PencilIcon class="w-3.5"></PencilIcon></Button

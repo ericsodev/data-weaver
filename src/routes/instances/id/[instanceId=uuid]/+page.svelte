@@ -6,12 +6,13 @@
   import type { AttributeValue } from '$lib/data/models/attribute.types';
   import type { FormData } from './types';
   import { onMount } from 'svelte';
-  import { validatorBuilder } from './validator';
+  import { getErrorMessageFromPath, validatorBuilder } from '$lib/utils/validator-builder';
+  import { fromError } from 'zod-validation-error';
 
   let { data } = $props();
   let form = $state<FormData>({});
 
-  function isEmpty(value: AttributeValue): boolean {
+  function isEmpty(value: AttributeValue | undefined): boolean {
     if (typeof value === 'string' && value === '') return true;
 
     return value === undefined || value === null;
@@ -23,11 +24,11 @@
   ): Record<string, boolean> {
     const ret: Record<string, boolean> = {};
     for (const key in form) {
-      if (isEmpty(original[key]) && isEmpty(form[key].value)) {
+      if (isEmpty(original[key]) && isEmpty(form[key]?.value)) {
         ret[key] = false;
         continue;
       }
-      ret[key] = original[key] !== form[key].value;
+      ret[key] = original[key] !== form[key]?.value;
     }
 
     return ret;
@@ -35,9 +36,8 @@
 
   function getFormData(form: FormData): Record<string, AttributeValue> {
     const ret: Record<string, AttributeValue> = {};
-
     for (const attr in form) {
-      ret[attr] = form[attr].value;
+      ret[attr] = form[attr]?.value ?? null;
     }
 
     return ret;
@@ -46,9 +46,15 @@
   let validator = validatorBuilder(data.instance.schema?.attributes ?? []);
   const validatedInput = $derived(validator.safeParse(getFormData(form)));
 
-  $effect(() => {
-    console.log(validatedInput.success);
-  });
+  const onSave = () => {};
+
+  const formError = $derived(
+    validatedInput.success ? undefined : fromError(validatedInput.error).message
+  );
+  const saveError = $state();
+
+  let modified = $derived(getModifiedFields(data.instance.attributes, $state.snapshot(form)));
+  let hasChanges = $derived(Object.values(modified).some((v) => v));
 
   onMount(() => {
     for (const attribute of data.instance.schema?.attributes ?? []) {
@@ -58,12 +64,6 @@
       };
     }
   });
-
-  let modified = $derived(getModifiedFields(data.instance.attributes, $state.snapshot(form)));
-
-  const onSave = () => {};
-  const error = $state();
-  let hasChanges = $derived(Object.values(modified).some((v) => v));
 </script>
 
 <header class="mb-8 flex justify-between">
@@ -79,7 +79,7 @@
   <!--   > -->
   <!-- {/if} -->
 </header>
-<div>
+<div class="flex flex-col gap-4">
   <Table.Root class="w-full">
     <Table.Header>
       <Table.Row>
@@ -92,21 +92,28 @@
     <Table.Body>
       {#each Object.entries(form) as [name, attribute]}
         <AttributeRow
+          error={validatedInput.error && getErrorMessageFromPath(validatedInput.error, name)}
           schema={attribute.schema}
           bind:value={attribute.value}
           modified={modified[attribute.schema.name]}
-          reset={() => (attribute.value = data.instance.attributes[name])}
+          reset={() => (attribute.value = data.instance.attributes[name] ?? null)}
         ></AttributeRow>
       {/each}
     </Table.Body>
   </Table.Root>
-  {#if data.abilities.includes('ATTRIBUTE:WRITE') && hasChanges}
+  {#if data.abilities.includes('ATTRIBUTE:WRITE') && hasChanges && validatedInput.success}
     <Button on:click={onSave} size="lg" class="mt-6">Save changes</Button>
   {/if}
-  {#if error}
+  {#if saveError}
     <Alert.Root class="w-60 bg-red-400/30 border-red-500 border-[1.5px] fixed top-10 right-10">
       <Alert.Title>Error saving</Alert.Title>
-      <Alert.Description>{error}</Alert.Description>
+      <Alert.Description>{saveError}</Alert.Description>
+    </Alert.Root>
+  {/if}
+  {#if formError}
+    <Alert.Root class="bg-red-400/30 w-fit">
+      <Alert.Title>Form error</Alert.Title>
+      <Alert.Description>{formError}</Alert.Description>
     </Alert.Root>
   {/if}
 </div>

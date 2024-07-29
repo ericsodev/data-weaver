@@ -6,7 +6,7 @@ import { error, json, type RequestHandler } from '@sveltejs/kit';
 export const PUT: RequestHandler = async ({ params, request, locals }) => {
   const payload = await request.json();
   const valPayload = schemaPutValidation.safeParse(payload);
-  const schemaId = params.id;
+  const schemaId = params['id'];
 
   if (!valPayload.success) {
     return error(400, { message: 'Validation error' });
@@ -70,7 +70,7 @@ export const PUT: RequestHandler = async ({ params, request, locals }) => {
 };
 
 export const DELETE: RequestHandler = async ({ params, locals }) => {
-  const schemaId = params.id;
+  const schemaId = params['id'];
   if (!schemaId) {
     return error(400, { message: 'Missing id' });
   }

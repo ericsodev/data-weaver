@@ -38,7 +38,7 @@ export function createAttributeState(initial: PageData['schema']['attributes']) 
 
   function toggleDelete(index: number) {
     // If entry is not in database, remove locally
-    if (attributes[index].id) {
+    if (attributes[index]?.id) {
       attributes[index].delete = !attributes[index].delete;
       return;
     }

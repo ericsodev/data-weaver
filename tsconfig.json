@@ -10,6 +10,11 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "strictPropertyInitialization": true,
     "moduleResolution": "bundler",
     "plugins": [{
       "name": "typescript-svelte-plugin",
