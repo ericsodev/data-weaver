@@ -108,8 +108,13 @@
       {/each}
     </Table.Body>
   </Table.Root>
-  {#if data.abilities.includes('ATTRIBUTE:WRITE') && hasChanges && validatedInput.success}
-    <Button on:click={onSave} size="lg" class="mt-6">Save changes</Button>
+  {#if data.abilities.includes('ATTRIBUTE:WRITE')}
+    <Button
+      on:click={onSave}
+      size="lg"
+      class="mt-6"
+      disabled={!hasChanges || !validatedInput.success}>Save changes</Button
+    >
   {/if}
   {#if saveError}
     <Alert.Root class="w-60 bg-red-400/30 border-red-500 border-[1.5px] fixed top-10 right-10">
