@@ -79,7 +79,7 @@
   <!--   > -->
   <!-- {/if} -->
 </header>
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 items-start">
   <Table.Root class="w-full">
     <Table.Header>
       <Table.Row>

@@ -6,7 +6,7 @@ export function validatorBuilder(schema: Pick<AttributeDTO, 'name' | 'type' | 'r
   const obj: Record<string, z.ZodTypeAny> = {};
   for (const attr of schema) {
     if (attr.type === 'number') {
-      obj[attr.name] = z.number({ coerce: true });
+      obj[attr.name] = z.number();
     } else if (attr.type === 'string') {
       obj[attr.name] = z.string();
     } else if (attr.type === 'boolean') {
@@ -28,6 +28,5 @@ export function validatorBuilder(schema: Pick<AttributeDTO, 'name' | 'type' | 'r
 export function getErrorMessageFromPath(error: ZodError, path: string): string | undefined {
   const refinedError = fromError(error);
   const ret = refinedError['details'].filter((err) => err.path.includes(path))[0]?.message;
-  console.log(path, ret, refinedError);
   return ret;
 }

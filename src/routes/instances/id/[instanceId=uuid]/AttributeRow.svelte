@@ -14,7 +14,10 @@
     reset: () => void;
   }
 
-  let { schema: attribute, value = $bindable(), modified, reset }: IProps = $props();
+  let { schema: attribute, value = $bindable(), modified, reset, error }: IProps = $props();
+  let touched = $state(false);
+
+  let highlightError = $derived(touched && error);
 </script>
 
 <TableRow>
@@ -30,8 +33,12 @@
       <Input
         bind:value
         type="text"
+        onfocus={() => (touched = true)}
         required={attribute.required}
-        class={cn('shrink grow basis-40 lg:inline-block hidden')}
+        class={cn(
+          'shrink grow basis-40 lg:inline-block hidden',
+          highlightError && '[&:not(:focus)]:border-red-500'
+        )}
       />
       <Button variant="outline" size="icon" class="grow-0 shrink-0"
         ><PencilIcon class="w-3.5"></PencilIcon></Button
@@ -40,15 +47,24 @@
       <Input
         bind:value
         type="number"
+        onfocus={() => (touched = true)}
         on:keypress={(e) => !isFinite(Number(e.key)) && e.preventDefault()}
         required={attribute.required}
-        class={cn('shrink grow basis-40 lg:inline-block hidden')}
+        class={cn(
+          'shrink grow basis-40 lg:inline-block hidden',
+          highlightError && '[&:not(:focus)]:border-red-500'
+        )}
       />
       <Button variant="outline" size="icon" class="grow-0 shrink-0"
         ><PencilIcon class="w-3.5"></PencilIcon></Button
       >
     {:else if attribute.type === 'boolean'}
-      <Switch checked={!!value} onCheckedChange={(v) => (value = v)}></Switch>
+      <Switch
+        onfocus={() => (touched = true)}
+        checked={!!value}
+        onCheckedChange={(v) => (value = v)}
+        class={cn(highlightError && '[&:not(:focus)]:border-red-500')}
+      ></Switch>
     {/if}
   </TableCell>
 
