@@ -8,6 +8,7 @@
   import { onMount } from 'svelte';
   import { getErrorMessageFromPath, validatorBuilder } from '$lib/utils/validator-builder';
   import { fromError } from 'zod-validation-error';
+  import { invalidate } from '$app/navigation';
 
   let { data } = $props();
   let form = $state<FormData>({});
@@ -51,6 +52,7 @@
       method: 'PUT',
       body: JSON.stringify(validatedInput.data)
     });
+    invalidate(() => true);
   };
 
   const formError = $derived(
