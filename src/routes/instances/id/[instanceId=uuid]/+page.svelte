@@ -46,7 +46,14 @@
   let validator = validatorBuilder(data.instance.schema?.attributes ?? []);
   const validatedInput = $derived(validator.safeParse(getFormData(form)));
 
-  const onSave = () => {};
+  const onSave = async () => {
+    const ret = await fetch(`/api/instance/${data.instance.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(validatedInput.data)
+    });
+
+    console.log(ret);
+  };
 
   const formError = $derived(
     validatedInput.success ? undefined : fromError(validatedInput.error).message
