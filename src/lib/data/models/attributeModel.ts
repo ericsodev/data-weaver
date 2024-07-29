@@ -24,7 +24,7 @@ export class Attribute extends mixin(BaseModel) {
     if (!schema) throw Error('Schema does not exist');
 
     await queryContext.transaction.schema.alterTable(schema.dataTableName, (table) => {
-      const column = 'attr_' + this.name;
+      const column = 'attr_$' + this.name;
       if (this.type === 'string') {
         table.string(column).nullable();
       } else if (this.type === 'boolean') {
@@ -48,7 +48,7 @@ export class Attribute extends mixin(BaseModel) {
     if (!schema) throw Error('Schema does not exist');
 
     await queryContext.transaction.schema.alterTable(schema.dataTableName, (table) => {
-      const column = 'attr_' + this.name;
+      const column = 'attr_$' + this.name;
       if (this.type === 'string') {
         table.string(column).nullable().alter();
       } else if (this.type === 'boolean') {
@@ -77,7 +77,7 @@ export class Attribute extends mixin(BaseModel) {
     if (!schema) throw Error('Schema does not exist');
 
     await queryContext.transaction.schema.alterTable(schema.dataTableName, (table) => {
-      const column = 'attr_' + attribute.name;
+      const column = 'attr_$' + attribute.name;
       table.dropColumn(column);
     });
   }
