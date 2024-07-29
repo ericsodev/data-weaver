@@ -15,7 +15,6 @@ export class Schema extends mixin(BaseModel) {
   async $beforeInsert(queryContext: QueryContext): Promise<void> {
     await super.$beforeInsert(queryContext);
     this.dataTableName = `data_${camelToSnakeCase(this.name)}`;
-    console.log('1.3');
     await queryContext.transaction.transaction(async (knex) => {
       await knex.schema.createTable(this.dataTableName, (table) => {
         table.uuid('id').primary();

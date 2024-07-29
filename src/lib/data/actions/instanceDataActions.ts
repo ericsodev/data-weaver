@@ -27,6 +27,8 @@ export class InstanceDataAction {
       return;
     }
 
+    console.log('row', row);
+
     const attributes = transformAttributeColumnsToObject(row);
 
     return {
@@ -63,7 +65,7 @@ export class InstanceDataAction {
 
 /**
  * Takes a row retrieved from the database and extracts all attribute columns to their actual names
- * e.g. {"attr_fullname": "john"} becomes {"fullname": "john"}
+ * e.g. {"attrFullname": "john"} becomes {"fullname": "john"}
  * Non-attribute columns are omitted
  */
 function transformAttributeColumnsToObject(
@@ -71,7 +73,7 @@ function transformAttributeColumnsToObject(
 ): Record<string, boolean | number | string | null> {
   const ret: Record<string, boolean | number | string | null> = {};
   for (const key in data) {
-    if (!key.startsWith('attr_')) continue;
+    if (!key.startsWith('attr$')) continue;
 
     if (isNumber(data[key]) || isString(data[key]) || isBoolean(data[key]) || data[key] === null) {
       const newKey = key.slice(5);
@@ -85,7 +87,7 @@ function transformAttributeColumnsToObject(
 function transformDataObjectToColumns(data: Record<string, AttributeValue>) {
   const ret: Record<string, boolean | number | string | null> = {};
   for (const [key, val] of Object.entries(data)) {
-    ret[`attr_${key}`] = val;
+    ret[`attr_$${key}`] = val;
   }
 
   return ret;
