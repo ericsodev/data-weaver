@@ -29,7 +29,6 @@ export class Instance extends mixin(BaseModel) {
 
   private async transformAfterRead() {
     const ret = await db.instanceData.getInstanceData(this.id, this.schemaId);
-    console.log('inside hoook', ret, this);
     this.attributes = ret?.attributes ?? {};
   }
 

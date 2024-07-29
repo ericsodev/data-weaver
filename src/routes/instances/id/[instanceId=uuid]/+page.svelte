@@ -47,12 +47,10 @@
   const validatedInput = $derived(validator.safeParse(getFormData(form)));
 
   const onSave = async () => {
-    const ret = await fetch(`/api/instance/${data.instance.id}`, {
+    await fetch(`/api/instance/${data.instance.id}`, {
       method: 'PUT',
       body: JSON.stringify(validatedInput.data)
     });
-
-    console.log(ret);
   };
 
   const formError = $derived(

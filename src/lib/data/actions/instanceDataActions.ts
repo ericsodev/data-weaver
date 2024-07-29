@@ -27,8 +27,6 @@ export class InstanceDataAction {
       return;
     }
 
-    console.log('row', row);
-
     const attributes = transformAttributeColumnsToObject(row);
 
     return {

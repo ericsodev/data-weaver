@@ -26,7 +26,6 @@ export class Schema extends mixin(BaseModel) {
           .notNullable();
       });
     });
-    console.log(this);
   }
 
   async $beforeDelete(queryContext: QueryContext): Promise<void> {

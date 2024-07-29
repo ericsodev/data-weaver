@@ -28,7 +28,7 @@
 
     const validatedPayload = await schemaPutValidation.safeParseAsync(payload);
     if (validatedPayload.error) {
-      error = validatedPayload.error.errors[0].message;
+      error = validatedPayload.error.errors[0]?.message ?? '';
       return;
     }
 
