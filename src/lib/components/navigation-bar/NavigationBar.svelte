@@ -21,7 +21,7 @@
   <Button
     data-sveltekit-prefetch
     href="/schema"
-    variant={path.startsWith('/instances') ? 'secondary' : 'ghost'}
+    variant={path.startsWith('/schema') ? 'secondary' : 'ghost'}
     class={cn('text-muted-foreground', path.startsWith('/schema') && 'text-white')}
   >
     <span>
