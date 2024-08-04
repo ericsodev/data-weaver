@@ -6,7 +6,7 @@
   import { page } from '$app/stores';
   import Button from '$lib/components/ui/button/button.svelte';
   import { cn } from '$lib/utils';
-  import { ChevronDown, ChevronUp, Icon, Menu } from 'lucide-svelte';
+  import { ChevronDown, ChevronUp, Icon } from 'lucide-svelte';
   import type { ComponentType } from 'svelte';
   import { fade } from 'svelte/transition';
 
@@ -27,8 +27,8 @@
     return $page.url.pathname.startsWith(rootUri + uri);
   }
 
-  const update = (_p) => routes.filter((r) => checkIsPrefix(r.id))[0] ?? routes[0];
-  let activeUrl = $derived(update($page)?.id ?? '');
+  const update = () => routes.filter((r) => checkIsPrefix(r.id))[0] ?? routes[0];
+  let activeUrl = $derived(update()?.id ?? '');
 
   let openMenu = $state(false);
 </script>
