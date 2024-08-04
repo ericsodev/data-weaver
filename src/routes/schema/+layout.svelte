@@ -1,14 +1,15 @@
 <script lang="ts">
   import type { SchemaDTO } from '$lib/data/models/schemaModel';
-  import Button from '$lib/components/ui/button/button.svelte';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
+  import { GanttChartIcon, KeyRoundIcon, Settings2Icon } from 'lucide-svelte';
+  import NavigationBar from '$lib/components/navigation-bar/NavigationBar.svelte';
 
   export let data;
   const staticRoutes = [
-    { id: 'overview', name: 'Overview' },
-    { id: 'permissions', name: 'Permissions' },
-    { id: 'settings', name: 'Settings' },
+    { id: 'overview', name: 'Overview', icon: GanttChartIcon },
+    { id: 'permissions', name: 'Permissions', icon: KeyRoundIcon },
+    { id: 'settings', name: 'Settings', icon: Settings2Icon },
     { id: '#separator', name: 'Separator' },
     { id: '#label', name: 'Schemas' }
   ];
@@ -27,10 +28,7 @@
   <section class="sidebar">
     <SettingsMenu routes={appendRoutes(data.schemas ?? [])} rootUri="/schema/" />
   </section>
-  <section class="subnav flex gap-2">
-    <Button href="/dashboard" variant="ghost" class="w-28 text-muted-foreground">Dashboard</Button>
-    <Button href="/instances" variant="ghost" class="w-28 text-muted-foreground">Instances</Button>
-  </section>
+  <NavigationBar></NavigationBar>
   <section class="main">
     <slot />
   </section>

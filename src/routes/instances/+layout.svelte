@@ -1,15 +1,16 @@
 <script lang="ts">
-  import Button from '$lib/components/ui/button/button.svelte';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
   import type { InstanceDTO } from '$lib/data/models/instanceModel';
+  import { GanttChart, Settings2Icon, UserRoundPenIcon } from 'lucide-svelte';
+  import NavigationBar from '$lib/components/navigation-bar/NavigationBar.svelte';
 
   let { data, children } = $props();
 
   const staticRoutes = [
-    { id: 'overview', name: 'Overview' },
-    { id: 'roles', name: 'Roles' },
-    { id: 'settings', name: 'Settings' },
+    { id: 'overview', name: 'Overview', icon: GanttChart },
+    { id: 'roles', name: 'Roles', icon: UserRoundPenIcon },
+    { id: 'settings', name: 'Settings', icon: Settings2Icon },
     { id: '#separator', name: 'Separator' },
     { id: '#label', name: 'Instances' }
   ];
@@ -29,10 +30,7 @@
   <section class="sidebar">
     <SettingsMenu routes={appendRoutes(data.instances)} rootUri="/instances/" />
   </section>
-  <section class="subnav flex gap-2">
-    <Button href="/schema" variant="ghost" class="w-28 text-muted-foreground">Schema</Button>
-    <Button href="/dashboard" variant="ghost" class="w-28 text-muted-foreground">Dashboard</Button>
-  </section>
+  <NavigationBar></NavigationBar>
   <section class="main">
     {@render children()}
   </section>

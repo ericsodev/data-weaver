@@ -1,14 +1,22 @@
 <script lang="ts">
-  import Button from '$lib/components/ui/button/button.svelte';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
+  import {
+    Database,
+    GanttChartIcon,
+    KeyRoundIcon,
+    UserRoundPenIcon,
+    UsersRoundIcon,
+    WebhookIcon
+  } from 'lucide-svelte';
+  import NavigationBar from '$lib/components/navigation-bar/NavigationBar.svelte';
   const routes = [
-    { id: 'overview', name: 'Overview' },
-    { id: 'users', name: 'Users' },
-    { id: 'roles', name: 'Roles' },
-    { id: 'permissions', name: 'Permissions' },
-    { id: 'webhooks', name: 'Webhooks' },
-    { id: 'database', name: 'Database' }
+    { id: 'overview', name: 'Overview', icon: GanttChartIcon },
+    { id: 'users', name: 'Users', icon: UsersRoundIcon },
+    { id: 'roles', name: 'Roles', icon: UserRoundPenIcon },
+    { id: 'permissions', name: 'Permissions', icon: KeyRoundIcon },
+    { id: 'webhooks', name: 'Webhooks', icon: WebhookIcon },
+    { id: 'database', name: 'Database', icon: Database }
   ];
 </script>
 
@@ -21,14 +29,6 @@
   <section class="sidebar">
     <SettingsMenu {routes} rootUri="/dashboard/" />
   </section>
-  <section class="subnav flex gap-2">
-    <Button
-      data-sveltekit-prefetch
-      href="/schema"
-      variant="ghost"
-      class="w-28 text-muted-foreground">Schema</Button
-    >
-    <Button href="/instances" variant="ghost" class="w-28 text-muted-foreground">Instances</Button>
-  </section>
+  <NavigationBar></NavigationBar>
   <section class="main"></section>
 </div>
