@@ -2,13 +2,21 @@
   import Button from '$lib/components/ui/button/button.svelte';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
+  import {
+    Database,
+    GanttChartIcon,
+    KeyRoundIcon,
+    UserRoundPenIcon,
+    UsersRoundIcon,
+    WebhookIcon
+  } from 'lucide-svelte';
   const routes = [
-    { id: 'overview', name: 'Overview' },
-    { id: 'users', name: 'Users' },
-    { id: 'roles', name: 'Roles' },
-    { id: 'permissions', name: 'Permissions' },
-    { id: 'webhooks', name: 'Webhooks' },
-    { id: 'database', name: 'Database' }
+    { id: 'overview', name: 'Overview', icon: GanttChartIcon },
+    { id: 'users', name: 'Users', icon: UsersRoundIcon },
+    { id: 'roles', name: 'Roles', icon: UserRoundPenIcon },
+    { id: 'permissions', name: 'Permissions', icon: KeyRoundIcon },
+    { id: 'webhooks', name: 'Webhooks', icon: WebhookIcon },
+    { id: 'database', name: 'Database', icon: Database }
   ];
 </script>
 

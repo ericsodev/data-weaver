@@ -3,13 +3,14 @@
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
   import type { InstanceDTO } from '$lib/data/models/instanceModel';
+  import { GanttChart, Settings2Icon, UserRoundPenIcon } from 'lucide-svelte';
 
   let { data, children } = $props();
 
   const staticRoutes = [
-    { id: 'overview', name: 'Overview' },
-    { id: 'roles', name: 'Roles' },
-    { id: 'settings', name: 'Settings' },
+    { id: 'overview', name: 'Overview', icon: GanttChart },
+    { id: 'roles', name: 'Roles', icon: UserRoundPenIcon },
+    { id: 'settings', name: 'Settings', icon: Settings2Icon },
     { id: '#separator', name: 'Separator' },
     { id: '#label', name: 'Instances' }
   ];

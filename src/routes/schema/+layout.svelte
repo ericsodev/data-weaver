@@ -3,12 +3,13 @@
   import Button from '$lib/components/ui/button/button.svelte';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
+  import { GanttChartIcon, KeyRoundIcon, Settings2Icon } from 'lucide-svelte';
 
   export let data;
   const staticRoutes = [
-    { id: 'overview', name: 'Overview' },
-    { id: 'permissions', name: 'Permissions' },
-    { id: 'settings', name: 'Settings' },
+    { id: 'overview', name: 'Overview', icon: GanttChartIcon },
+    { id: 'permissions', name: 'Permissions', icon: KeyRoundIcon },
+    { id: 'settings', name: 'Settings', icon: Settings2Icon },
     { id: '#separator', name: 'Separator' },
     { id: '#label', name: 'Schemas' }
   ];
