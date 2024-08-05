@@ -7,8 +7,6 @@
   import { PlusIcon, Trash2 } from 'lucide-svelte';
   import { createAttributeState } from './AttributeState.svelte';
   import { invalidateAll } from '$app/navigation';
-  import { Dialog, DialogTitle, DialogTrigger } from '$lib/components/ui/dialog';
-  import DialogContent from '$lib/components/ui/dialog/dialog-content.svelte';
   import DeleteSchemaPrompt from './DeleteSchemaPrompt.svelte';
 
   let { data } = $props();

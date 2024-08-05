@@ -2,7 +2,7 @@ import { permissions } from '$lib/auth/roles/permissions';
 import { db } from '$lib/data/actions';
 import type { InstanceDTO } from '$lib/data/models/instanceModel';
 import { schemaPutValidation } from '$lib/validationSchemas/api/schema';
-import { error, json, type RequestHandler } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
 export const PUT = async ({ params, request, locals }) => {
   const payload = await request.json();

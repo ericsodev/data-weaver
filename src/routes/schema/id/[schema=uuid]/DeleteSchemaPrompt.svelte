@@ -7,8 +7,8 @@
   import { onMount } from 'svelte';
   import type { AttachedInstance } from '../../../api/schema/[id=uuid]/attached-instances/+server';
   import { Skeleton } from '$lib/components/ui/skeleton';
-  import { CheckIcon, CircleAlertIcon, MinusIcon, X } from 'lucide-svelte';
-  import { Alert, AlertDescription, Title } from '$lib/components/ui/alert';
+  import { CheckIcon, CircleAlertIcon } from 'lucide-svelte';
+  import { Alert, AlertDescription } from '$lib/components/ui/alert';
   import AlertTitle from '$lib/components/ui/alert/alert-title.svelte';
   import { Badge } from '$lib/components/ui/badge';
 

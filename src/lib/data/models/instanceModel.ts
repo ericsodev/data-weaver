@@ -18,13 +18,18 @@ export class Instance extends mixin(BaseModel) {
   }
 
   async $afterInsert(ctx: QueryContext) {
-    super.$afterInsert(ctx);
+    await super.$afterInsert(ctx);
     await this.transformAfterRead();
   }
 
   async $afterFind(ctx: QueryContext) {
-    super.$afterFind(ctx);
+    await super.$afterFind(ctx);
     await this.transformAfterRead();
+  }
+
+  async $beforeDelete(queryContext: QueryContext): Promise<void> {
+    await super.$beforeDelete(queryContext);
+    await db.instanceData.deleteInstanceData(this.id);
   }
 
   private async transformAfterRead() {
