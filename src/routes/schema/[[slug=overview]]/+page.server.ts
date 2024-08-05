@@ -36,6 +36,7 @@ const createSchemaHandler: Action = async ({ request, locals }) => {
   }
   return error(409, 'Schema exists');
 };
+
 export const actions: Actions = {
   default: createSchemaHandler
 };
