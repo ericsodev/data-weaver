@@ -59,6 +59,16 @@ export class InstanceDataAction {
     }
     await Model.query().knex().table(tableName).update(dbData).where('instance_id', instanceId);
   }
+
+  public async deleteInstanceData(instanceId: string) {
+    const instance = await db.instance.find({ id: instanceId }, 'schema');
+    if (!instance || !instance.schema) {
+      throw new Error('Instance or schema not found.');
+    }
+
+    const tableName = instance.schema.dataTableName;
+    await Model.query().knex().table(tableName).where('instance_id', instanceId).del();
+  }
 }
 
 /**
