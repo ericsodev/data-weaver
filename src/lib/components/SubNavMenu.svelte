@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import Button from '$lib/components/ui/button/button.svelte';
   import { cn } from '$lib/utils';
@@ -30,10 +31,16 @@
   const update = () => routes.filter((r) => checkIsPrefix(r.id))[0] ?? routes[0];
   let activeUrl = $derived(update()?.id ?? '');
 
+  const signout = () => {
+    fetch('/api/user/logout', { method: 'POST' }).then(() => {
+      goto('/', { invalidateAll: true });
+    });
+  };
+
   let openMenu = $state(false);
 </script>
 
-<div class="md:flex h-full w-full flex-col items-stretch gap-2.5 hidden">
+<div class="md:flex h-full w-full flex-col items-stretch gap-2.5 hidden pb-4">
   {#each routes as { id, name, icon }}
     {#if id === '#separator'}
       <hr class="mb-2" />
@@ -54,6 +61,8 @@
       >
     {/if}
   {/each}
+
+  <Button onclick={signout} variant="outline" class="text-center mt-auto">Sign out</Button>
 </div>
 <div class=" md:hidden">
   <Button
@@ -95,6 +104,8 @@
           >
         {/if}
       {/each}
+
+      <Button onclick={signout} variant="outline" class="text-center">Sign out</Button>
     </div>
   {/if}
 </div>
