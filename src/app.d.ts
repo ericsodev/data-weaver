@@ -12,7 +12,9 @@ declare global {
     //interface PageData {
     //	session?: Session;
     //}
-    // interface PageState {}
+    interface PageState {
+      showModal: boolean;
+    }
     // interface Platform {}
   }
 }

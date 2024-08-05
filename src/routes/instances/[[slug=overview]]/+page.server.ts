@@ -1,4 +1,4 @@
-import { error, type Actions } from '@sveltejs/kit';
+import { error, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/data/actions';
 import { removePrototype } from '$lib/utils/toPojo';
@@ -43,10 +43,14 @@ export const actions: Actions = {
 
     // TODO:permissions to create instances
 
-    await createInstanceWithPermission({
+    const createdInstance = await createInstanceWithPermission({
       ...form.data,
       creatorId: event.locals.user.id
     });
+
+    if (createdInstance) {
+      redirect(300, `/instances/id/${createdInstance.id}`);
+    }
 
     return {
       form
