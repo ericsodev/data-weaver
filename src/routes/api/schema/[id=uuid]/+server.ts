@@ -1,12 +1,13 @@
 import { permissions } from '$lib/auth/roles/permissions';
 import { db } from '$lib/data/actions';
+import type { InstanceDTO } from '$lib/data/models/instanceModel';
 import { schemaPutValidation } from '$lib/validationSchemas/api/schema';
-import { error, json, type RequestHandler } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
-export const PUT: RequestHandler = async ({ params, request, locals }) => {
+export const PUT = async ({ params, request, locals }) => {
   const payload = await request.json();
   const valPayload = schemaPutValidation.safeParse(payload);
-  const schemaId = params['id'];
+  const schemaId = params.id;
 
   if (!valPayload.success) {
     return error(400, { message: 'Validation error' });
@@ -69,7 +70,7 @@ export const PUT: RequestHandler = async ({ params, request, locals }) => {
   return json('');
 };
 
-export const DELETE: RequestHandler = async ({ params, locals }) => {
+export const DELETE = async ({ params, locals }) => {
   const schemaId = params['id'];
   if (!schemaId) {
     return error(400, { message: 'Missing id' });
@@ -83,6 +84,33 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 
   if (!canDelete) {
     return error(401, { message: 'Unauthorized' });
+  }
+
+  // Cascade delete instances
+
+  const attachedInstances = await db.instance.findAll({ schemaId: params.id });
+
+  if (attachedInstances === undefined) {
+    return json([]);
+  }
+
+  const userId = locals.user.id;
+  const getInstanceAbilities = async (instance: InstanceDTO) => {
+    const perms = await permissions.instance.getAbilities(instance.id, userId);
+    return {
+      ...instance,
+      permissions: perms
+    };
+  };
+
+  const instancePerms = await Promise.all(attachedInstances.map((i) => getInstanceAbilities(i)));
+
+  if (!instancePerms.every((i) => i.permissions.includes('INSTANCE:DELETE'))) {
+    error(401, { message: 'Unauthorized to delete attached instances.' });
+  }
+
+  for (const instance of attachedInstances) {
+    await db.instance.delete(instance);
   }
 
   const schema = await db.schema.delete({ id: schemaId });

@@ -5,6 +5,7 @@ const logout: Action = async ({ cookies }) => {
   if (cookies.get('data-weaver-session')) {
     cookies.set('data-weaver-session', '', { path: '/' });
   }
+
   return redirect(303, '/');
 };
 export const actions: Actions = {

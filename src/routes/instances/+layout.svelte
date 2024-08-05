@@ -2,7 +2,7 @@
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
   import type { InstanceDTO } from '$lib/data/models/instanceModel';
-  import { GanttChart, Settings2Icon, UserRoundPenIcon } from 'lucide-svelte';
+  import { FileText, GanttChart, Settings2Icon, UserRoundPenIcon } from 'lucide-svelte';
   import NavigationBar from '$lib/components/navigation-bar/NavigationBar.svelte';
 
   let { data, children } = $props();
@@ -16,7 +16,10 @@
   ];
 
   const appendRoutes = (instances: Pick<InstanceDTO, 'id' | 'name'>[]) => {
-    const routes = [...staticRoutes, ...instances.map((s) => ({ id: 'id/' + s.id, name: s.name }))];
+    const routes = [
+      ...staticRoutes,
+      ...instances.map((s) => ({ id: 'id/' + s.id, name: s.name, icon: FileText }))
+    ];
     return routes;
   };
 </script>

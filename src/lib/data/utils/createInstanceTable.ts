@@ -23,8 +23,6 @@ export async function createInstanceTable(schema: SchemaDTO): Promise<string> {
   return tableName;
 }
 
-export async function linkInstance(instanceID: string): Promise<void> {}
-
 function createColumn(table: TableBuilder, attribute: AttributeDTO) {
   switch (attribute.type) {
     case 'string':
@@ -38,11 +36,3 @@ function createColumn(table: TableBuilder, attribute: AttributeDTO) {
       break;
   }
 }
-
-type InstanceTableDTO<T extends AttributeDTO[]> = {
-  [name in T[number]['name']]: T[number]['type'] extends 'string'
-    ? string
-    : T[number]['type'] extends 'number'
-      ? number
-      : boolean;
-};

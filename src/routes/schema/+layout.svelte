@@ -2,7 +2,7 @@
   import type { SchemaDTO } from '$lib/data/models/schemaModel';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
-  import { GanttChartIcon, KeyRoundIcon, Settings2Icon } from 'lucide-svelte';
+  import { GanttChartIcon, KeyRoundIcon, Settings2Icon, SwatchBook } from 'lucide-svelte';
   import NavigationBar from '$lib/components/navigation-bar/NavigationBar.svelte';
 
   export let data;
@@ -14,7 +14,10 @@
     { id: '#label', name: 'Schemas' }
   ];
   const appendRoutes = (schemas: Pick<SchemaDTO, 'id' | 'name'>[]) => {
-    const routes = [...staticRoutes, ...schemas.map((s) => ({ id: 'id/' + s.id, name: s.name }))];
+    const routes = [
+      ...staticRoutes,
+      ...schemas.map((s) => ({ id: 'id/' + s.id, name: s.name, icon: SwatchBook }))
+    ];
     return routes;
   };
 </script>

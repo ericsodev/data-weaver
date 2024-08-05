@@ -6,7 +6,8 @@
   import { Button } from '$lib/components/ui/button';
   import { PlusIcon, Trash2 } from 'lucide-svelte';
   import { createAttributeState } from './AttributeState.svelte';
-  import { goto, invalidateAll } from '$app/navigation';
+  import { invalidateAll } from '$app/navigation';
+  import DeleteSchemaPrompt from './DeleteSchemaPrompt.svelte';
 
   let { data } = $props();
   let error = $state('');
@@ -50,15 +51,7 @@
     }
   }
 
-  const handleDelete = async () => {
-    if (!canDelete) return;
-    const res = await fetch(`/api/schema/${data.schema.id}`, { method: 'DELETE' });
-    if (!res.ok) {
-      error = 'Error deleting schema.';
-    } else {
-      goto('/schema', { invalidateAll: true });
-    }
-  };
+  let openDeletePrompt = $state(false);
 </script>
 
 <header class="mb-8 flex justify-between">
@@ -69,11 +62,14 @@
     </h2>
   </span>
   {#if canDelete}
-    <Button onclick={handleDelete} size="sm" variant="outline" class="self-end"
+    <Button onclick={() => (openDeletePrompt = true)} size="sm" variant="outline" class="self-end"
       ><Trash2 class="w-4 mr-2"></Trash2> Delete</Button
     >
   {/if}
 </header>
+
+<DeleteSchemaPrompt bind:isOpen={openDeletePrompt}></DeleteSchemaPrompt>
+
 <div>
   <Table.Root class="w-full">
     <Table.Header>
