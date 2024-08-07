@@ -7,7 +7,7 @@
   import { page } from '$app/stores';
   import Button from '$lib/components/ui/button/button.svelte';
   import { cn } from '$lib/utils';
-  import { ChevronDown, ChevronUp, Icon } from 'lucide-svelte';
+  import { ChevronDown, ChevronUp, Icon, LogOut } from 'lucide-svelte';
   import type { ComponentType } from 'svelte';
   import { fade } from 'svelte/transition';
 
@@ -62,7 +62,9 @@
     {/if}
   {/each}
 
-  <Button onclick={signout} variant="outline" class="text-center mt-auto">Sign out</Button>
+  <Button onclick={signout} variant="outline" class="text-center mt-auto">
+    <LogOut class="w-4 mr-1.5" /> Sign out</Button
+  >
 </div>
 <div class=" md:hidden">
   <Button
@@ -105,7 +107,9 @@
         {/if}
       {/each}
 
-      <Button onclick={signout} variant="outline" class="text-center">Sign out</Button>
+      <Button onclick={signout} variant="outline" class="text-center"
+        ><LogOut class="w-4 mr-1.5"></LogOut> Sign out</Button
+      >
     </div>
   {/if}
 </div>

@@ -1,13 +1,18 @@
 import { Model, mixin } from 'objection';
 import { BaseModel } from './base';
 
-const USER_ROLES = ['admin', 'creator', 'instance_creator', 'viewer'] as const;
-type UserRole = (typeof USER_ROLES)[number];
+export enum USER_ROLES {
+  OWNER = 'Owner',
+  ADMIN = 'Admin',
+  SCHEMA_CREATOR = 'Schema Creator',
+  INSTANCE_CREATOR = 'Instance Creator',
+  EDITOR = 'Editor'
+}
 
 export class User extends mixin(BaseModel) {
   public name!: string;
   public passwordHash!: string;
-  public userRole!: UserRole;
+  public userRole!: USER_ROLES;
 
   static get tableName() {
     return 'user';
@@ -20,7 +25,7 @@ export class User extends mixin(BaseModel) {
       properties: {
         name: { type: 'string', minLength: 1, maxLength: 64 },
         passwordHash: { type: 'string', minLength: 64, maxLength: 64 },
-        userRole: { enum: [...USER_ROLES] }
+        userRole: { enum: Object.values(USER_ROLES) }
       }
     };
   }
