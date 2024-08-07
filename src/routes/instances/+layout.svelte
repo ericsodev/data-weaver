@@ -1,7 +1,7 @@
 <script lang="ts">
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
-  import type { InstanceDTO } from '$lib/data/models/instanceModel';
+  import type { InstanceDTO } from '$lib/data/models/instance.model.js';
   import { FileText, GanttChart, Settings2Icon, UserRoundPenIcon } from 'lucide-svelte';
   import NavigationBar from '$lib/components/navigation-bar/NavigationBar.svelte';
 

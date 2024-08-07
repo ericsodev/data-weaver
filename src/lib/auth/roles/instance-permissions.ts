@@ -1,5 +1,5 @@
 import { db } from '$lib/data/actions';
-import type { InstanceRole } from '$lib/data/models/instancePermissionModel';
+import type { InstanceRole } from '$lib/data/models/instance-permission.model';
 import type { ResourceAuthorizer } from './permissions';
 
 const INSTANCE_ACTIONS = ['WRITE', 'READ', 'DELETE', 'UPDATE', 'MANAGE'] as const;

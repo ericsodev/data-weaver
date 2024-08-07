@@ -4,7 +4,7 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { db } from '$lib/data/actions';
 import { sha256 } from 'js-sha256';
-import { USER_ROLES } from '$lib/data/models/userModel';
+import { USER_ROLES } from '$lib/data/models/user.model';
 
 export const actions: Actions = {
   default: async ({ request, cookies }) => {

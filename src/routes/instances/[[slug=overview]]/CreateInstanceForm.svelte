@@ -8,7 +8,7 @@
     SelectTrigger,
     SelectValue
   } from '$lib/components/ui/select';
-  import type { SchemaDTO } from '$lib/data/models/schemaModel';
+  import type { SchemaDTO } from '$lib/data/models/schema.model';
   import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { instanceCreateFormValidation } from '$lib/validationSchemas/api/instance';

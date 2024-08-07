@@ -1,5 +1,5 @@
-import type { SchemaPermission, SchemaPermissionDTO } from '../models/schemaPermissionModel';
-import { BaseActions } from './baseActions';
+import type { SchemaPermission, SchemaPermissionDTO } from '../models/schema-permission.model';
+import { BaseActions } from './base-actions';
 
 export class SchemaPermissionAction extends BaseActions<typeof SchemaPermission, 'schema'> {
   async listAuthorizedSchemas(userId: string): Promise<SchemaPermissionDTO[]> {

@@ -1,7 +1,7 @@
 import { Model, mixin, type JSONSchema, type QueryContext } from 'objection';
 import { BaseModel } from './base';
-import { User } from './userModel';
-import { Schema, type SchemaDTO } from './schemaModel';
+import { User } from './user.model';
+import { Schema, type SchemaDTO } from './schema.model';
 import type { Except } from 'type-fest';
 import type { AttributeValue } from './attribute.types';
 import { db } from '../actions';

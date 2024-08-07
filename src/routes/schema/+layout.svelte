@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SchemaDTO } from '$lib/data/models/schemaModel';
+  import type { SchemaDTO } from '$lib/data/models/schema.model.js';
   import SettingsMenu from '$lib/components/SubNavMenu.svelte';
   import '$lib/styles/mainLayout.css';
   import { GanttChartIcon, KeyRoundIcon, Settings2Icon, SwatchBook } from 'lucide-svelte';

@@ -1,5 +1,5 @@
-import type { Schema } from '../models/schemaModel';
-import { BaseActions } from './baseActions';
+import type { Schema } from '../models/schema.model';
+import { BaseActions } from './base-actions';
 
 export class SchemaAction extends BaseActions<typeof Schema, 'attributes' | 'dataTableName'> {
   protected model: typeof Schema;

@@ -1,7 +1,7 @@
 import { mixin, Model } from 'objection';
 import { BaseModel } from './base';
-import { Instance, type InstanceDTO } from './instanceModel';
-import { User } from './userModel';
+import { Instance, type InstanceDTO } from './instance.model';
+import { User } from './user.model';
 import type { Except } from 'type-fest';
 
 export const INSTANCE_USER_ROLES = ['OWNER', 'ADMIN', 'EDITOR', 'VIEWER'] as const;

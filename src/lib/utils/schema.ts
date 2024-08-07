@@ -1,5 +1,5 @@
 import { db } from '$lib/data/actions';
-import type { CreateSchemaDTO, SchemaDTO } from '$lib/data/models/schemaModel';
+import type { CreateSchemaDTO, SchemaDTO } from '$lib/data/models/schema.model';
 
 export async function createSchemaWithPermission(
   schema: CreateSchemaDTO

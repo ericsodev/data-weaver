@@ -3,7 +3,7 @@
   import Input from '$lib/components/ui/input/input.svelte';
   import { Switch } from '$lib/components/ui/switch';
   import { TableCell, TableRow } from '$lib/components/ui/table';
-  import type { AttributeDTO } from '$lib/data/models/attributeModel';
+  import type { AttributeDTO } from '$lib/data/models/attribute.model';
   import { cn } from '$lib/utils';
   import { AsteriskIcon, PencilIcon, RotateCcwIcon } from 'lucide-svelte';
   interface IProps {

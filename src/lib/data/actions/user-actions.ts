@@ -1,5 +1,5 @@
-import type { User } from '../models/userModel';
-import { BaseActions } from './baseActions';
+import type { User } from '../models/user.model';
+import { BaseActions } from './base-actions';
 
 export class UserAction extends BaseActions<typeof User> {
   protected model: typeof User;

@@ -1,5 +1,8 @@
-import type { InstancePermission, InstancePermissionDTO } from '../models/instancePermissionModel';
-import { BaseActions } from './baseActions';
+import type {
+  InstancePermission,
+  InstancePermissionDTO
+} from '../models/instance-permission.model';
+import { BaseActions } from './base-actions';
 
 export class InstancePermissionAction extends BaseActions<typeof InstancePermission, 'instance'> {
   protected model: typeof InstancePermission;

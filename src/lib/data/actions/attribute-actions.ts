@@ -1,6 +1,6 @@
 import type { TransactionOrKnex } from 'objection';
-import type { Attribute, AttributeDTO, CreateAttributeDTO } from '../models/attributeModel';
-import { BaseActions } from './baseActions';
+import type { Attribute, AttributeDTO, CreateAttributeDTO } from '../models/attribute.model';
+import { BaseActions } from './base-actions';
 
 export class AttributeActions extends BaseActions<typeof Attribute> {
   protected model: typeof Attribute;

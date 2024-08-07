@@ -1,6 +1,6 @@
 import { permissions } from '$lib/auth/roles/permissions';
 import { db } from '$lib/data/actions';
-import type { InstanceDTO } from '$lib/data/models/instanceModel';
+import type { InstanceDTO } from '$lib/data/models/instance.model';
 import { schemaPutValidation } from '$lib/validationSchemas/api/schema';
 import { error, json } from '@sveltejs/kit';
 

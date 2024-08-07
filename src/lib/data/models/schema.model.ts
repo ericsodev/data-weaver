@@ -1,7 +1,7 @@
 import { Model, mixin, type QueryContext } from 'objection';
 import { BaseModel } from './base';
-import { User } from './userModel';
-import { Attribute, type AttributeDTO } from './attributeModel';
+import { User } from './user.model';
+import { Attribute, type AttributeDTO } from './attribute.model';
 import { camelToSnakeCase } from '$lib/utils/camelToSnake';
 import type { SchemaType } from './schema.types';
 

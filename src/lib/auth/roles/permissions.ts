@@ -1,5 +1,5 @@
-import { InstanceAuthorization } from './instancePermissions';
-import { SchemaAuthorization } from './schemaPermissions';
+import { InstanceAuthorization } from './instance-permissions';
+import { SchemaAuthorization } from './schema-permissions';
 
 export interface ResourceAuthorizer<Ability extends string> {
   canI(ability: Ability, resourceId: string, userId: string): Promise<boolean>;

@@ -3,7 +3,7 @@
   import { Input } from '$lib/components/ui/input';
   import * as Select from '$lib/components/ui/select';
   import * as Table from '$lib/components/ui/table';
-  import type { AttributeFormStat, AttributeData } from './AttributeState.svelte';
+  import type { AttributeFormState, AttributeData } from './AttributeState.svelte';
   import { cn } from '$lib/utils';
   import { ATTRIBUTE_TYPES, type AttributeType } from '$lib/data/models/attribute.types';
   import { Button } from '$lib/components/ui/button';
@@ -11,7 +11,7 @@
 
   interface IProps {
     disabled?: boolean;
-    data: AttributeFormStat;
+    data: AttributeFormState;
     modify: (c: Partial<AttributeData>) => void;
     toggleDelete: () => void;
   }

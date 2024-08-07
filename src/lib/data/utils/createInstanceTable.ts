@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import knex from '../knex';
 import type { Knex } from 'knex';
-import type { AttributeDTO } from '../models/attributeModel';
-import type { SchemaDTO } from '../models/schemaModel';
+import type { AttributeDTO } from '../models/attribute.model';
+import type { SchemaDTO } from '../models/schema.model';
 
 type TableBuilder = Parameters<Parameters<Knex['schema']['createTable']>[1]>[0];
 

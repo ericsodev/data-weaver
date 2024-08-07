@@ -1,6 +1,6 @@
 import { isBoolean, isNumber, isString } from 'util';
 import { db } from '.';
-import type { InstanceDataDTO } from '../models/instanceDataModel';
+import type { InstanceDataDTO } from '../models/instance-data.model';
 import { Model } from 'objection';
 import { randomUUID } from 'crypto';
 import type { AttributeValue } from '../models/attribute.types';

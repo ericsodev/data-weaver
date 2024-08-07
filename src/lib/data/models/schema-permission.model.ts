@@ -1,7 +1,7 @@
 import { Model, mixin, type JSONSchema } from 'objection';
 import { BaseModel } from './base';
-import { Schema, type SchemaDTO } from './schemaModel';
-import { User } from './userModel';
+import { Schema, type SchemaDTO } from './schema.model';
+import { User } from './user.model';
 import type { Except } from 'type-fest';
 
 export const SCHEMA_USER_ROLES = ['OWNER', 'ADMIN', 'EDITOR', 'VIEWER'] as const;

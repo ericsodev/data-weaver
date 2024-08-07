@@ -1,5 +1,5 @@
 import { db } from '$lib/data/actions';
-import type { SCHEMA_USER_ROLES } from '$lib/data/models/schemaPermissionModel';
+import type { SCHEMA_USER_ROLES } from '$lib/data/models/schema-permission.model';
 import type { ResourceAuthorizer } from './permissions';
 
 const SCHEMA_ACTIONS = ['WRITE', 'READ', 'DELETE', 'MANAGE'] as const;
