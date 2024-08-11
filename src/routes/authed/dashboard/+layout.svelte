@@ -17,6 +17,7 @@
     { id: 'webhooks', name: 'Webhooks', icon: WebhookIcon },
     { id: 'database', name: 'Database', icon: Database }
   ];
+  export let data;
 </script>
 
 <div class="layout h-full px-12">
@@ -26,7 +27,7 @@
     </h2>
   </header>
   <section class="sidebar">
-    <SettingsMenu {routes} rootUri="/dashboard/" />
+    <SettingsMenu {routes} rootUri="/authed/dashboard/" userName={data.user?.name ?? ''} />
   </section>
   <NavigationBar></NavigationBar>
   <section class="main">

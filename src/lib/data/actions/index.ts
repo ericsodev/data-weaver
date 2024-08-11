@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Model from '../database';
+import _Model from '../database';
 
 import { User } from '../models/user.model';
 import { UserAction } from './user-actions';
@@ -15,6 +15,8 @@ import { InstancePermissionAction } from './instance-permission-actions';
 import { InstanceAction } from './instance-actions';
 import { Instance } from '../models/instance.model';
 import { InstanceDataAction } from './instance-data-actions';
+import { RoleActions } from './roles';
+import { Role } from '../models/role.model';
 
 const db = {
   user: new UserAction(User),
@@ -23,7 +25,8 @@ const db = {
   instancePermission: new InstancePermissionAction(InstancePermission),
   instanceData: new InstanceDataAction(),
   schemaPermission: new SchemaPermissionAction(SchemaPermission),
-  attribute: new AttributeActions(Attribute)
+  attribute: new AttributeActions(Attribute),
+  role: new RoleActions(Role)
 };
 
 export { db };

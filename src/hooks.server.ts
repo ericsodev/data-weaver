@@ -12,9 +12,9 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     // TODO: Add session validation
-    const user = await db.user.find({ id: parsedCookie.data.id });
+    const user = await db.user.find({ id: parsedCookie.data.id }, 'roles');
     if (user) {
-      event.locals.user = { name: user.name, id: user.id, userRole: user.userRole };
+      event.locals.user = { name: user.name, id: user.id, roles: user.roles };
     }
   }
 
@@ -26,8 +26,6 @@ export const handle: Handle = async ({ event, resolve }) => {
   return response;
 };
 
-const protectedRoutes: string[] = ['/dashboard', '/settings', '/account', '/schema', '/data'];
-
 function isProtectedRoute(path: string): boolean {
-  return protectedRoutes.map((route) => path.startsWith(route)).some(Boolean);
+  return path.startsWith('/authed');
 }

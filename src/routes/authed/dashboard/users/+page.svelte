@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Badge } from '$lib/components/ui/badge';
   import {
     Table,
     TableBody,
@@ -28,7 +29,11 @@
           {user.name}
         </TableCell>
         <TableCell>{dayjs(user.createdAt).format('MMMM DD, YYYY')}</TableCell>
-        <TableCell>{user.userRole}</TableCell>
+        <TableCell>
+          {#each user.roles as role}
+            <Badge>{role.name}</Badge>
+          {/each}
+        </TableCell>
       </TableRow>
     {/each}
   </TableBody>

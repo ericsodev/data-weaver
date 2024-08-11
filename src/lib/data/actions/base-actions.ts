@@ -38,6 +38,7 @@ export class BaseActions<
             qb.withGraphFetched(relExpr);
           }
         }, relations)
+        .modify('nonDeleted')
         .first();
       return ret as unknown as GenericDTO<T>;
     } catch (error: unknown) {
@@ -58,7 +59,8 @@ export class BaseActions<
           if (relExpr) {
             qb.withGraphFetched(relExpr);
           }
-        }, relations);
+        }, relations)
+        .modify('nonDeleted');
       return ret as unknown as GenericDTO<T>[];
     } catch (error: unknown) {
       console.log(error as string);
@@ -75,7 +77,7 @@ export class BaseActions<
     data: RequireAtLeastOne<CreateDTO<T, E>> & { id: string }
   ): Promise<GenericDTO<T> | undefined> {
     try {
-      const ret = await this.model.query().patchAndFetchById(data.id, data);
+      const ret = await this.model.query().patchAndFetchById(data.id, data).modify('nonDeleted');
       return ret as unknown as GenericDTO<T>;
     } catch (error: unknown) {
       console.log(error as string);

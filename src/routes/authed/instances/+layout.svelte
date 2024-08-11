@@ -31,7 +31,11 @@
     </h2>
   </header>
   <section class="sidebar">
-    <SettingsMenu routes={appendRoutes(data.instances)} rootUri="/instances/" />
+    <SettingsMenu
+      routes={appendRoutes(data.instances)}
+      rootUri="/authed/instances/"
+      userName={data.user?.name ?? ''}
+    />
   </section>
   <NavigationBar></NavigationBar>
   <section class="main">

@@ -9,7 +9,7 @@
 
 <section class="subnav flex gap-2">
   <Button
-    href="/dashboard"
+    href="/authed/dashboard"
     variant={path.startsWith('/dashboard') ? 'secondary' : 'ghost'}
     class={cn('text-muted-foreground', path.startsWith('/dashboard') && 'text-white')}
   >
@@ -20,7 +20,7 @@
   >
   <Button
     data-sveltekit-prefetch
-    href="/schema"
+    href="/authed/schema"
     variant={path.startsWith('/schema') ? 'secondary' : 'ghost'}
     class={cn('text-muted-foreground', path.startsWith('/schema') && 'text-white')}
   >
@@ -31,7 +31,7 @@
   </Button>
   <Button
     data-sveltekit-prefetch
-    href="/instances"
+    href="/authed/instances"
     variant={path.startsWith('/instances') ? 'secondary' : 'ghost'}
     class={cn('text-muted-foreground', path.startsWith('/instances') && 'text-white')}
   >

@@ -1,11 +1,10 @@
 import type { Reroute } from '@sveltejs/kit';
 
 const translated: Record<string, string> = {
-  '/dashboard/overview': '/dashboard'
+  '/authed/dashboard/overview': '/authed/dashboard'
 };
 
 export const reroute: Reroute = ({ url }) => {
-  console.log('hi');
   if (url.pathname in translated) {
     return translated[url.pathname];
   }

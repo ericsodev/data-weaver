@@ -7,7 +7,7 @@ export const load = async ({ locals }) => {
     redirect(300, '/');
   }
 
-  const users = (await db.user.findAll({})) ?? [];
+  const users = (await db.user.findAll({}, 'roles')) ?? [];
 
   return {
     users: removePrototype(users)

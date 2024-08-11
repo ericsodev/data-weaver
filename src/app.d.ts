@@ -7,7 +7,7 @@ declare global {
   namespace App {
     // interface Error {}
     interface Locals {
-      user?: Pick<User, 'id' | 'name' | 'userRole'>;
+      user?: Pick<User, 'id' | 'name' | 'roles'>;
     }
     //interface PageData {
     //	session?: Session;

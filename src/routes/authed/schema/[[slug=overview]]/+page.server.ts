@@ -32,7 +32,7 @@ const createSchemaHandler: Action = async ({ request, locals }) => {
   });
 
   if (schema) {
-    return redirect(300, `/schema/id/${schema.id}`);
+    return redirect(300, `/authed/schema/id/${schema.id}`);
   }
   return error(409, 'Schema exists');
 };

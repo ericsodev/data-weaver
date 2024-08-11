@@ -33,7 +33,7 @@
         <Button href="/register">Get Started</Button>
         <Button href="/login" class="w-24" variant="secondary">Login</Button>
       {:else}
-        <Button href="/dashboard" class="px-6">Go to dashboard</Button>
+        <Button href="/authed/dashboard" class="px-6">Go to dashboard</Button>
       {/if}
     </section>
   </main>

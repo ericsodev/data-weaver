@@ -63,8 +63,8 @@
     {/if}
   {/each}
 
-  <p class="text-muted-foreground mt-auto text-sm text-center">Signed in as: {userName}</p>
-  <Button onclick={signout} variant="outline" class="text-center mt-2">
+  <p class="text-muted-foreground mt-auto text-sm">Signed in as: {userName}</p>
+  <Button onclick={signout} variant="outline" class="text-center">
     <LogOut class="w-4 mr-1.5" /> Sign out</Button
   >
 </div>

@@ -18,5 +18,5 @@ export const GET: Handle = async ({ event }) => {
     return error(401, 'Invalid session');
   }
 
-  return json({ id: user.id, name: user.name, userRole: user.userRole });
+  return json({ id: user.id, name: user.name, roles: user.roles });
 };

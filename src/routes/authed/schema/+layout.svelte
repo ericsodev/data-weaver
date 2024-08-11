@@ -29,7 +29,11 @@
     </h2>
   </header>
   <section class="sidebar">
-    <SettingsMenu routes={appendRoutes(data.schemas ?? [])} rootUri="/schema/" />
+    <SettingsMenu
+      routes={appendRoutes(data.schemas ?? [])}
+      rootUri="/authed/schema/"
+      userName={data.user?.name ?? ''}
+    />
   </section>
   <NavigationBar></NavigationBar>
   <section class="main">

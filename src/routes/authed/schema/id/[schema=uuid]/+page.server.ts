@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ params, locals, depends }) => {
   }
 
   if (!params.schema) {
-    redirect(301, '/schema');
+    redirect(301, '/authed/schema');
   }
 
   const userAuthLevel = await db.schemaPermission.getAuthorizationLevel({

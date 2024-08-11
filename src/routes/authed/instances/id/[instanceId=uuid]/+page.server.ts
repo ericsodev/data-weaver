@@ -7,7 +7,7 @@ import { removePrototype } from '$lib/utils/toPojo';
 export const load: PageServerLoad = async ({ locals, params }) => {
   const instanceId = params['instanceId'];
 
-  if (!instanceId) redirect(301, '/instances');
+  if (!instanceId) redirect(301, '/authed/instances');
   if (!locals.user) redirect(401, '/login');
 
   const abilities = await permissions.instance.getAbilities(instanceId, locals.user.id);

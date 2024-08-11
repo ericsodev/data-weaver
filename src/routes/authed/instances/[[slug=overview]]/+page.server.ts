@@ -49,7 +49,7 @@ export const actions: Actions = {
     });
 
     if (createdInstance) {
-      redirect(300, `/instances/id/${createdInstance.id}`);
+      redirect(300, `/authed/instances/id/${createdInstance.id}`);
     }
 
     return {
