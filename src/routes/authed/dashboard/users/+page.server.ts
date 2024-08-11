@@ -7,6 +7,7 @@ export const load = async ({ locals }) => {
     redirect(300, '/');
   }
 
+  console.log('hii');
   const users = (await db.user.findAll({}, 'roles')) ?? [];
 
   return {

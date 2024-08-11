@@ -11,7 +11,7 @@ export class UserAction extends BaseActions<typeof User, 'roles'> {
 
   override async delete(data: { id: string }): Promise<boolean | undefined> {
     try {
-      await this.model.query().updateAndFetchById(data.id, { deletedAt: new Date().toISOString() });
+      await this.model.query().patchAndFetchById(data.id, { deletedAt: new Date().toISOString() });
       return true;
     } catch {
       return false;
