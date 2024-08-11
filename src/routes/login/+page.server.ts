@@ -22,7 +22,7 @@ export const actions: Actions = {
       cookies.set('data-weaver-session', stringifySession({ session_id: '8', id: user.id }), {
         path: '/'
       });
-      return redirect(300, '/dashboard');
+      return redirect(300, '/authed/dashboard');
     }
 
     return setError(loginForm, 'password', 'Invalid login');

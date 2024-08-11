@@ -1,7 +1,7 @@
-import type { InstanceAbility } from '$lib/auth/roles/instancePermissions.js';
+import type { InstanceAbility } from '$lib/auth/roles/instance-permissions';
 import { permissions } from '$lib/auth/roles/permissions.js';
 import { db } from '$lib/data/actions/';
-import type { InstanceDTO } from '$lib/data/models/instanceModel.js';
+import type { InstanceDTO } from '$lib/data/models/instance.model.js';
 import { error, json } from '@sveltejs/kit';
 import type { Merge } from 'type-fest';
 

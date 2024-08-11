@@ -6,9 +6,11 @@ export async function up(knex: Knex): Promise<void> {
     t.datetime('created_at').notNullable();
     t.datetime('updated_at').notNullable();
     t.datetime('deleted_at');
-    t.string('name').unique().notNullable();
+
+    t.string('name').notNullable();
     t.string('password_hash').notNullable();
-    t.string('user_role').notNullable();
+
+    t.unique(['name'], { predicate: knex.whereNull('deleted_at') });
   });
 }
 

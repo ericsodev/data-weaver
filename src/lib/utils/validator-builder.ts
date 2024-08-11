@@ -1,4 +1,4 @@
-import type { AttributeDTO } from '$lib/data/models/attributeModel';
+import type { AttributeDTO } from '$lib/data/models/attribute.model';
 import { z } from 'zod';
 import { fromError, type ZodError } from 'zod-validation-error';
 

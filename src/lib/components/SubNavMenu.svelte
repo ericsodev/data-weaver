@@ -3,19 +3,21 @@
 </script>
 
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import Button from '$lib/components/ui/button/button.svelte';
   import { cn } from '$lib/utils';
-  import { ChevronDown, ChevronUp, Icon } from 'lucide-svelte';
+  import { ChevronDown, ChevronUp, Icon, LogOut } from 'lucide-svelte';
   import type { ComponentType } from 'svelte';
   import { fade } from 'svelte/transition';
 
   interface Props {
     routes: Route[];
     rootUri: string;
+    userName: string;
   }
 
-  let { routes, rootUri }: Props = $props();
+  let { routes, rootUri, userName }: Props = $props();
 
   rootUri = rootUri.endsWith('/') ? rootUri : rootUri + '/';
   // Checks if rootUri + uri is a prefix of the current URI
@@ -30,10 +32,16 @@
   const update = () => routes.filter((r) => checkIsPrefix(r.id))[0] ?? routes[0];
   let activeUrl = $derived(update()?.id ?? '');
 
+  const signout = () => {
+    fetch('/api/user/logout', { method: 'POST' }).then(() => {
+      goto('/', { invalidateAll: true });
+    });
+  };
+
   let openMenu = $state(false);
 </script>
 
-<div class="md:flex h-full w-full flex-col items-stretch gap-2.5 hidden">
+<div class="md:flex h-full w-full flex-col items-stretch gap-2.5 hidden pb-4">
   {#each routes as { id, name, icon }}
     {#if id === '#separator'}
       <hr class="mb-2" />
@@ -54,6 +62,11 @@
       >
     {/if}
   {/each}
+
+  <p class="text-muted-foreground mt-auto text-sm text-center">Signed in as: {userName}</p>
+  <Button onclick={signout} variant="outline" class="text-center mt-2">
+    <LogOut class="w-4 mr-1.5" /> Sign out</Button
+  >
 </div>
 <div class=" md:hidden">
   <Button
@@ -95,6 +108,10 @@
           >
         {/if}
       {/each}
+
+      <Button onclick={signout} variant="outline" class="text-center"
+        ><LogOut class="w-4 mr-1.5"></LogOut> Sign out</Button
+      >
     </div>
   {/if}
 </div>

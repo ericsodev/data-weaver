@@ -1,5 +1,5 @@
 import { db } from '$lib/data/actions';
-import type { CreateInstanceDTO, InstanceDTO } from '$lib/data/models/instanceModel';
+import type { CreateInstanceDTO, InstanceDTO } from '$lib/data/models/instance.model';
 
 export async function createInstanceWithPermission(
   instance: CreateInstanceDTO
