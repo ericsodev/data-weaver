@@ -12,7 +12,7 @@
   } from '$lib/components/ui/table';
   import dayjs from 'dayjs';
   import { UserMinus } from 'lucide-svelte';
-  import { invalidate, invalidateAll, pushState } from '$app/navigation';
+  import { invalidateAll, pushState } from '$app/navigation';
   import { page } from '$app/stores';
   import { Dialog, DialogContent, DialogHeader } from '$lib/components/ui/dialog';
   import DialogTitle from '$lib/components/ui/dialog/dialog-title.svelte';
