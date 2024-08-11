@@ -35,7 +35,7 @@
 
     const res = await fetch(`/api/schema/${schemaId}`, { method: 'DELETE' });
     if (res.ok) {
-      goto('/schema', { invalidateAll: true });
+      goto('/authed/schema', { invalidateAll: true });
     }
   };
 
