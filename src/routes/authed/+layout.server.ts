@@ -1,4 +1,5 @@
 import { error, redirect } from '@sveltejs/kit';
+import { removePrototype } from '$lib/utils/toPojo';
 
 export const load = ({ locals, cookies }) => {
   const user = locals.user;
@@ -12,5 +13,7 @@ export const load = ({ locals, cookies }) => {
     error(401, { message: 'The administrator has not assigned a role to your account.' });
   }
 
-  return {};
+  return {
+    user: removePrototype(user)
+  };
 };

@@ -1,3 +1,4 @@
+import { permissions } from '$lib/auth/roles/permissions';
 import { db } from '$lib/data/actions';
 import { cookieSchema } from '$lib/validationSchemas/cookie';
 import { redirect, type Handle } from '@sveltejs/kit';
@@ -14,7 +15,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     // TODO: Add session validation
     const user = await db.user.find({ id: parsedCookie.data.id }, 'roles');
     if (user) {
-      event.locals.user = { name: user.name, id: user.id, roles: user.roles };
+      const abilities = await permissions.system.getAbilities(user.id);
+      event.locals.user = { name: user.name, id: user.id, roles: user.roles, abilities };
     }
   }
 
