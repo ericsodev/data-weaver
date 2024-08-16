@@ -14,6 +14,7 @@
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { schemaPostValidation } from '$lib/validationSchemas/api/schema';
   import { Button } from '$lib/components/ui/button';
+  import { Alert } from '$lib/components/ui/alert';
 
   let { data } = $props();
 
@@ -31,7 +32,8 @@
     validators: zodClient(schemaPostValidation)
   });
 
-  const { form: formData, enhance } = form;
+  const { form: formData, enhance, allErrors } = form;
+  console.log(...$allErrors);
 </script>
 
 <h2 class="scroll-m-20 mb-4 pb-2 text-3xl font-semibold tracking-tight first:mt-0">Schemas</h2>
@@ -64,5 +66,8 @@
       </Form.Field>
       <Button type="submit" variant="default" class="mt-4 px-8">Save</Button>
     </form>
+    {#if $allErrors.length > 0}
+      <Alert class="bg-red-400 text-sm">{$allErrors.map((x) => x.messages).join('\n')}</Alert>
+    {/if}
   </DialogContent>
 </Dialog>
