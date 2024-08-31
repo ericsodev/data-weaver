@@ -54,7 +54,7 @@
     "vite": "^5.3.4"
   },
   "dependencies": {
-    "bits-ui": "^0.21.12",
+    "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.12",
     "formsnap": "^1.0.1",
