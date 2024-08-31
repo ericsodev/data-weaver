@@ -2,6 +2,10 @@ import { db } from '$lib/data/actions';
 import type { SCHEMA_USER_ROLES } from '$lib/data/models/schema-permission.model';
 import type { ResourceAuthorizer } from './permissions';
 
+/*
+ * These are permissions scoped to a specific schema.
+ */
+
 const SCHEMA_ACTIONS = ['WRITE', 'READ', 'DELETE', 'MANAGE'] as const;
 const SCHEMA_RESOURCES = ['NAME', 'SCHEMA', 'ATTRIBUTE'] as const;
 

@@ -33,7 +33,6 @@
   });
 
   const { form: formData, enhance, allErrors } = form;
-  console.log(...$allErrors);
 </script>
 
 <h2 class="scroll-m-20 mb-4 pb-2 text-3xl font-semibold tracking-tight first:mt-0">Schemas</h2>
@@ -41,12 +40,16 @@
   {#each data.schemas as schema}
     <SchemaCard {schema}></SchemaCard>
   {/each}
-  <Card class="hover:bg-secondary transition-colors cursor-pointer min-h-36" onclick={showModal}>
-    <CardContent class="p-0 flex items-center justify-center h-full">
-      <PlusCircle class="w-5 mr-3"></PlusCircle>
-      New Schema</CardContent
-    >
-  </Card>
+  {#if data.user.abilities.includes('SCHEMA:CREATE')}
+    <Card class="hover:bg-secondary transition-colors cursor-pointer min-h-36" onclick={showModal}>
+      <CardContent class="p-0 flex items-center justify-center h-full">
+        <PlusCircle class="w-5 mr-3"></PlusCircle>
+        New Schema</CardContent
+      >
+    </Card>
+  {:else if data.schemas.length === 0}
+    <Alert>No schemas found</Alert>
+  {/if}
 </div>
 
 <Dialog open={modalOpen} onOpenChange={(value) => !value && closeModal()}>
