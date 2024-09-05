@@ -37,6 +37,7 @@ export class User extends mixin(BaseModel) {
 }
 
 export type UserDTO = Omit<User, keyof Model>;
+export type RedactedUserDTO = Omit<User, keyof Model | 'passwordHash'>;
 export type FindUserDTO = Pick<User, 'name'>;
 export type CreateUserDTO = Except<User, keyof BaseModel | 'passwordHash' | 'roles'> & {
   password: string;
