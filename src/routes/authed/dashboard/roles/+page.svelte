@@ -38,7 +38,11 @@
   </TableHeader>
   <TableBody>
     {#each users as user, i}
-      <UserTableRow {user} bind:newState={formData[i] as User}></UserTableRow>
+      <UserTableRow
+        readonly={!data.user.abilities.includes('USER:MANAGE')}
+        {user}
+        bind:newState={formData[i] as User}
+      ></UserTableRow>
     {/each}
   </TableBody>
 </Table>

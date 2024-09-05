@@ -12,9 +12,10 @@
   interface IProps {
     user: User;
     newState: User;
+    readonly: boolean;
   }
 
-  let { user, newState = $bindable() }: IProps = $props();
+  let { user, newState = $bindable(), readonly }: IProps = $props();
 
   let assignedRoles = $derived(
     Object.entries(newState.roles)
@@ -40,23 +41,25 @@
   </TableCell>
   <TableCell>{dayjs(user.createdAt).format('MMMM DD, YYYY')}</TableCell>
   <TableCell class="flex items-center gap-4">
-    <DropdownMenu.Root closeOnItemClick={false}>
-      <DropdownMenu.Trigger asChild let:builder>
-        <Button builders={[builder]} size="sm" variant="ghost">Assign</Button>
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content class="w-56">
-        <DropdownMenu.Label>Roles</DropdownMenu.Label>
-        <DropdownMenu.Separator />
-        {#each Object.keys(newState.roles) as role}
-          <DropdownMenu.CheckboxItem
-            bind:checked={newState.roles[role as USER_ROLES]}
-            disabled={role === USER_ROLES.OWNER}
-          >
-            {role}
-          </DropdownMenu.CheckboxItem>
-        {/each}
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+    {#if !readonly}
+      <DropdownMenu.Root closeOnItemClick={false}>
+        <DropdownMenu.Trigger asChild let:builder>
+          <Button builders={[builder]} size="sm" variant="ghost">Assign</Button>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content class="w-56">
+          <DropdownMenu.Label>Roles</DropdownMenu.Label>
+          <DropdownMenu.Separator />
+          {#each Object.keys(newState.roles) as role}
+            <DropdownMenu.CheckboxItem
+              bind:checked={newState.roles[role as USER_ROLES]}
+              disabled={role === USER_ROLES.OWNER}
+            >
+              {role}
+            </DropdownMenu.CheckboxItem>
+          {/each}
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    {/if}
     <div class="flex flex-wrap items-center gap-1 w-72">
       {#each assignedRoles as role}
         <Badge variant="outline">{role}</Badge>
