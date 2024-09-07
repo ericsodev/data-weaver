@@ -7,7 +7,8 @@ export enum USER_ROLES {
   ADMIN = 'Admin',
   SCHEMA_CREATOR = 'Schema Creator',
   INSTANCE_CREATOR = 'Instance Creator',
-  EDITOR = 'Editor'
+  EDITOR = 'Editor',
+  VIEWER = 'Viewer'
 }
 
 export class Role extends BaseModel {
@@ -19,3 +20,5 @@ export class Role extends BaseModel {
 }
 
 export type RoleDTO = Except<Role, keyof Model>;
+export type CreateRoleDTO = Except<Role, keyof BaseModel>;
+export type DeleteManyRoleDTO = { userId: string; role: USER_ROLES[] };

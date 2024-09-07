@@ -68,6 +68,7 @@
     <div class="ml-auto flex items-center gap-1">
       {#if hasChanged}
         <SaveConfirmationPrompt
+          userId={user.id}
           userName={user.name}
           existingRoles={Object.keys(user.roles).filter(
             (role) => !!user.roles[role as USER_ROLES]

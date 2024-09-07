@@ -8,17 +8,35 @@
   interface IProps {
     children: Snippet;
     userName: string;
+    userId: string;
     assignedRoles: USER_ROLES[];
     existingRoles: USER_ROLES[];
   }
 
-  let { children, userName, assignedRoles, existingRoles }: IProps = $props();
+  let { children, userId, userName, assignedRoles, existingRoles }: IProps = $props();
 
   let addedRoles = $derived(assignedRoles.filter((role) => !existingRoles.includes(role)));
   let removedRoles = $derived(existingRoles.filter((role) => !assignedRoles.includes(role)));
   let unchangedRoles = $derived(assignedRoles.filter((role) => existingRoles.includes(role)));
 
   let dialogOpen = $state(false);
+  let formState = $state<'submitting' | 'done' | 'none'>('none');
+
+  async function handleSubmit() {
+    formState = 'submitting';
+    try {
+      await fetch(`/api/user/id/${userId}/roles`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          roles: assignedRoles
+        })
+      });
+      dialogOpen = false;
+    } catch (error) {
+      console.log(error);
+    }
+    formState = 'done';
+  }
 </script>
 
 <Dialog.Root bind:open={dialogOpen}>
@@ -53,8 +71,12 @@
       {/each}
     </ul>
     <div class="flex gap-2">
-      <Button>Confirm</Button>
-      <Button variant="outline" onclick={() => (dialogOpen = false)}>Cancel</Button>
+      <Button onclick={handleSubmit} disabled={formState === 'submitting'}>Confirm</Button>
+      <Button
+        variant="outline"
+        onclick={() => (dialogOpen = false)}
+        disabled={formState === 'submitting'}>Cancel</Button
+      >
     </div>
   </Dialog.Content>
 </Dialog.Root>
