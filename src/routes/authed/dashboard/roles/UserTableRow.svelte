@@ -62,7 +62,7 @@
     {/if}
     <div class="flex flex-wrap items-center gap-1 w-72">
       {#each assignedRoles as role}
-        <Badge variant="outline">{role}</Badge>
+        <Badge>{role}</Badge>
       {/each}
     </div>
     <div class="ml-auto flex items-center gap-1">

@@ -60,9 +60,11 @@
         </TableCell>
         <TableCell>{dayjs(user.createdAt).format('MMMM DD, YYYY')}</TableCell>
         <TableCell>
-          {#each user.roles as role}
-            <Badge>{role.name}</Badge>
-          {/each}
+          <div class="flex flex-wrap gap-1">
+            {#each user.roles as role}
+              <Badge>{role.name}</Badge>
+            {/each}
+          </div>
         </TableCell>
         <TableCell class="flex">
           {#if canDelete && data.user.id !== user.id}
@@ -109,7 +111,6 @@
               onclick={() => showDeleteModal(user.id)}
             >
               <UserMinus class="w-4 mr-2"></UserMinus>
-
               Remove</Button
             >
           {/if}
