@@ -1,5 +1,5 @@
-<script context="module" lang="ts">
-  export type Route = { id: string; name: string; icon?: ComponentType<Icon> };
+<script module lang="ts">
+  export type Route = { id: string; name: string; icon?: typeof ComponentIcon };
 </script>
 
 <script lang="ts">
@@ -7,8 +7,7 @@
   import { page } from '$app/stores';
   import Button from '$lib/components/ui/button/button.svelte';
   import { cn } from '$lib/utils';
-  import { ChevronDown, ChevronUp, Icon, LogOut } from 'lucide-svelte';
-  import type { ComponentType } from 'svelte';
+  import { ChevronDown, ChevronUp, ComponentIcon, LogOut } from 'lucide-svelte';
   import { fade } from 'svelte/transition';
 
   interface Props {
@@ -54,7 +53,8 @@
         class="justify-start text-start"
       >
         {#if icon}
-          <svelte:component this={icon} class="w-5 mr-3"></svelte:component>
+          {@const Icon = icon}
+          <Icon class="w-5 mr-3"></Icon>
         {:else}
           <span class="w-8"></span>
         {/if}
@@ -100,7 +100,8 @@
             class="justify-start text-start"
           >
             {#if icon}
-              <svelte:component this={icon} class="w-5 mr-3"></svelte:component>
+              {@const Icon = icon}
+              <Icon class="w-5 mr-3"></Icon>
             {:else}
               <span class="w-8"></span>
             {/if}
