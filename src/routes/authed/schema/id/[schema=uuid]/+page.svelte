@@ -8,10 +8,11 @@
   import { createAttributeState } from './AttributeState.svelte';
   import { invalidateAll } from '$app/navigation';
   import DeleteSchemaPrompt from './DeleteSchemaPrompt.svelte';
+  import { untrack } from 'svelte';
 
   let { data } = $props();
   let error = $state('');
-  let attributesState = $derived(createAttributeState(data.schema.attributes));
+  let attributesState = $derived(untrack(() => createAttributeState(data.schema.attributes)));
   const canDelete = $derived(data.abilities.includes('SCHEMA:DELETE'));
   const canModifyAttributes = $derived(data.abilities.includes('ATTRIBUTE:WRITE'));
 
