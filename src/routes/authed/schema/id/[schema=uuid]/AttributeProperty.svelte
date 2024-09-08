@@ -62,7 +62,7 @@
       }}
     >
       <Select.Trigger
-        bind:value={data.modified.type}
+        bind:value={data.modified.type!}
         class={cn(modifiedFields.type ? 'border-green-300 border-2 focus:border-none' : '')}
       >
         <Select.Value placeholder={data.modified.type}></Select.Value>

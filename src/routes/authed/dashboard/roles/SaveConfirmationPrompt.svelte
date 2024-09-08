@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { invalidate, invalidateAll } from '$app/navigation';
+  import { invalidate } from '$app/navigation';
   import { Button } from '$lib/components/ui/button';
   import * as Dialog from '$lib/components/ui/dialog';
   import type { USER_ROLES } from '$lib/data/models/role.model';

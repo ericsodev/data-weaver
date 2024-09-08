@@ -30,18 +30,14 @@ export const actions: Actions = {
 
     if (!event.locals.user) return fail(401, { form });
 
-    // validate permissions to see schema
-    const canReadSchema = await permissions.schema.canI(
-      'SCHEMA:READ',
-      form.data.schemaId,
+    const canCreateInstance = await permissions.system.canI(
+      'INSTANCE:CREATE',
       event.locals.user.id
     );
 
-    if (!canReadSchema) {
+    if (!canCreateInstance) {
       return fail(401, { form });
     }
-
-    // TODO:permissions to create instances
 
     const createdInstance = await createInstanceWithPermission({
       ...form.data,

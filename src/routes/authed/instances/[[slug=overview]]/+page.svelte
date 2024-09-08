@@ -7,6 +7,7 @@
   import { pushState } from '$app/navigation';
   import { page } from '$app/stores';
   import InstanceCard from './InstanceCard.svelte';
+  import Alert from '$lib/components/ui/alert/alert.svelte';
 
   let { data } = $props();
 
@@ -25,12 +26,17 @@
 <div class="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-4 auto-rows-fr">
   {#each data.instances as instance}
     <InstanceCard {instance}></InstanceCard>{/each}
-  <Card class="hover:bg-secondary transition-colors cursor-pointer min-h-36" onclick={showModal}>
-    <CardContent class="p-0 flex items-center justify-center h-full">
-      <PlusCircle class="w-5 mr-3"></PlusCircle>
-      New Instance</CardContent
-    >
-  </Card>
+
+  {#if data.user.abilities.includes('SCHEMA:CREATE')}
+    <Card class="hover:bg-secondary transition-colors cursor-pointer min-h-36" onclick={showModal}>
+      <CardContent class="p-0 flex items-center justify-center h-full">
+        <PlusCircle class="w-5 mr-3"></PlusCircle>
+        New Instance</CardContent
+      >
+    </Card>
+  {:else if data.instances.length === 0}
+    <Alert>No instances found</Alert>
+  {/if}
 </div>
 
 <Dialog.Root open={modalOpen} onOpenChange={(value) => !value && closeModal()}>
