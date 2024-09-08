@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { invalidate, invalidateAll } from '$app/navigation';
+  import { invalidate } from '$app/navigation';
   import { Button } from '$lib/components/ui/button';
   import * as Dialog from '$lib/components/ui/dialog';
   import type { USER_ROLES } from '$lib/data/models/role.model';
@@ -9,7 +9,7 @@
   interface IProps {
     children: Snippet;
     userName: string;
-    userId: string;
+    userId: any;
     assignedRoles: USER_ROLES[];
     existingRoles: USER_ROLES[];
   }
