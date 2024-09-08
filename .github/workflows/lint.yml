@@ -8,7 +8,7 @@ on: # event list
       - main
 
 env: # environment variables (available in any part of the action)
-  NODE_VERSION: 14
+  NODE_VERSION: 20
 
 jobs: # list of things to do
   linting:
