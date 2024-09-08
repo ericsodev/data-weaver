@@ -2,6 +2,10 @@ import { db } from '$lib/data/actions';
 import type { InstanceRole } from '$lib/data/models/instance-permission.model';
 import type { ResourceAuthorizer } from './permissions';
 
+/*
+ * These are permissions scoped to a specific instance.
+ */
+
 const INSTANCE_ACTIONS = ['WRITE', 'READ', 'DELETE', 'UPDATE', 'MANAGE'] as const;
 const INSTANCE_RESOURCES = ['INSTANCE', 'NAME', 'ATTRIBUTE'] as const;
 

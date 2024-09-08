@@ -33,11 +33,7 @@ export class BaseActions<
       const ret = await this.model
         .query()
         .where(filters)
-        .modify((qb, relExpr) => {
-          if (relExpr) {
-            qb.withGraphFetched(relExpr);
-          }
-        }, relations)
+        .withGraphFetched(relations ?? '')
         .modify('nonDeleted')
         .first();
       return ret as unknown as GenericDTO<T>;
@@ -55,11 +51,7 @@ export class BaseActions<
       const ret = await this.model
         .query()
         .where(filters)
-        .modify((qb, relExpr) => {
-          if (relExpr) {
-            qb.withGraphFetched(relExpr);
-          }
-        }, relations)
+        .withGraphFetched(relations ?? '')
         .modify('nonDeleted');
       return ret as unknown as GenericDTO<T>[];
     } catch (error: unknown) {

@@ -5,7 +5,7 @@
   import { Dialog, DialogContent, DialogDescription } from '$lib/components/ui/dialog';
   import DialogTitle from '$lib/components/ui/dialog/dialog-title.svelte';
   import { onMount } from 'svelte';
-  import type { AttachedInstance } from '../../../api/schema/[id=uuid]/attached-instances/+server';
+  import type { AttachedInstance } from '../../../../api/schema/[id=uuid]/attached-instances/+server.ts';
   import { Skeleton } from '$lib/components/ui/skeleton';
   import { CheckIcon, CircleAlertIcon } from 'lucide-svelte';
   import { Alert, AlertDescription } from '$lib/components/ui/alert';
@@ -35,7 +35,7 @@
 
     const res = await fetch(`/api/schema/${schemaId}`, { method: 'DELETE' });
     if (res.ok) {
-      goto('/schema', { invalidateAll: true });
+      goto('/authed/schema', { invalidateAll: true });
     }
   };
 

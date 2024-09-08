@@ -17,6 +17,7 @@ export type SystemAbility = {
   [Resource in keyof typeof ABILITIES]: `${Resource}:${(typeof ABILITIES)[Resource][number]}`;
 }[Resource];
 
+const ViewerAbilities: SystemAbility[] = ['SCHEMA:READ', 'INSTANCE:READ'];
 const EditorAbilities: SystemAbility[] = [
   'SCHEMA:WRITE',
   'SCHEMA:READ',
@@ -44,7 +45,8 @@ const RoleAbilities: Record<USER_ROLES, SystemAbility[]> = {
   Admin: AdminAbilities,
   'Schema Creator': SchemaCreatorAbilities,
   'Instance Creator': InstanceCreatorAbilities,
-  Editor: EditorAbilities
+  Editor: EditorAbilities,
+  Viewer: ViewerAbilities
 };
 
 export class SystemAuthorization implements SystemAuthorizer<SystemAbility> {

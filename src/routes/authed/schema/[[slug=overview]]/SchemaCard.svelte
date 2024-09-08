@@ -16,7 +16,7 @@
 <Card
   class="cursor-pointer hover:bg-secondary transition-colors"
   onclick={() => {
-    goto(`/schema/id/${schema.id}`);
+    goto(`/authed/schema/id/${schema.id}`);
   }}
 >
   <CardHeader>
