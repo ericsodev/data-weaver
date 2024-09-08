@@ -4,7 +4,8 @@ import type { RedactedUserDTO } from '$lib/data/models/user.model';
 import { removePrototype } from '$lib/utils/toPojo';
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals }) => {
+export const load = async ({ locals, depends }) => {
+  depends('user:roles');
   if (!locals.user?.id) {
     redirect(300, '/');
   }

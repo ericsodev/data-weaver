@@ -6,14 +6,16 @@
   let { data } = $props();
 
   // Users is the initial user data
-  let users: User[] = structuredClone(data.users).map((user) => {
-    let roles = Object.values(data.roles).reduce((acc: SelectedRoles, curr) => {
-      acc[curr] = user.roles.filter((role) => role.name === curr).length !== 0;
-      return acc;
-    }, {});
+  let users: User[] = $derived(
+    structuredClone(data.users).map((user) => {
+      let roles = Object.values(data.roles).reduce((acc: SelectedRoles, curr) => {
+        acc[curr] = user.roles.filter((role) => role.name === curr).length !== 0;
+        return acc;
+      }, {});
 
-    return { ...user, roles };
-  });
+      return { ...user, roles };
+    })
+  );
   //
   let formData = $state<User[]>(
     data.users.map((user) => {
