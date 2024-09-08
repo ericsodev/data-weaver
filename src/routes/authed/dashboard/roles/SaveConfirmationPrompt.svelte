@@ -9,7 +9,7 @@
   interface IProps {
     children: Snippet;
     userName: string;
-    userId: any;
+    userId: string;
     assignedRoles: USER_ROLES[];
     existingRoles: USER_ROLES[];
   }
