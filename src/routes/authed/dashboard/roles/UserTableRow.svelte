@@ -44,7 +44,7 @@
     {#if !readonly}
       <DropdownMenu.Root closeOnItemClick={false}>
         <DropdownMenu.Trigger asChild let:builder>
-          <Button builders={[builder]} size="sm" variant="ghost">Assign</Button>
+          <Button builders={[builder]} size="sm" variant="secondary">Assign</Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content class="w-56">
           <DropdownMenu.Label>Roles</DropdownMenu.Label>
