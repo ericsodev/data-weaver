@@ -41,6 +41,8 @@
   const canDelete = data.user.abilities.includes('USER:DELETE');
 </script>
 
+<svelte:head><title>Dataweaver | Users</title></svelte:head>
+
 <h2 class="scroll-m-20 mb-4 pb-2 text-3xl font-semibold tracking-tight first:mt-0">Users</h2>
 <h3 class="scroll-m-20 text-2xl font-semibold tracking-tight mt-12">Active Users</h3>
 <Table>
