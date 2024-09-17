@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { signJwt } from '$lib/utils/jwt';
 
 export const cookieSchema = z.object({
   session_id: z.string(),
@@ -7,8 +8,8 @@ export const cookieSchema = z.object({
 
 export type SessionType = z.infer<typeof cookieSchema>;
 
-export function stringifySession(session: SessionType): string {
-  return JSON.stringify(session);
+export async function signSession(session: SessionType): Promise<string> {
+  return await signJwt(session);
 }
 
 declare global {

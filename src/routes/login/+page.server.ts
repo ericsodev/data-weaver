@@ -5,7 +5,8 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { db } from '$lib/data/actions';
 import { sha256 } from 'js-sha256';
-import { stringifySession } from '$lib/validationSchemas/cookie';
+import { signSession } from '$lib/validationSchemas/cookie';
+import { v4 as uuidv4 } from 'uuid';
 
 export const actions: Actions = {
   default: async ({ request, cookies }) => {
@@ -19,7 +20,7 @@ export const actions: Actions = {
     const user = await db.user.find({ name: data.username });
 
     if (user && user.passwordHash === sha256(data.password)) {
-      cookies.set('data-weaver-session', stringifySession({ session_id: '8', id: user.id }), {
+      cookies.set('data-weaver-session', await signSession({ session_id: uuidv4(), id: user.id }), {
         path: '/'
       });
       return redirect(300, '/authed/dashboard');
