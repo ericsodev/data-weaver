@@ -22,7 +22,7 @@
   <CardHeader>
     <CardTitle>{schema.name}</CardTitle>
   </CardHeader>
-  <CardContent>foobar</CardContent>
+  <CardContent>{schema.description}</CardContent>
   <CardFooter>
     <Badge variant="secondary">{schema.role}</Badge>
   </CardFooter>

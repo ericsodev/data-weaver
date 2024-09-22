@@ -32,6 +32,7 @@ const createSchemaHandler: Action = async ({ request, locals }) => {
   const schema = await createSchemaWithPermission({
     name: data.name,
     creatorId: locals.user.id,
+    description: data.description,
     schemaType: 'Single'
   });
 

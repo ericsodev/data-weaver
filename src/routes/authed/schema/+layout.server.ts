@@ -16,6 +16,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
           id: s.schema?.id as string,
           name: s.schema?.name as string,
           role: s.role,
+          description: s.schema?.description as string | null,
           createdAt: s.createdAt
         };
       });
