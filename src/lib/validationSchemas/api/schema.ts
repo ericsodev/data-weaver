@@ -19,7 +19,8 @@ export const attributePutValidation = attributePostValidation
 
 export const schemaPostValidation = z.object({
   name: z.string().min(1),
-  schemaType: z.enum(Object.values(SCHEMA_TYPES) as [string, ...string[]]).optional()
+  schemaType: z.enum(Object.values(SCHEMA_TYPES) as [string, ...string[]]).optional(),
+  description: z.string().max(150)
 });
 
 export const schemaPutValidation = schemaPostValidation
