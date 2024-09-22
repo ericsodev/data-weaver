@@ -11,6 +11,7 @@ export class Schema extends mixin(BaseModel) {
   attributes?: AttributeDTO[];
   dataTableName!: string;
   schemaType!: SchemaType;
+  description?: string;
 
   async $beforeInsert(queryContext: QueryContext): Promise<void> {
     await super.$beforeInsert(queryContext);
@@ -43,7 +44,8 @@ export class Schema extends mixin(BaseModel) {
       required: ['name', 'creatorId'],
       properties: {
         name: { type: 'string' },
-        creatorId: { type: 'string' }
+        creatorId: { type: 'string' },
+        description: { type: 'string' }
       }
     };
   }

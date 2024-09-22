@@ -12,6 +12,7 @@ export class Instance extends mixin(BaseModel) {
   schemaId!: string;
   schema?: SchemaDTO;
   attributes!: Record<string, AttributeValue>;
+  description?: string;
 
   static get tableName() {
     return 'instance';
@@ -44,7 +45,8 @@ export class Instance extends mixin(BaseModel) {
       properties: {
         name: { type: 'string', minLength: 1, maxLength: 32 },
         creatorId: { type: 'string' },
-        schemaId: { type: 'string' }
+        schemaId: { type: 'string' },
+        description: { type: 'string' }
       }
     };
   }

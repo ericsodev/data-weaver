@@ -13,13 +13,13 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "svelte-kit sync && svelte-check",
     "format": "prettier --write .",
-    "seed:make": "node --loader ts-node/esm ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts seed:make -x ts",
-    "seed:run": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts seed:run",
-    "migrate:make": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:make -x ts",
-    "migrate:up": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:up",
-    "migrate:down": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:down",
-    "migrate:rollback": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:rollback",
-    "migrate:latest": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:latest"
+    "db:seed:make": "node --loader ts-node/esm ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts seed:make -x ts",
+    "db:seed:run": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts seed:run",
+    "db:migrate:make": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:make -x ts",
+    "db:migrate:up": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:up",
+    "db:migrate:down": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:down",
+    "db:migrate:rollback": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:rollback",
+    "db:migrate:latest": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:latest"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",

@@ -67,6 +67,14 @@
         <Form.Description />
         <Form.FieldErrors />
       </Form.Field>
+      <Form.Field {form} name="description">
+        <Form.Control let:attrs>
+          <Form.Label class="text-muted-foreground">Description</Form.Label>
+          <Input {...attrs} bind:value={$formData.description} />
+        </Form.Control>
+        <Form.Description />
+        <Form.FieldErrors />
+      </Form.Field>
       <Button type="submit" variant="default" class="mt-4 px-8">Save</Button>
     </form>
     {#if $allErrors.length > 0}

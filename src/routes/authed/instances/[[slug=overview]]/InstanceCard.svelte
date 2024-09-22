@@ -21,7 +21,7 @@
   <CardHeader>
     <CardTitle>{instance.name}</CardTitle>
   </CardHeader>
-  <CardContent>foobar</CardContent>
+  <CardContent>{instance.description}<br /></CardContent>
   <CardFooter>
     <Badge variant="secondary">{instance.role}</Badge>
   </CardFooter>
