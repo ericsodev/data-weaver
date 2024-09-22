@@ -17,6 +17,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
       // TODO: Add session validation
       const user = await db.user.find({ id: parsedCookie.data.id }, 'roles');
+      console.log(user);
       if (user) {
         const abilities = await permissions.system.getAbilities(user.id);
         event.locals.user = { name: user.name, id: user.id, roles: user.roles, abilities };

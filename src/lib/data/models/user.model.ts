@@ -1,7 +1,13 @@
-import { Model, mixin, type RelationMappings, type RelationMappingsThunk } from 'objection';
+import {
+  Model,
+  mixin,
+  type QueryContext,
+  type RelationMappings,
+  type RelationMappingsThunk
+} from 'objection';
 import { BaseModel } from './base';
 import { Role, type RoleDTO } from './role.model';
-import type { Except } from 'type-fest';
+import type { Except, Merge } from 'type-fest';
 
 export class User extends mixin(BaseModel) {
   public name!: string;
@@ -34,7 +40,13 @@ export class User extends mixin(BaseModel) {
       relation: Model.HasManyRelation
     }
   };
+
+  $afterFind(queryContext: UserQueryContext): void {
+    if (!queryContext.showPassword) this.passwordHash = '';
+  }
 }
+
+export type UserQueryContext = Merge<QueryContext, { showPassword?: boolean }>;
 
 export type UserDTO = Omit<User, keyof Model>;
 export type RedactedUserDTO = Omit<User, keyof Model | 'passwordHash'>;
