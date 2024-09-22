@@ -17,7 +17,7 @@ export const actions: Actions = {
     }
 
     const data = loginForm.data;
-    const user = await db.user.find({ name: data.username });
+    const user = await db.user.getWithPassword({ name: data.username });
 
     if (user && user.passwordHash === sha256(data.password)) {
       cookies.set('data-weaver-session', await signSession({ session_id: uuidv4(), id: user.id }), {
