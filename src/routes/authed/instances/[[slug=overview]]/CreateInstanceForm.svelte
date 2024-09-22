@@ -47,6 +47,14 @@
       <FormDescription></FormDescription>
       <FormFieldErrors></FormFieldErrors>
     </FormField>
+    <FormField {form} name="description">
+      <FormControl let:attrs>
+        <FormLabel>Description</FormLabel>
+        <Input bind:value={$formData.description} {...attrs}></Input>
+      </FormControl>
+      <FormDescription></FormDescription>
+      <FormFieldErrors></FormFieldErrors>
+    </FormField>
     <FormField {form} name="schemaId">
       <FormControl let:attrs>
         <input hidden bind:value={$formData.schemaId} name={attrs.name} />

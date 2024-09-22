@@ -27,7 +27,7 @@
   {#each data.instances as instance}
     <InstanceCard {instance}></InstanceCard>{/each}
 
-  {#if data.user.abilities.includes('SCHEMA:CREATE')}
+  {#if data.user.abilities.includes('INSTANCE:CREATE')}
     <Card class="hover:bg-secondary transition-colors cursor-pointer min-h-36" onclick={showModal}>
       <CardContent class="p-0 flex items-center justify-center h-full">
         <PlusCircle class="w-5 mr-3"></PlusCircle>

@@ -16,6 +16,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
           id: s.instance?.id as string,
           name: s.instance?.name as string,
           schemaId: s.instance?.schemaId as string,
+          description: s.instance?.description as string | null,
           role: s.role,
           createdAt: s.createdAt
         };
