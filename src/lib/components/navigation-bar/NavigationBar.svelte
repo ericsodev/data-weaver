@@ -10,8 +10,8 @@
 <section class="subnav flex gap-2">
   <Button
     href="/authed/dashboard"
-    variant={path.startsWith('/dashboard') ? 'secondary' : 'ghost'}
-    class={cn('text-muted-foreground', path.startsWith('/dashboard') && 'text-white')}
+    variant={path.startsWith('/authed/dashboard') ? 'secondary' : 'ghost'}
+    class={cn('text-muted-foreground', path.startsWith('/authed/dashboard') && 'text-white')}
   >
     <span>
       <Layers class="w-4 mr-2"></Layers>
@@ -21,8 +21,8 @@
   <Button
     data-sveltekit-prefetch
     href="/authed/schema"
-    variant={path.startsWith('/schema') ? 'secondary' : 'ghost'}
-    class={cn('text-muted-foreground', path.startsWith('/schema') && 'text-white')}
+    variant={path.startsWith('/authed/schema') ? 'secondary' : 'ghost'}
+    class={cn('text-muted-foreground', path.startsWith('/authed/schema') && 'text-white')}
   >
     <span>
       <SwatchBook class="w-4 mr-2"></SwatchBook>
@@ -32,8 +32,8 @@
   <Button
     data-sveltekit-prefetch
     href="/authed/instances"
-    variant={path.startsWith('/instances') ? 'secondary' : 'ghost'}
-    class={cn('text-muted-foreground', path.startsWith('/instances') && 'text-white')}
+    variant={path.startsWith('/authed/instances') ? 'secondary' : 'ghost'}
+    class={cn('text-muted-foreground', path.startsWith('/authed/instances') && 'text-white')}
   >
     <span>
       <FileText class="w-4 mr-2"></FileText>
