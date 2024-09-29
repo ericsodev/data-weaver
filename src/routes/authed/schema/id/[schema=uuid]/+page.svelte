@@ -18,6 +18,12 @@
   const canDelete = $derived(data.abilities.includes('SCHEMA:DELETE'));
   const canModifyAttributes = $derived(data.abilities.includes('ATTRIBUTE:WRITE'));
 
+  let tabOptions = [{ name: 'Table', content: table }];
+
+  if (data.abilities.includes('SCHEMA:MANAGE')) {
+    tabOptions.push({ name: 'Users', content: userTab });
+  }
+
   async function onSave() {
     const payload: SchemaPutPayload = {
       name: data.schema.name,
@@ -129,12 +135,6 @@
     >
   {/if}
 </header>
-<TabGroup
-  defaultSelected="Default"
-  options={[
-    { name: 'Table', content: table },
-    { name: 'Users', content: userTab }
-  ]}
-/>
+<TabGroup defaultSelected="Default" options={tabOptions} />
 
 <DeleteSchemaPrompt bind:isOpen={openDeletePrompt}></DeleteSchemaPrompt>
