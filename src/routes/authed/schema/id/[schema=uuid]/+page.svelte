@@ -1,16 +1,16 @@
 <script lang="ts">
-  import AttributeProperty from './AttributeProperty.svelte';
+  import AttributeProperty from './_components/AttributeProperty.svelte';
   import { schemaPutValidation, type SchemaPutPayload } from '$lib/validationSchemas/api/schema';
   import * as Table from '$lib/components/ui/table';
   import * as Alert from '$lib/components/ui/alert';
   import { Button } from '$lib/components/ui/button';
   import { PlusIcon, Trash2 } from 'lucide-svelte';
-  import { createAttributeState } from './AttributeState.svelte';
+  import { createAttributeState } from './_components/AttributeState.svelte';
   import { invalidateAll } from '$app/navigation';
-  import DeleteSchemaPrompt from './DeleteSchemaPrompt.svelte';
+  import DeleteSchemaPrompt from './_components/DeleteSchemaPrompt.svelte';
   import { untrack } from 'svelte';
   import TabGroup from '$lib/components/tabs/TabGroup.svelte';
-  import UserTab from './UserTab.svelte';
+  import UserTab from './_components/UserTab.svelte';
   import Can from '$lib/components/authorization/Can.svelte';
 
   let { data } = $props();

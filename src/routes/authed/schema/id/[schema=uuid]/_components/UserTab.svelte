@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Badge } from '$lib/components/ui/badge';
   import { Button } from '$lib/components/ui/button';
   import {
     Table,
@@ -8,8 +9,10 @@
     TableBody,
     TableCell
   } from '$lib/components/ui/table';
-  import type { UserListResponse } from '$lib/validationSchemas/api/schema-users';
-  import { Badge, UserMinus } from 'lucide-svelte';
+  import { listSchemaUsers } from '$lib/data/api-service/schema-api-service';
+  import { listUsers, type UserListResponse } from '$lib/data/api-service/user-api-service';
+  import type { SchemaUserListResponse } from '$lib/validationSchemas/api/schema-users';
+  import { UserMinus } from 'lucide-svelte';
   import { onMount } from 'svelte';
 
   interface Props {
@@ -19,19 +22,23 @@
 
   let { schemaId, currentUserId }: Props = $props();
 
-  let currentUsers = $state<UserListResponse>([]);
+  let currentUsers = $state<SchemaUserListResponse>([]);
+  let allUsers = $state<UserListResponse>([]);
 
   async function loadCurrentUsers() {
-    const result = await fetch(`/api/schema/${schemaId}/users`);
-    currentUsers = await result.json();
+    currentUsers = await listSchemaUsers(schemaId);
   }
 
-  onMount(() => {
-    loadCurrentUsers();
+  onMount(async () => {
+    async function loadAllUsers() {
+      allUsers = await listUsers();
+    }
+    await Promise.all([loadCurrentUsers(), loadAllUsers()]);
+    console.log($state.snapshot(allUsers));
   });
 </script>
 
-<Table>
+<Table class="mb-8">
   <TableHeader>
     <TableRow>
       <TableHead class="w-28 md:w-48">Username</TableHead>
@@ -47,7 +54,7 @@
         </TableCell>
         <TableCell>
           <div class="flex flex-wrap gap-1">
-            <Badge>{'Fake Role'}</Badge>
+            <Badge>{user.role}</Badge>
           </div>
         </TableCell>
         <TableCell class="flex">
@@ -68,3 +75,4 @@
     {/each}
   </TableBody>
 </Table>
+<Button variant="outline" class="px-10">Add User</Button>
