@@ -42,7 +42,9 @@ export class User extends mixin(BaseModel) {
   };
 
   $afterFind(queryContext: UserQueryContext): void {
-    if (!queryContext.showPassword) this.passwordHash = '';
+    if (queryContext.showPassword) return;
+    // @ts-expect-error hiding password field unless explicitly requested to show
+    delete this.passwordHash;
   }
 }
 
