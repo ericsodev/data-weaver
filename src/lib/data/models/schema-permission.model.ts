@@ -1,7 +1,7 @@
 import { Model, mixin, type JSONSchema } from 'objection';
 import { BaseModel } from './base';
 import { Schema, type SchemaDTO } from './schema.model';
-import { User } from './user.model';
+import { User, type UserDTO } from './user.model';
 import type { Except } from 'type-fest';
 
 export const SCHEMA_USER_ROLES = ['OWNER', 'ADMIN', 'EDITOR', 'VIEWER'] as const;
@@ -13,7 +13,8 @@ export class SchemaPermission extends mixin(BaseModel) {
   public userId!: string;
   public role!: SchemaUserRole;
 
-  public schema?: SchemaDTO;
+  public user!: UserDTO;
+  public schema!: SchemaDTO;
 
   static get tableName() {
     return 'schema_permission';
