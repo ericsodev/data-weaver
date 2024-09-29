@@ -64,7 +64,7 @@
 </script>
 
 {#snippet userTab()}
-  <UserTab></UserTab>
+  <UserTab schemaId={data.schema.id} currentUserId={data.user.id}></UserTab>
 {/snippet}
 
 {#snippet table()}
@@ -135,6 +135,6 @@
     >
   </Can>
 </header>
-<TabGroup defaultSelected="Default" options={tabOptions} />
+<TabGroup defaultSelected="Table" options={tabOptions} />
 
 <DeleteSchemaPrompt bind:isOpen={openDeletePrompt}></DeleteSchemaPrompt>
