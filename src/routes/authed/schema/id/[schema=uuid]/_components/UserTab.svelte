@@ -11,7 +11,7 @@
   } from '$lib/components/ui/table';
   import { listSchemaUsers } from '$lib/data/api-service/schema-api-service';
   import { listUsers, type UserListResponse } from '$lib/data/api-service/user-api-service';
-  import type { SchemaUserListResponse } from '$lib/validationSchemas/api/schema-users';
+  import type { SchemaUserListResponse } from '$lib/validation-schemas/api/schema-users';
   import { UserMinus } from 'lucide-svelte';
   import { onMount } from 'svelte';
 

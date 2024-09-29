@@ -11,7 +11,7 @@
   import type { SchemaDTO } from '$lib/data/models/schema.model';
   import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { instanceCreateFormValidation } from '$lib/validationSchemas/api/instance';
+  import { instanceCreateFormValidation } from '$lib/validation-schemas/api/instance';
   import FormField from '$lib/components/ui/form/form-field.svelte';
   import { FormControl, FormDescription, FormLabel } from '$lib/components/ui/form';
   import FormFieldErrors from '$lib/components/ui/form/form-field-errors.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import AttributeProperty from './_components/AttributeProperty.svelte';
-  import { schemaPutValidation, type SchemaPutPayload } from '$lib/validationSchemas/api/schema';
+  import { schemaPutValidation, type SchemaPutPayload } from '$lib/validation-schemas/api/schema';
   import * as Table from '$lib/components/ui/table';
   import * as Alert from '$lib/components/ui/alert';
   import { Button } from '$lib/components/ui/button';
