@@ -1,7 +1,7 @@
 import { permissions } from '$lib/auth/roles/permissions';
 import { db } from '$lib/data/actions';
 import { verifyJwt } from '$lib/utils/jwt';
-import { cookieSchema } from '$lib/validationSchemas/cookie';
+import { cookieSchema } from '$lib/validation-schemas/cookie';
 import { redirect, type Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {

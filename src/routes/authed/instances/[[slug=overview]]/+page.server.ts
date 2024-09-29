@@ -4,7 +4,7 @@ import { db } from '$lib/data/actions';
 import { removePrototype } from '$lib/utils/toPojo';
 import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { instanceCreateFormValidation } from '$lib/validationSchemas/api/instance';
+import { instanceCreateFormValidation } from '$lib/validation-schemas/api/instance';
 import { permissions } from '$lib/auth/roles/permissions';
 import { createInstanceWithPermission } from '$lib/utils/instance';
 

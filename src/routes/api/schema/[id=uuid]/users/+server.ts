@@ -1,6 +1,6 @@
 import { permissions } from '$lib/auth/roles/permissions';
 import { db } from '$lib/data/actions';
-import type { SchemaUserListResponse } from '$lib/validationSchemas/api/schema-users';
+import type { SchemaUserListResponse } from '$lib/validation-schemas/api/schema-users';
 import { error, json } from '@sveltejs/kit';
 
 export const GET = async ({ locals, params }) => {

@@ -1,5 +1,5 @@
 import { db } from '$lib/data/actions';
-import { cookieSchema } from '$lib/validationSchemas/cookie';
+import { cookieSchema } from '$lib/validation-schemas/cookie';
 import { error, json, type Handle } from '@sveltejs/kit';
 
 export const GET: Handle = async ({ event }) => {

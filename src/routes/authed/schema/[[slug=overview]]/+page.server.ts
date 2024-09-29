@@ -3,7 +3,7 @@ import { fail, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { createSchemaWithPermission } from '$lib/utils/schema';
-import { schemaPostValidation } from '$lib/validationSchemas/api/schema';
+import { schemaPostValidation } from '$lib/validation-schemas/api/schema';
 
 export const load: PageServerLoad = async ({ request }) => {
   const params = new URLSearchParams(request.url.toString());
