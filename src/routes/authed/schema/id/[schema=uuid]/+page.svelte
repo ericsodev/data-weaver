@@ -11,11 +11,11 @@
   import { untrack } from 'svelte';
   import TabGroup from '$lib/components/tabs/TabGroup.svelte';
   import UserTab from './UserTab.svelte';
+  import Can from '$lib/components/authorization/Can.svelte';
 
   let { data } = $props();
   let error = $state('');
   let attributesState = $derived(untrack(() => createAttributeState(data.schema.attributes)));
-  const canDelete = $derived(data.abilities.includes('SCHEMA:DELETE'));
   const canModifyAttributes = $derived(data.abilities.includes('ATTRIBUTE:WRITE'));
 
   let tabOptions = [{ name: 'Table', content: table }];
@@ -92,7 +92,7 @@
             }}
           ></AttributeProperty>
         {/each}
-        {#if canModifyAttributes}
+        <Can I="ATTRIBUTE:WRITE" abilities={data.abilities}>
           <Table.Row class="hover:bg-transparent">
             <Table.Cell colspan={3}>
               <Button
@@ -107,12 +107,12 @@
               >
             </Table.Cell>
           </Table.Row>
-        {/if}
+        </Can>
       </Table.Body>
     </Table.Root>
-    {#if data.abilities.includes('ATTRIBUTE:WRITE')}
+    <Can I="ATTRIBUTE:WRITE" abilities={data.abilities}>
       <Button on:click={onSave} size="lg" class="mt-6">Save changes</Button>
-    {/if}
+    </Can>
     {#if error}
       <Alert.Root class="w-60 bg-red-400/30 border-red-500 border-[1.5px] fixed top-10 right-10">
         <Alert.Title>Error saving</Alert.Title>
@@ -129,11 +129,11 @@
       {data.schema.name}
     </h2>
   </span>
-  {#if canDelete}
+  <Can I="SCHEMA:DELETE" abilities={data.abilities}>
     <Button onclick={() => (openDeletePrompt = true)} size="sm" variant="outline" class="self-end"
       ><Trash2 class="w-4 mr-2"></Trash2> Delete</Button
     >
-  {/if}
+  </Can>
 </header>
 <TabGroup defaultSelected="Default" options={tabOptions} />
 
