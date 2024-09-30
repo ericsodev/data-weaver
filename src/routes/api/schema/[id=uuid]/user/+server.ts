@@ -2,7 +2,7 @@ import { permissions } from '$lib/auth/roles/permissions';
 import { db } from '$lib/data/actions';
 import {
   schemaUserDeleteValidation,
-  schemaUserPostValidation
+  schemaUserPutValidation
 } from '$lib/validation-schemas/api/schema-users';
 import { error, json } from '@sveltejs/kit';
 
@@ -18,11 +18,11 @@ export const PUT = async ({ locals, params, request }) => {
       locals.user.id
     );
     if (!canManageSchema) {
-      error(401);
+      error(401, 'User cannot manage schema');
     }
 
     const requestBody = await request.json();
-    const validated = await schemaUserPostValidation.safeParseAsync(requestBody);
+    const validated = await schemaUserPutValidation.safeParseAsync(requestBody);
 
     if (validated.error) {
       error(400, validated.error.toString());

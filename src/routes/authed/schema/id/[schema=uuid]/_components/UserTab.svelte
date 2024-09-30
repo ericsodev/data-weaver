@@ -14,19 +14,21 @@
   import type { SchemaUserListResponse } from '$lib/validation-schemas/api/schema-users';
   import { UserMinus } from 'lucide-svelte';
   import { onMount } from 'svelte';
+  import AddUserDialog from './AddUserDialog.svelte';
+  import type { PageData } from '../$types';
 
   interface Props {
-    schemaId: string;
+    schema: PageData['schema'];
     currentUserId: string;
   }
 
-  let { schemaId, currentUserId }: Props = $props();
+  let { schema, currentUserId }: Props = $props();
 
   let currentUsers = $state<SchemaUserListResponse>([]);
   let allUsers = $state<UserListResponse>([]);
 
   async function loadCurrentUsers() {
-    currentUsers = await listSchemaUsers(schemaId);
+    currentUsers = await listSchemaUsers(schema.id);
   }
 
   onMount(async () => {
@@ -75,4 +77,4 @@
     {/each}
   </TableBody>
 </Table>
-<Button variant="outline" class="px-10">Add User</Button>
+<AddUserDialog {schema} userId={currentUserId} {allUsers} />

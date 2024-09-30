@@ -64,7 +64,7 @@
 </script>
 
 {#snippet userTab()}
-  <UserTab schemaId={data.schema.id} currentUserId={data.user.id}></UserTab>
+  <UserTab schema={data.schema} currentUserId={data.user.id}></UserTab>
 {/snippet}
 
 {#snippet table()}

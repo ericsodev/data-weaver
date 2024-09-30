@@ -3,10 +3,7 @@ import { BaseModel } from './base';
 import { Schema, type SchemaDTO } from './schema.model';
 import { User, type UserDTO } from './user.model';
 import type { Except } from 'type-fest';
-
-export const SCHEMA_USER_ROLES = ['OWNER', 'ADMIN', 'EDITOR', 'VIEWER'] as const;
-
-export type SchemaUserRole = (typeof SCHEMA_USER_ROLES)[number];
+import { SCHEMA_USER_ROLES, type SchemaUserRole } from './schema-permission.types';
 
 export class SchemaPermission extends mixin(BaseModel) {
   public schemaId!: string;
