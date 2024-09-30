@@ -88,4 +88,8 @@ export class BaseActions<
       return undefined;
     }
   }
+
+  async deleteByFilter(data: FilterDTO<T, E>): Promise<void> {
+    await this.model.query().where(data).delete();
+  }
 }
