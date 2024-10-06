@@ -12,7 +12,7 @@
   import { Input } from '$lib/components/ui/input';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { schemaPostValidation } from '$lib/validationSchemas/api/schema';
+  import { schemaPostValidation } from '$lib/validation-schemas/api/schema';
   import { Button } from '$lib/components/ui/button';
   import { Alert } from '$lib/components/ui/alert';
 

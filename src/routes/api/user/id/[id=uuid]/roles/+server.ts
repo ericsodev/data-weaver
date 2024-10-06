@@ -1,6 +1,6 @@
 import { db } from '$lib/data/actions';
 import { USER_ROLES } from '$lib/data/models/role.model';
-import { updateUserRoleSchema } from '$lib/validationSchemas/api/user-role';
+import { updateUserRoleSchema } from '$lib/validation-schemas/api/user-role';
 import { error } from '@sveltejs/kit';
 
 export const PUT = async ({ locals, request, params }) => {

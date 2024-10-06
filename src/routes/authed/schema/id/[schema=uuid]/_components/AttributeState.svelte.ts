@@ -1,5 +1,5 @@
-import type { AttributePostPayload } from '$lib/validationSchemas/api/schema';
-import type { PageData } from './$types';
+import type { AttributePostPayload } from '$lib/validation-schemas/api/schema';
+import type { PageData } from '../$types';
 
 export type AttributeData = Omit<AttributePostPayload, 'id'>;
 

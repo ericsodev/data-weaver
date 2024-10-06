@@ -23,7 +23,7 @@ export async function up(knex: Knex): Promise<void> {
 
     t.string('role').notNullable();
 
-    t.unique(['schema_id', 'user_id']);
+    t.unique(['schema_id', 'user_id'], { predicate: knex.whereNull('deleted_at') });
   });
 }
 

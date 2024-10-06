@@ -5,7 +5,7 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { db } from '$lib/data/actions';
 import { sha256 } from 'js-sha256';
-import { signSession } from '$lib/validationSchemas/cookie';
+import { signSession } from '$lib/validation-schemas/cookie';
 import { v4 as uuidv4 } from 'uuid';
 
 export const actions: Actions = {
