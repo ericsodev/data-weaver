@@ -13,6 +13,6 @@ export const GET = async ({ locals }) => {
     error(401);
   }
 
-  const users: RedactedUserDTO[] = (await db.user.findAll({})) ?? [];
-  return json(users);
+  const users: RedactedUserDTO[] = (await db.user.findAll({}, 'roles')) ?? [];
+  return json(users.filter((user) => user.roles.length > 0));
 };
