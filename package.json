@@ -25,6 +25,7 @@
   "devDependencies": {
     "@eslint/js": "^9.7.0",
     "@sveltejs/adapter-auto": "^3.2.2",
+    "@sveltejs/adapter-node": "^5.2.5",
     "@sveltejs/kit": "^2.5.26",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
     "@types/eslint": "^8.56.10",
@@ -60,6 +61,7 @@
     "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.12",
+    "dotenv": "^16.4.5",
     "eslint_d": "^14.0.4",
     "formsnap": "^1.0.1",
     "js-cookie": "^3.0.5",
