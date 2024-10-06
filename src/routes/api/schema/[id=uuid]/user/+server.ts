@@ -90,6 +90,18 @@ export const DELETE = async ({ locals, params, request }) => {
       error(400, 'Cannot remove yourself from schema');
     }
 
+    const schemaRole = await db.schemaPermission.find({
+      userId: payload.userId,
+      schemaId: params.id
+    });
+    if (!schemaRole) {
+      error(404, 'Schema permission does not exist');
+    }
+
+    if (schemaRole.role === 'OWNER') {
+      error(404, 'Cannot remove owner role');
+    }
+
     await db.schemaPermission.deleteByFilter(payload);
     return json({ status: 'Success' });
   } catch (err: unknown) {
