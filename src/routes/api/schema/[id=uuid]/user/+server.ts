@@ -49,6 +49,11 @@ export const PUT = async ({ locals, params, request }) => {
       schemaId: payload.schemaId
     });
 
+    if (existingRole?.role === 'OWNER') {
+      // eslint-disable-next-line quotes
+      error(400, "Cannot edit owner's role");
+    }
+
     if (existingRole) {
       await db.schemaPermission.update({ id: existingRole.id, role: payload.role });
     } else {
