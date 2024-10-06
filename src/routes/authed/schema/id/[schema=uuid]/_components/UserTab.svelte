@@ -16,6 +16,7 @@
   import AddUserDialog from './AddUserDialog.svelte';
   import type { PageData } from '../$types';
   import schemaUserStore from './SchemaUserStore';
+  import RemoveUserPrompt from './RemoveUserPrompt.svelte';
 
   interface Props {
     schema: PageData['schema'];
@@ -34,6 +35,14 @@
       allUsers = await listUsers();
     }
     await Promise.all([schemaUserStore.refresh(schema.id), loadAllUsers()]);
+  });
+
+  let deleteUserDialog = $state<{
+    isOpen: boolean;
+    user: SchemaUserListResponse[number] | undefined;
+  }>({
+    isOpen: false,
+    user: undefined
   });
 </script>
 
@@ -57,12 +66,15 @@
           </div>
         </TableCell>
         <TableCell class="flex">
-          {#if currentUserId !== user.id}
+          {#if currentUserId !== user.userId}
             <Button
               class="group-hover:visible group-hover:opacity-100 opacity-0 transition-opacity ml-auto invisible group"
               variant="destructive"
               size="sm"
-              onclick={() => {}}
+              onclick={() => {
+                deleteUserDialog.user = user;
+                deleteUserDialog.isOpen = true;
+              }}
             >
               <UserMinus class="w-4 mr-2"></UserMinus>
 
@@ -75,3 +87,5 @@
   </TableBody>
 </Table>
 <AddUserDialog {schema} userId={currentUserId} {allUsers} />
+<RemoveUserPrompt bind:isOpen={deleteUserDialog.isOpen} schemaUser={deleteUserDialog.user} {schema}
+></RemoveUserPrompt>
