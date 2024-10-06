@@ -19,7 +19,8 @@
     "db:migrate:up": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:up",
     "db:migrate:down": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:down",
     "db:migrate:rollback": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:rollback",
-    "db:migrate:latest": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:latest"
+    "db:migrate:latest": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:latest",
+    "prod:db:migrate:latest": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --env production --knexfile ./knex/knexfile.ts migrate:latest"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
