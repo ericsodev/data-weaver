@@ -1,16 +1,7 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
   import { Button } from '$lib/components/ui/button';
   import { Dialog, DialogContent, DialogDescription } from '$lib/components/ui/dialog';
   import DialogTitle from '$lib/components/ui/dialog/dialog-title.svelte';
-  import { onMount } from 'svelte';
-  import type { AttachedInstance } from '../../../../../api/schema/[id=uuid]/attached-instances/+server.ts';
-  import { Skeleton } from '$lib/components/ui/skeleton';
-  import { CheckIcon, CircleAlertIcon } from 'lucide-svelte';
-  import { Alert, AlertDescription } from '$lib/components/ui/alert';
-  import AlertTitle from '$lib/components/ui/alert/alert-title.svelte';
-  import { Badge } from '$lib/components/ui/badge';
   import type { SchemaUserListResponse } from '$lib/validation-schemas/api/schema-users.js';
   import { deleteSchemaUser } from '$lib/data/api-service/schema-api-service.js';
   import type { PageData } from '../$types.js';
