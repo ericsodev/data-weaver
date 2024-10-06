@@ -22,11 +22,7 @@ export const config: { [key: string]: Knex.Config } = {
   },
   production: {
     client: 'pg',
-    connection: {
-      database: 'my_db',
-      user: 'username',
-      password: 'password'
-    },
+    connection: process.env['db'],
     pool: {
       min: 2,
       max: 10
