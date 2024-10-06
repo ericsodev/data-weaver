@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev --port 3000",
+    "dev": "vite dev --port 3000 --host",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -19,11 +19,13 @@
     "db:migrate:up": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:up",
     "db:migrate:down": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:down",
     "db:migrate:rollback": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:rollback",
-    "db:migrate:latest": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:latest"
+    "db:migrate:latest": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --knexfile ./knex/knexfile.ts migrate:latest",
+    "prod:db:migrate:latest": "node --loader ts-node/esm --experimental-specifier-resolution=node ./node_modules/.bin/knex --env production --knexfile ./knex/knexfile.ts migrate:latest"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
     "@sveltejs/adapter-auto": "^3.2.2",
+    "@sveltejs/adapter-node": "^5.2.5",
     "@sveltejs/kit": "^2.5.26",
     "@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
     "@types/eslint": "^8.56.10",
@@ -59,6 +61,7 @@
     "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.12",
+    "dotenv": "^16.4.5",
     "eslint_d": "^14.0.4",
     "formsnap": "^1.0.1",
     "js-cookie": "^3.0.5",

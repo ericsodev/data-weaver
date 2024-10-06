@@ -1,0 +1,39 @@
+name: dataweaver-stack
+services:
+  server:
+    build:
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:3000"
+    links:
+      - db
+    environment:
+      DATABASE_URI: postgresql://postgres:postgres@db:5432/postgres
+      ENVIRONMENT: production
+    depends_on: 
+      - migration
+  migration:
+    build:
+      context: .
+    command: ["npm", "run", "prod:db:migrate:latest"]
+    links:
+      - db
+    environment:
+      DATABASE_URI: postgresql://postgres:postgres@db:5432/postgres
+      ENVIRONMENT: production
+  db:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - db-data:/data/postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    ports:
+      - "5432:5432"
+
+
+volumes:
+  db-data:
+    driver: local

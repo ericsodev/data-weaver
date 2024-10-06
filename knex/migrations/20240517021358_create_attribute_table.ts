@@ -20,8 +20,8 @@ export async function up(knex: Knex): Promise<void> {
     t.boolean('required').notNullable();
 
     t.unique(['schema_id', 'name'], {
-      deferrable: 'deferred',
-      predicate: knex.whereNull('deleted_at')
+      predicate: knex.whereNull('deleted_at'),
+      useConstraint: false
     });
   });
 }
