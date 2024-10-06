@@ -1,38 +1,25 @@
-# create-svelte
+# DataWeaver
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+**DataWeaver** is a headless CMS with advanced features and flexibility. It supports webhooks, user roles & governance, reusable schemas, and API integration for content delivery.
 
-## Creating a project
+## Features:
+- **Reusable Schemas**: Define content structures once and reuse them across multiple instances.
+- **User Roles & Governance**: Manage access control with customizable roles and permissions.
+- **API Support**: Fully API-driven for easy integration with frontend applications.
+- **Webhooks**: Trigger real-time notifications and actions on content changes.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Running locally
+Run a local instance of PostgreSQL on port 5432 with database `dataweaver` and user `dataweaver` without authentication.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Create a .env.development file with a `JWT_SECRET` key.
 
-# create a new project in my-app
-npm create svelte@latest my-app
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+npm i
+npm run db:migrate:latest
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
-
+## Deploying
 ```bash
-npm run build
+docker compose up
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
