@@ -23,6 +23,7 @@
   import { SCHEMA_USER_ROLES } from '$lib/data/models/schema-permission.types';
   import { addSchemaUser } from '$lib/data/api-service/schema-api-service';
   import { Alert } from '$lib/components/ui/alert';
+  import schemaUserStore from './SchemaUserStore';
 
   interface Props {
     userId: string;
@@ -53,6 +54,7 @@
   async function submitForm() {
     try {
       await addSchemaUser(formData);
+      await schemaUserStore.refresh(schema.id);
       setModalOpen(false);
     } catch (error) {
       console.log(error);

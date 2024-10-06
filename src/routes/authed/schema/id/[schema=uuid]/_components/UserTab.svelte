@@ -9,13 +9,13 @@
     TableBody,
     TableCell
   } from '$lib/components/ui/table';
-  import { listSchemaUsers } from '$lib/data/api-service/schema-api-service';
   import { listUsers, type UserListResponse } from '$lib/data/api-service/user-api-service';
   import type { SchemaUserListResponse } from '$lib/validation-schemas/api/schema-users';
   import { UserMinus } from 'lucide-svelte';
   import { onMount } from 'svelte';
   import AddUserDialog from './AddUserDialog.svelte';
   import type { PageData } from '../$types';
+  import schemaUserStore from './SchemaUserStore';
 
   interface Props {
     schema: PageData['schema'];
@@ -27,16 +27,13 @@
   let currentUsers = $state<SchemaUserListResponse>([]);
   let allUsers = $state<UserListResponse>([]);
 
-  async function loadCurrentUsers() {
-    currentUsers = await listSchemaUsers(schema.id);
-  }
+  schemaUserStore.subscribe((v) => (currentUsers = v));
 
   onMount(async () => {
     async function loadAllUsers() {
       allUsers = await listUsers();
     }
-    await Promise.all([loadCurrentUsers(), loadAllUsers()]);
-    console.log($state.snapshot(allUsers));
+    await Promise.all([schemaUserStore.refresh(schema.id), loadAllUsers()]);
   });
 </script>
 
