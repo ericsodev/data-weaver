@@ -61,6 +61,11 @@
       formError = (error as Error).message;
     }
   }
+
+  let ownerId: string | undefined = $state();
+  schemaUserStore.subscribe((v) => (ownerId = v.find((user) => user.role === 'OWNER')?.userId));
+
+  const eligibleTargetUsers = $derived(allUsers.filter((u) => u.id !== userId && u.id !== ownerId));
 </script>
 
 <Button variant="outline" class="px-10" onclick={() => setModalOpen(true)}>Add User</Button>
@@ -82,11 +87,13 @@
         formData.userId = id?.value ?? '';
       }}
     >
-      <SelectTrigger>
-        <SelectValue placeholder="Select a user"></SelectValue>
+      <SelectTrigger disabled={eligibleTargetUsers.length === 0}>
+        <SelectValue
+          placeholder={eligibleTargetUsers.length > 0 ? 'Select a user' : 'No eligible users'}
+        ></SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {#each allUsers.filter((u) => u.id !== userId) as user}
+        {#each eligibleTargetUsers as user}
           <SelectItem label={user.name} value={user.id} />
         {/each}
       </SelectContent>
@@ -110,7 +117,12 @@
       </SelectContent>
     </Select>
     <div class="flex gap-2 mt-4">
-      <Button onclick={() => submitForm()} size="sm" class="px-6">Save</Button>
+      <Button
+        onclick={() => submitForm()}
+        size="sm"
+        class="px-6"
+        disabled={!formData.userId || !formData.role}>Save</Button
+      >
       <Button onclick={() => setModalOpen(false)} variant="outline" size="sm" class="px-6"
         >Cancel</Button
       >
