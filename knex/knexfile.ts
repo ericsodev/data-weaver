@@ -1,5 +1,7 @@
 import { type Knex } from 'knex';
 
+console.log('Connecting from environment:', process.env['ENVIRONMENT']);
+
 export const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'pg',
@@ -22,7 +24,7 @@ export const config: { [key: string]: Knex.Config } = {
   },
   production: {
     client: 'pg',
-    connection: process.env['db'],
+    connection: process.env['DATABASE_URI'],
     pool: {
       min: 2,
       max: 10

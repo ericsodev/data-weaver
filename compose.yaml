@@ -4,12 +4,12 @@ services:
     build:
       dockerfile: ./Dockerfile
     ports:
-      - "3000:3000"
+      - "80:3000"
     links:
       - db
     environment:
-      db: postgresql://postgres:postgres@db:5432/postgres
-      environment: production
+      DATABASE_URI: postgresql://postgres:postgres@db:5432/postgres
+      ENVIRONMENT: production
     depends_on: 
       - migration
   migration:
@@ -19,8 +19,8 @@ services:
     links:
       - db
     environment:
-      db: postgresql://postgres:postgres@db:5432/postgres
-      environment: production
+      DATABASE_URI: postgresql://postgres:postgres@db:5432/postgres
+      ENVIRONMENT: production
   db:
     container_name: postgres
     image: postgres:latest
